@@ -6,27 +6,30 @@
 # include "Key.hpp"
 # include "Mouse.hpp"
 
-class Input
+namespace mysf
 {
-public:
-  Input();
-  Input(const Input &);
-  Input & operator=(const Input &);
-  virtual ~Input();
+  class Input
+  {
+  public:
+    Input();
+    Input(const Input &);
+    Input & operator=(const Input &);
+    virtual ~Input();
 
-  void			update(const sf::Event & event);
-  void			reset();
+    void		update(const sf::Event & event);
+    void		reset();
 
-  const Key &		getKey() const;
-  const Mouse &		getMouse() const;
-  bool			isClosed() const;
-  bool			isFocused() const;
+    const Key &		getKey() const;
+    const Mouse &	getMouse() const;
+    bool		isClosed() const;
+    bool		isFocused() const;
 
-protected:
-  Key			_key;
-  Mouse			_mouse;
-  bool			_closed;
-  bool			_focus;
-};
+  protected:
+    Key			_key;
+    Mouse		_mouse;
+    bool		_closed;
+    bool		_focus;
+  };
+}
 
 #endif // !INPUT_HPP_

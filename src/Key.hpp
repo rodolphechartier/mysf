@@ -5,22 +5,25 @@
 
 # include <SFML/Window.hpp>
 
-class Key
+namespace mysf
 {
-public:
-  Key();
-  Key(const Key & o);
-  Key & operator=(const Key & o);
-  virtual ~Key();
+  class Key
+  {
+  public:
+    Key();
+    Key(const Key & o);
+    Key & operator=(const Key & o);
+    virtual ~Key();
 
-  void	update(const sf::Event & event);
-  void	reset();
+    void	update(const sf::Event & event);
+    void	reset();
 
-  bool	isDown(sf::Keyboard::Key key) const;
-  bool	isDown(const std::vector<sf::Keyboard::Key> & key) const;
+    bool	isDown(sf::Keyboard::Key key) const;
+    bool	isDown(const std::vector<sf::Keyboard::Key> & key) const;
 
-protected:
-  std::vector<bool>	_down;
-};
+  protected:
+    std::vector<bool>	_down;
+  };
+}
 
 #endif // !KEY_HPP_

@@ -6,13 +6,16 @@
 # include "GraphicLayerSet.hpp"
 # include "ResourceHolder.hpp"
 
-struct Context
+namespace mysf
 {
-  sf::RenderWindow	win;
-  GraphicLayerSet	gls;
-  TextureHolder		thl;
-  SoundHolder		shl;
-  FontHolder		fhl;
-};
+  struct Context
+  {
+    sf::RenderWindow	win;
+    GraphicLayerSet	gls;
+    TextureHolder	thl;
+    SoundHolder		shl;
+    FontHolder		fhl;
+  };
+}
 
 #endif // !CONTEXT_HPP_

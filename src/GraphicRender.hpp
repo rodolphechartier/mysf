@@ -3,21 +3,24 @@
 
 # include "Context.hpp"
 
-class GraphicRender
+namespace mysf
 {
-public:
-  explicit GraphicRender(Context & ctx);
-  GraphicRender(const GraphicRender &);
-  GraphicRender & operator=(const GraphicRender &);
-  virtual ~GraphicRender();
+  class GraphicRender
+  {
+  public:
+    explicit GraphicRender(Context & ctx);
+    GraphicRender(const GraphicRender &);
+    GraphicRender & operator=(const GraphicRender &);
+    virtual ~GraphicRender();
 
-  virtual bool			init() = 0;
+    virtual bool	init() = 0;
 
-  virtual GraphicRender *	update(float deltaTime, const Input & input);
-  virtual void			draw() const;
+    GraphicRender *	update(const sf::Time & deltaTime, const Input & input);
+    void		draw() const;
 
-protected:
-  Context &			_ctx;
-};
+  protected:
+    Context &		_ctx;
+  };
+}
 
 #endif // !GRAPHIC_RENDER_HPP_

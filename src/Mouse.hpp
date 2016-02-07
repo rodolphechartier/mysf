@@ -3,32 +3,35 @@
 
 # include <SFML/Window.hpp>
 
-class Mouse
+namespace mysf
 {
-public:
-  Mouse();
-  Mouse(const Mouse & o);
-  Mouse & operator=(const Mouse & o);
-  virtual ~Mouse();
+  class Mouse
+  {
+  public:
+    Mouse();
+    Mouse(const Mouse & o);
+    Mouse & operator=(const Mouse & o);
+    virtual ~Mouse();
 
-  void			update(const sf::Event & event);
-  void			reset();
+    void			update(const sf::Event & event);
+    void			reset();
 
-  bool			isDown(sf::Mouse::Button button) const;
-  bool			isInside() const;
-  bool			isMouseMoved() const;
-  bool			isWheelMoved() const;
-  int			getWheelTick() const;
+    bool			isDown(sf::Mouse::Button button) const;
+    bool			isInside() const;
+    bool			isMouseMoved() const;
+    bool			isWheelMoved() const;
+    int				getWheelTick() const;
 
-  const sf::Vector2i &	getPos() const;
+    const sf::Vector2i &	getPos() const;
 
-protected:
-  std::vector<bool>	_down;
-  bool			_inside;
-  bool			_wheelMoved;
-  bool			_mouseMoved;
-  int			_wheelTick;
-  sf::Vector2i		_pos;
-};
+  protected:
+    std::vector<bool>	_down;
+    bool		_inside;
+    bool		_wheelMoved;
+    bool		_mouseMoved;
+    int			_wheelTick;
+    sf::Vector2i	_pos;
+  };
+}
 
 #endif // !MOUSE_HPP_

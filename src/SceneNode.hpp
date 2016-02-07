@@ -5,40 +5,33 @@
 
 # include <list>
 
-class SceneNode : public sf::Transformable, public sf::Drawable
+namespace mysf
 {
-public:
-  enum Layer
-    {
-      None = -1,
-      First = 0,
-      Background = First,
-      Air,
-      Size
-    };
+  class SceneNode : public sf::Transformable, public sf::Drawable
+  {
+  public:
+    SceneNode();
+    SceneNode(const SceneNode & o);
+    SceneNode & operator=(const SceneNode & o);
+    virtual ~SceneNode();
 
-public:
-  SceneNode();
-  SceneNode(const SceneNode & o);
-  SceneNode & operator=(const SceneNode & o);
-  virtual ~SceneNode();
+    void		attachChild(SceneNode * child);
+    SceneNode *		detachChild(const SceneNode & node);
 
-  void		attachChild(SceneNode * child);
-  SceneNode *	detachChild(const SceneNode & node);
+    sf::Transform	getWorldTransform() const;
+    sf::Vector2f	getWorldPosition() const;
 
-  sf::Transform	getWorldTransform() const;
-  sf::Vector2f	getWorldPosition() const;
+    virtual void	update(const sf::Time & deltaTime, const Input & input);
+    virtual void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
 
-  virtual void	update(const sf::Time & deltaTime);
-  virtual void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
+  protected:
+    virtual void	updateCurrent(const sf::Time & deltaTime, const Input & input) = 0;
+    virtual void	drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 
-protected:
-  virtual void	updateCurrent(const sf::Time & deltaTime) = 0;
-  virtual void	drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const = 0;
-
-protected:
-  std::list<SceneNode *>	_child;
-  SceneNode *			_parent;
-};
+  protected:
+    std::list<SceneNode *>	_child;
+    SceneNode *			_parent;
+  };
+}
 
 #endif // !SCENE_NODE_HPP_
