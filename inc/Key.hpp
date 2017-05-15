@@ -20,7 +20,7 @@ namespace mysf
 
     bool  operator[](sf::Keyboard::Key key) const;
     bool	isDown(sf::Keyboard::Key key) const;
-    bool	isDown(const std::vector<sf::Keyboard::Key> & key) const;
+    bool	isDown(const std::vector<sf::Keyboard::Key> & keys) const;
 
   protected:
     std::vector<bool>	_down;

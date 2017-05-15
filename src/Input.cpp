@@ -2,16 +2,22 @@
 
 namespace mysf
 {
-  Input::Input()
+  Input::Input(bool isJoystick)
     : _closed(false)
     , _focus(true)
   {
-
+    if (isJoystick)
+    {
+      for (unsigned int i = 0; i < sf::Joystick::Count; ++i)
+        if (sf::Joystick::isConnected(i))
+          _joysticks.push_back(Joystick(i));
+    }
   }
 
   Input::Input(const Input & o)
     : _key(o._key)
     , _mouse(o._mouse)
+    , _joysticks(o._joysticks)
     , _closed(o._closed)
     , _focus(o._focus)
   {
@@ -24,6 +30,7 @@ namespace mysf
       return *this;
     _key = o._key;
     _mouse = o._mouse;
+    _joysticks = o._joysticks;
     _closed = o._closed;
     _focus = o._focus;
     return *this;
@@ -38,6 +45,8 @@ namespace mysf
   {
     _key.update(event);
     _mouse.update(event);
+    for (unsigned int i = 0; i < _joysticks.size(); ++i)
+      _joysticks[i].update();
 
     switch (event.type)
       {
@@ -59,6 +68,8 @@ namespace mysf
   {
     _key.reset();
     _mouse.reset();
+    for (unsigned int i = 0; i < _joysticks.size(); ++i)
+      _joysticks[i].reset();
   }
 
   const Key & Input::key() const
@@ -69,6 +80,14 @@ namespace mysf
   const Mouse & Input::mouse() const
   {
     return _mouse;
+  }
+
+  const Joystick * Input::joystick(unsigned int idJoystick) const
+  {
+    for (unsigned int i = 0; i < _joysticks.size(); ++i)
+      if (_joysticks[i].getID() == idJoystick)
+        return &(_joysticks[i]);
+    return 0;
   }
 
   bool Input::isClosed() const
