@@ -1,5 +1,5 @@
-#ifndef AENGINE_HPP_
-# define AENGINE_HPP_
+#ifndef ENGINE_HPP_
+# define ENGINE_HPP_
 
 # include "GraphicRender.hpp"
 # include "Input.hpp"
@@ -8,13 +8,13 @@
 
 namespace mysf
 {
-  class AEngine
+  class Engine
   {
   public:
-    AEngine();
-    AEngine(const AEngine &) = delete;
-    AEngine & operator=(const AEngine &) = delete;
-    virtual ~AEngine();
+    Engine();
+    Engine(const Engine &) = delete;
+    Engine & operator=(const Engine &) = delete;
+    virtual ~Engine();
 
     bool	init(int ac, char ** av);
     int		run();
@@ -37,4 +37,4 @@ namespace mysf
   };
 }
 
-#endif // !AENGINE_HPP_
+#endif // !ENGINE_HPP_

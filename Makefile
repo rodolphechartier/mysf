@@ -5,7 +5,7 @@ CPPFLAGS	+= -I /usr/local/include
 
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
-SRC				= src/AEngine.cpp \
+SRC				= src/Engine.cpp \
 						src/GraphicLayerSet.cpp \
 						src/GraphicRender.cpp \
 						src/Input.cpp \

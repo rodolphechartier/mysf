@@ -1,27 +1,27 @@
-#include "AEngine.hpp"
+#include "Engine.hpp"
 
 namespace mysf
 {
-  AEngine::AEngine()
+  Engine::Engine()
     : _grender(0)
   {
 
   }
 
-  AEngine::~AEngine()
+  Engine::~Engine()
   {
     if (_grender)
       delete _grender;
   }
 
-  bool AEngine::init(int ac, char ** av)
+  bool Engine::init(int ac, char ** av)
   {
     if (_ctx.thl.setDefault("assets/default.png") == false)
       return false;
     return onInit(ac, av);
   }
 
-  int AEngine::run()
+  int Engine::run()
   {
     int ret = 0;
 
@@ -39,14 +39,14 @@ namespace mysf
     return ret;
   }
 
-  void AEngine::_processEvents()
+  void Engine::_processEvents()
   {
     while (_ctx.win.pollEvent(_event))
       _input.update(_event);
   }
 
   // return (0: continue, 1: close win, 2: error)
-  int AEngine::_update(const sf::Time & deltaTime)
+  int Engine::_update(const sf::Time & deltaTime)
   {
     GraphicRender * ret;
 
@@ -64,7 +64,7 @@ namespace mysf
     return 0;
   }
 
-  void AEngine::_draw()
+  void Engine::_draw()
   {
     _ctx.win.clear();
     if (_grender)
