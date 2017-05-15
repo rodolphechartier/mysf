@@ -13,24 +13,24 @@ namespace mysf
 
   SceneNode::~SceneNode()
   {
-    for (typename std::list<SceneNode *>::iterator it = _child.begin(); it != _child.end(); ++it)
+    for (auto it = _child.begin(); it != _child.end(); ++it)
       delete *it;
   }
 
-  void SceneNode::attachChild(SceneNode * child)
+  void SceneNode::addChild(SceneNode * child)
   {
     child->_parent = this;
     _child.push_back(child);
   }
 
-  SceneNode * SceneNode::detachChild(const SceneNode & node)
+  SceneNode * SceneNode::subChild(const SceneNode & node)
   {
-    for (typename std::list<SceneNode *>::iterator it = _child.begin(); it != _child.end(); ++it)
+    for (auto it = _child.begin(); it != _child.end(); ++it)
       if (&node == *it)
-	{
-	  _child.erase(it);
-	  return *it;
-	}
+    	{
+    	  _child.erase(it);
+    	  return *it;
+    	}
     return 0;
   }
 
@@ -51,7 +51,7 @@ namespace mysf
   void SceneNode::update(const sf::Time & deltaTime, const Input & input)
   {
     updateCurrent(deltaTime, input);
-    for (typename std::list<SceneNode *>::const_iterator it = _child.begin(); it != _child.end(); ++it)
+    for (auto it = _child.begin(); it != _child.end(); ++it)
       (*it)->update(deltaTime, input);
   }
 
@@ -59,7 +59,7 @@ namespace mysf
   {
     states.transform *= getTransform();
     drawCurrent(target, states);
-    for (typename std::list<SceneNode *>::const_iterator it = _child.begin(); it != _child.end(); ++it)
+    for (auto it = _child.begin(); it != _child.end(); ++it)
       (*it)->draw(target, states);
   }
 }

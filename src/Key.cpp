@@ -32,13 +32,13 @@ namespace mysf
     switch (event.type)
       {
       case sf::Event::KeyPressed:
-	_down[event.key.code] = true;
-	break;
+      	_down[event.key.code] = true;
+      	break;
       case sf::Event::KeyReleased:
-	_down[event.key.code] = false;
-	break;
+      	_down[event.key.code] = false;
+      	break;
       default:
-	break;
+	      break;
       }
   }
 
@@ -46,6 +46,11 @@ namespace mysf
   {
     for (unsigned int i = 0; i < _down.size(); ++i)
       _down[i] = false;
+  }
+
+  bool Key::operator[](sf::Keyboard::Key key) const
+  {
+    return _down[key];
   }
 
   bool Key::isDown(sf::Keyboard::Key key) const
@@ -57,7 +62,7 @@ namespace mysf
   {
     for (unsigned int i = 0; i < key.size(); ++i)
       if (_down[key[i]])
-	return true;
+	     return true;
     return false;
   }
 }

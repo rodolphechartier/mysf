@@ -12,6 +12,28 @@ namespace mysf
 
   }
 
+  Mouse::Mouse(const Mouse & o)
+    : _down(o._down)
+    , _inside(o._inside)
+    , _wheelMoved(o._wheelMoved)
+    , _wheelTick(o._wheelTick)
+    , _pos(o._pos)
+  {
+
+  }
+
+  Mouse & Mouse::operator=(const Mouse & o)
+  {
+    if (this == &o)
+      return *this;
+    _down = o._down;
+    _inside = o._inside;
+    _wheelMoved = o._wheelMoved;
+    _wheelTick = o._wheelTick;
+    _pos = o._pos;
+    return *this;
+  }
+
   Mouse::~Mouse()
   {
 
@@ -24,38 +46,38 @@ namespace mysf
     switch (event.type)
       {
       case sf::Event::MouseWheelMoved:
-	_wheelMoved = true;
-	_wheelTick = event.mouseWheel.delta;
-	_pos.x = event.mouseWheel.x;
-	_pos.y = event.mouseWheel.y;
-	_inside = true;
-	break;
+      	_wheelMoved = true;
+      	_wheelTick = event.mouseWheel.delta;
+      	_pos.x = event.mouseWheel.x;
+      	_pos.y = event.mouseWheel.y;
+      	_inside = true;
+      	break;
       case sf::Event::MouseButtonPressed:
-	_down[event.mouseButton.button] = true;
-	_pos.x = event.mouseButton.x;
-	_pos.y = event.mouseButton.y;
-	_inside = true;
-	break;
+      	_down[event.mouseButton.button] = true;
+      	_pos.x = event.mouseButton.x;
+      	_pos.y = event.mouseButton.y;
+      	_inside = true;
+      	break;
       case sf::Event::MouseButtonReleased:
-	_down[event.mouseButton.button] = false;
-	_pos.x = event.mouseButton.x;
-	_pos.y = event.mouseButton.y;
-	_inside = true;
-	break;
+      	_down[event.mouseButton.button] = false;
+      	_pos.x = event.mouseButton.x;
+      	_pos.y = event.mouseButton.y;
+      	_inside = true;
+      	break;
       case sf::Event::MouseMoved:
-	_pos.x = event.mouseMove.x;
-	_pos.y = event.mouseMove.y;
-	_inside = true;
-	_mouseMoved = true;
-	break;
+      	_pos.x = event.mouseMove.x;
+      	_pos.y = event.mouseMove.y;
+      	_inside = true;
+      	_mouseMoved = true;
+      	break;
       case sf::Event::MouseEntered:
-	_inside = true;
-	break;
+      	_inside = true;
+      	break;
       case sf::Event::MouseLeft:
-	_inside = false;
-	break;
+      	_inside = false;
+      	break;
       default:
-	break;
+	       break;
       }
   }
 

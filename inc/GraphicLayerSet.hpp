@@ -14,11 +14,11 @@ namespace mysf
   {
   public:
     explicit GraphicLayerSet(unsigned int nbLayer = 0);
-    GraphicLayerSet(const GraphicLayerSet &);
-    GraphicLayerSet & operator=(const GraphicLayerSet &);
+    GraphicLayerSet(const GraphicLayerSet &) = delete;
+    GraphicLayerSet & operator=(const GraphicLayerSet &) = delete;
     virtual ~GraphicLayerSet();
 
-    void		update(float deltaTime, const Input & input);
+    void		update(const sf::Time & deltaTime, const Input & input);
     void		draw(sf::RenderTarget & target, sf::RenderStates states) const;
 
     void		resize(unsigned int nbLayer);
@@ -26,11 +26,11 @@ namespace mysf
     void		sub(unsigned int nbLayer);
     void		clear();
 
-    Layer &		operator[](unsigned int layer);
-    const Layer &	operator[](unsigned int layer) const;
+    Layer & operator[](unsigned int layer);
+    const Layer & operator[](unsigned int layer) const;
 
-  private:
-    std::vector<Layer>	_layers;
+  protected:
+    std::vector<Layer> _layers;
   };
 }
 

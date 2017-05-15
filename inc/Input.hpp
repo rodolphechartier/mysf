@@ -12,17 +12,17 @@ namespace mysf
   {
   public:
     Input();
-    Input(const Input &);
-    Input & operator=(const Input &);
+    Input(const Input & o);
+    Input & operator=(const Input & o);
     virtual ~Input();
 
     void		update(const sf::Event & event);
     void		reset();
 
-    const Key &		getKey() const;
-    const Mouse &	getMouse() const;
-    bool		isClosed() const;
-    bool		isFocused() const;
+    const Key &		key() const;
+    const Mouse &	mouse() const;
+    bool		      isClosed() const;
+    bool		      isFocused() const;
 
   protected:
     Key			_key;

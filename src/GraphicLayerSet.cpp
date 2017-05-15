@@ -13,7 +13,7 @@ namespace mysf
 
   }
 
-  void GraphicLayerSet::update(float deltaTime, const Input & input)
+  void GraphicLayerSet::update(const sf::Time & deltaTime, const Input & input)
   {
     for (unsigned int i = 0; i < _layers.size(); ++i)
       _layers[i].update(deltaTime, input);
@@ -40,7 +40,7 @@ namespace mysf
   {
     if (_layers.size() != nbLayer)
       for (unsigned int i = _layers.size() - nbLayer - 1; i < _layers.size(); ++i)
-	_layers[i].clear();
+	     _layers[i].clear();
     _layers.resize(_layers.size() - nbLayer);
   }
 

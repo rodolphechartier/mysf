@@ -26,11 +26,11 @@ namespace mysf
 
   protected:
     std::vector<bool>	_down;
-    bool		_inside;
-    bool		_wheelMoved;
-    bool		_mouseMoved;
-    int			_wheelTick;
-    sf::Vector2i	_pos;
+    bool	           	_inside;
+    bool	           	_wheelMoved;
+    bool          		_mouseMoved;
+    int	          		_wheelTick;
+    sf::Vector2i    	_pos;
   };
 }
 

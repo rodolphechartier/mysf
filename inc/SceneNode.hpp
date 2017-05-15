@@ -5,18 +5,20 @@
 
 # include <list>
 
+# include "Input.hpp"
+
 namespace mysf
 {
   class SceneNode : public sf::Transformable, public sf::Drawable
   {
   public:
     SceneNode();
-    SceneNode(const SceneNode & o);
-    SceneNode & operator=(const SceneNode & o);
+    SceneNode(const SceneNode & o) = delete;
+    SceneNode & operator=(const SceneNode & o) = delete;
     virtual ~SceneNode();
 
-    void		attachChild(SceneNode * child);
-    SceneNode *		detachChild(const SceneNode & node);
+    void		      addChild(SceneNode * child);
+    SceneNode *		subChild(const SceneNode & node);
 
     sf::Transform	getWorldTransform() const;
     sf::Vector2f	getWorldPosition() const;
@@ -29,8 +31,8 @@ namespace mysf
     virtual void	drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 
   protected:
-    std::list<SceneNode *>	_child;
-    SceneNode *			_parent;
+    std::list<SceneNode *> _child;
+    SceneNode * _parent;
   };
 }
 

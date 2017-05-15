@@ -9,6 +9,26 @@ namespace mysf
 
   }
 
+  Input::Input(const Input & o)
+    : _key(o._key)
+    , _mouse(o._mouse)
+    , _closed(o._closed)
+    , _focus(o._focus)
+  {
+
+  }
+
+  Input & Input::operator=(const Input & o)
+  {
+    if (this == &o)
+      return *this;
+    _key = o._key;
+    _mouse = o._mouse;
+    _closed = o._closed;
+    _focus = o._focus;
+    return *this;
+  }
+
   Input::~Input()
   {
 
@@ -22,16 +42,16 @@ namespace mysf
     switch (event.type)
       {
       case sf::Event::Closed:
-	_closed = true;
-	break;
+      	_closed = true;
+      	break;
       case sf::Event::LostFocus:
-	_focus = false;
-	break;
+      	_focus = false;
+      	break;
       case sf::Event::GainedFocus:
-	_focus = true;
-	break;
+      	_focus = true;
+      	break;
       default:
-	break;
+	      break;
       }
   }
 
@@ -41,12 +61,12 @@ namespace mysf
     _mouse.reset();
   }
 
-  const Key & Input::getKey() const
+  const Key & Input::key() const
   {
     return _key;
   }
 
-  const Mouse & Input::getMouse() const
+  const Mouse & Input::mouse() const
   {
     return _mouse;
   }
