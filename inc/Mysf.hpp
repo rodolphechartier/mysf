@@ -7,6 +7,6 @@
 # include "GraphicRender.hpp"
 # include "Input.hpp"
 # include "KeyBinding.hpp"
-# include "SceneNode.hpp"
+# include "SpriteNode.hpp"
 
 #endif // !MYSF_HPP_

@@ -14,7 +14,8 @@ SRC				= src/Engine.cpp \
 						src/KeyBinding.cpp \
 						src/Layer.cpp \
 						src/Mouse.cpp \
-						src/SceneNode.cpp
+						src/SceneNode.cpp \
+						src/SpriteNode.cpp
 
 OBJ				= $(SRC:.cpp=.o)
 
