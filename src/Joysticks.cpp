@@ -81,7 +81,9 @@ namespace mysf
     : _joysticks()
     , _nbConnected(0)
   {
-
+    for (unsigned int i = 0; i < sf::Joystick::Count; ++i)
+      if (sf::Joystick::isConnected(i))
+        connect(i);
   }
 
   Joysticks::Joysticks(const Joysticks & o)
@@ -110,15 +112,12 @@ namespace mysf
     switch (event.type)
       {
       case sf::Event::JoystickButtonPressed:
-        checkConnect(event.joystickButton.joystickId);
         _joysticks[event.joystickButton.joystickId].setButton(event.joystickButton.button, true);
         break;
       case sf::Event::JoystickButtonReleased:
-        checkConnect(event.joystickButton.joystickId);
         _joysticks[event.joystickButton.joystickId].setButton(event.joystickButton.button, false);
         break;
       case sf::Event::JoystickMoved:
-        checkConnect(event.joystickMove.joystickId);
         _joysticks[event.joystickMove.joystickId][event.joystickMove.axis] = event.joystickMove.position;
         break;
       case sf::Event::JoystickConnected:
@@ -141,14 +140,6 @@ namespace mysf
   const Joysticks::Joystick & Joysticks::operator[](unsigned int joystick) const
   {
     return _joysticks[joystick];
-  }
-
-  void Joysticks::checkConnect(unsigned int joystick)
-  {
-    if (!_joysticks.size())
-      connect(joystick);
-    else if (_joysticks[joystick].isConnected() == false)
-      _joysticks[joystick].connect();
   }
 
   void Joysticks::connect(unsigned int joystick)

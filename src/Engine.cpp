@@ -14,13 +14,6 @@ namespace mysf
       delete _grender;
   }
 
-  bool Engine::init(int ac, char ** av)
-  {
-    if (_ctx.thl.setDefault("assets/default.png") == false)
-      return false;
-    return onInit(ac, av);
-  }
-
   int Engine::run()
   {
     int ret = 0;

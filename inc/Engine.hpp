@@ -16,11 +16,8 @@ namespace mysf
     Engine & operator=(const Engine &) = delete;
     virtual ~Engine();
 
-    bool	init(int ac, char ** av);
-    int		run();
-
-  protected:
-    virtual bool onInit(int ac, char ** av) = 0;
+    virtual bool init(int ac, char ** av) = 0;
+    int run();
 
   private:
     void	_processEvents();
