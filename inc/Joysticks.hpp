@@ -47,9 +47,10 @@ namespace mysf
     void	reset();
 
     const Joystick & operator[](unsigned int joystick) const;
+    unsigned int size() const;
+    unsigned int nbConnected() const;
 
   private:
-    void checkConnect(unsigned int joystick);
     void connect(unsigned int joystick);
     void disconnect(unsigned int joystick);
 

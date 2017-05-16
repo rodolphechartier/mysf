@@ -24,10 +24,11 @@ namespace mysf
     int		_update(const sf::Time & deltaTime);
     void	_draw();
 
-  private:
+  protected:
     Context _ctx;
     GraphicRender *	_grender;
 
+  private:
     sf::Clock _clock;
     sf::Event _event;
     Input _input;

@@ -142,6 +142,16 @@ namespace mysf
     return _joysticks[joystick];
   }
 
+  unsigned int Joysticks::size() const
+  {
+    return _joysticks.size();
+  }
+
+  unsigned int Joysticks::nbConnected() const
+  {
+    return _nbConnected;
+  }
+
   void Joysticks::connect(unsigned int joystick)
   {
     if (_joysticks.size() == 0)
