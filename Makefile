@@ -9,7 +9,7 @@ SRC				= src/Engine.cpp \
 						src/GraphicLayerSet.cpp \
 						src/GraphicRender.cpp \
 						src/Input.cpp \
-						src/Joystick.cpp \
+						src/Joysticks.cpp \
 						src/Key.cpp \
 						src/KeyBinding.cpp \
 						src/Layer.cpp \

@@ -5,14 +5,14 @@
 
 # include "Key.hpp"
 # include "Mouse.hpp"
-# include "Joystick.hpp"
+# include "Joysticks.hpp"
 
 namespace mysf
 {
   class Input
   {
   public:
-    explicit Input(bool isJoystick = false);
+    Input();
     Input(const Input & o);
     Input & operator=(const Input & o);
     virtual ~Input();
@@ -22,16 +22,16 @@ namespace mysf
 
     const Key &		    key() const;
     const Mouse &	    mouse() const;
-    const Joystick *  joystick(unsigned int idJoystick) const;
+    const Joysticks & joysticks() const;
     bool		          isClosed() const;
     bool		          isFocused() const;
 
   protected:
-    Key		               	_key;
-    Mouse	              	_mouse;
-    std::vector<Joystick> _joysticks;
-    bool	               	_closed;
-    bool              		_focus;
+    Key		            _key;
+    Mouse	            _mouse;
+    Joysticks         _joysticks;
+    bool	            _closed;
+    bool              _focus;
   };
 }
 
