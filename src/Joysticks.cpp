@@ -152,6 +152,13 @@ namespace mysf
     return _nbConnected;
   }
 
+	bool Joysticks::isConnected(unsigned int joystick) const
+	{
+		if (joystick >= _joysticks.size())
+			return false;
+		return _joysticks[joystick].isConnected();
+	}
+
   void Joysticks::connect(unsigned int joystick)
   {
     if (_joysticks.size() == 0)

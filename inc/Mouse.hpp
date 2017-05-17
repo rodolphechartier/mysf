@@ -16,6 +16,7 @@ namespace mysf
     void			update(const sf::Event & event);
     void			reset();
 
+		bool			operator[](sf::Mouse::Button button) const;
     bool			isDown(sf::Mouse::Button button) const;
     bool			isInside() const;
     bool			isMouseMoved() const;

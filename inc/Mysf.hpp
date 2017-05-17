@@ -6,7 +6,7 @@
 # include "GraphicLayerSet.hpp"
 # include "GraphicRender.hpp"
 # include "Input.hpp"
-# include "KeyBinding.hpp"
+# include "Binding.hpp"
 # include "SpriteNode.hpp"
 
 #endif // !MYSF_HPP_

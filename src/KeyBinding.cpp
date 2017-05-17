@@ -37,32 +37,34 @@ namespace mysf
       return false;
     _initSfbind(sfbind);
     while (std::getline(file, line))
-      {
-	line = line.substr(0, line.find_first_of("#"));
-	_eraseSpace(line);
-	if (line.size())
-	  {
-	    unsigned int action;
-	    std::vector<sf::Keyboard::Key> key;
+    {
+			line = line.substr(0, line.find_first_of("#"));
+			_eraseSpace(line);
+			if (line.size())
+		  {
+		    unsigned int action;
+		    std::vector<sf::Keyboard::Key> key;
 
-	    action = bind[line.substr(0, line.find_first_of("="))];
-	    line = line.substr(line.find_first_of("=") + 1);
-	    while (line.size())
+		    action = bind[line.substr(0, line.find_first_of("="))];
+		    line = line.substr(line.find_first_of("=") + 1);
+		    while (line.size())
 	      {
-		std::size_t pos;
+					std::size_t pos;
 
-		key.push_back(sfbind[line.substr(0, line.find('|'))]);
-		pos = line.find('|');
-		if (pos != std::string::npos)
-		  line = line.substr(line.find('|') + (pos != line.size() - 1));
-		else
-		  line.resize(0);
+					key.push_back(sfbind[line.substr(0, line.find('|'))]);
+					pos = line.find('|');
+					if (pos != std::string::npos)
+					  line = line.substr(line.find('|') + (pos != line.size() - 1));
+					else
+					  line.resize(0);
 	      }
-	    if (_bind.size() <= action)
-	      _bind.resize(action + 1);
-	    _bind[action] = key;
-	  }
-      }
+
+		    if (_bind.size() <= action)
+		      _bind.resize(action + 1);
+		    _bind[action] = key;
+		  }
+    }
+
     file.close();
     return true;
   }
@@ -82,17 +84,16 @@ namespace mysf
     std::size_t pos, size;
 
     while ((pos = str.find_first_of(" \n\t")) != std::string::npos)
-      {
-	size = str.find_first_not_of(" \n\t", pos);
-	if (size != std::string::npos)
-	  size -= pos;
-	str.erase(pos, size);
-      }
+    {
+			size = str.find_first_not_of(" \n\t", pos);
+			if (size != std::string::npos)
+			  size -= pos;
+			str.erase(pos, size);
+    }
   }
 
   void KeyBinding::_initSfbind(std::map<std::string, sf::Keyboard::Key> & sfbind) const
   {
-    sfbind["Unknown"] = sf::Keyboard::Unknown;
     sfbind["A"] = sf::Keyboard::A;
     sfbind["B"] = sf::Keyboard::B;
     sfbind["C"] = sf::Keyboard::C;

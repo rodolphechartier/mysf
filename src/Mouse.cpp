@@ -87,6 +87,11 @@ namespace mysf
       _down[i] = false;
   }
 
+	bool Mouse::operator[](sf::Mouse::Button button) const
+	{
+		return _down[button];
+	}
+
   bool Mouse::isDown(sf::Mouse::Button button) const
   {
     return _down[button];

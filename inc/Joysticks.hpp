@@ -49,6 +49,7 @@ namespace mysf
     const Joystick & operator[](unsigned int joystick) const;
     unsigned int size() const;
     unsigned int nbConnected() const;
+		bool isConnected(unsigned int joystick) const;
 
   private:
     void connect(unsigned int joystick);

@@ -57,12 +57,4 @@ namespace mysf
   {
     return _down[key];
   }
-
-  bool Key::isDown(const std::vector<sf::Keyboard::Key> & keys) const
-  {
-    for (unsigned int i = 0; i < keys.size(); ++i)
-      if (_down[keys[i]])
-	     return true;
-    return false;
-  }
 }

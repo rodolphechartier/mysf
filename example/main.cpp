@@ -2,8 +2,27 @@
 
 class Node : public mysf::SpriteNode
 {
+	enum Action
+	{
+		Up,
+		Left,
+		Down,
+		Right,
+		ActionCount
+	};
+
 public:
-  Node() : mysf::SpriteNode(), _speed(500.f) {}
+  explicit Node()
+		: mysf::SpriteNode()
+		, _bind()
+		, _speed(500.f)
+	{
+		_bind.setNbAction(ActionCount);
+		_bind.setBind(Up, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::Z));
+		_bind.setBind(Left, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::Q));
+		_bind.setBind(Down, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::S));
+		_bind.setBind(Right, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::D));
+	}
 
   Node(const Node &) = delete;
   Node & operator=(const Node &) = delete;
@@ -15,18 +34,19 @@ protected:
     sf::Vector2f pos(getPosition());
     const float move = deltaTime.asSeconds() * _speed;
 
-    if (input.key()[sf::Keyboard::W])
+    if (_bind.isDown(Up, input))
       pos.y -= move;
-    if (input.key()[sf::Keyboard::A])
+    if (_bind.isDown(Left, input))
       pos.x -= move;
-    if (input.key()[sf::Keyboard::S])
+    if (_bind.isDown(Down, input))
       pos.y += move;
-    if (input.key()[sf::Keyboard::D])
+    if (_bind.isDown(Right, input))
       pos.x += move;
     setPosition(pos);
   }
 
 private:
+	mysf::Binding _bind;
   float _speed;
 };
 
