@@ -66,8 +66,7 @@ namespace mysf
 		if (action >= _bind.size())
 			_bind.resize(action + 1);
 		_bind[action].resize(1);
-		_bind[action][0].resize(1);
-		_bind[action][0][0] = bind;
+		_bind[action][0].resize(1, bind);
 	}
 
 	void Binding::setBind(unsigned int action, const std::vector<InputCode> & bind)
