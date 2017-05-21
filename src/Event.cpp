@@ -1,15 +1,15 @@
-#include "Input.hpp"
+#include "Event.hpp"
 
 namespace mysf
 {
-  Input::Input()
+  Event::Event()
     : _closed(false)
     , _focus(true)
   {
 
   }
 
-  Input::Input(const Input & o)
+  Event::Event(const Event & o)
     : _key(o._key)
     , _mouse(o._mouse)
     , _joysticks(o._joysticks)
@@ -19,7 +19,7 @@ namespace mysf
 
   }
 
-  Input & Input::operator=(const Input & o)
+  Event & Event::operator=(const Event & o)
   {
     if (this == &o)
       return *this;
@@ -31,12 +31,12 @@ namespace mysf
     return *this;
   }
 
-  Input::~Input()
+  Event::~Event()
   {
 
   }
 
-  void Input::update(const sf::Event & event)
+  void Event::update(const sf::Event & event)
   {
     _key.update(event);
     _mouse.update(event);
@@ -58,34 +58,34 @@ namespace mysf
       }
   }
 
-  void Input::reset()
+  void Event::reset()
   {
     _key.reset();
     _mouse.reset();
     _joysticks.reset();
   }
 
-  const Key & Input::key() const
+  const Key & Event::key() const
   {
     return _key;
   }
 
-  const Mouse & Input::mouse() const
+  const Mouse & Event::mouse() const
   {
     return _mouse;
   }
 
-  const Joysticks & Input::joysticks() const
+  const Joysticks & Event::joysticks() const
   {
     return _joysticks;
   }
 
-  bool Input::isClosed() const
+  bool Event::isClosed() const
   {
     return _closed;
   }
 
-  bool Input::isFocused() const
+  bool Event::isFocused() const
   {
     return _focus;
   }

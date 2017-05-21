@@ -15,7 +15,7 @@ namespace mysf
 
     virtual bool init() = 0;
 
-    virtual GraphicRender * update(const sf::Time & deltaTime, const Input & input);
+    virtual GraphicRender * update(const sf::Time & deltaTime, const Event & event);
     virtual void draw() const;
 
   protected:

@@ -1,5 +1,5 @@
-#ifndef INPUT_HPP_
-# define INPUT_HPP_
+#ifndef EVENT_HPP_
+# define EVENT_HPP_
 
 # include <SFML/Window.hpp>
 
@@ -9,13 +9,13 @@
 
 namespace mysf
 {
-  class Input
+  class Event
   {
   public:
-    Input();
-    Input(const Input & o);
-    Input & operator=(const Input & o);
-    virtual ~Input();
+    Event();
+    Event(const Event & o);
+    Event & operator=(const Event & o);
+    virtual ~Event();
 
     void	           	update(const sf::Event & event);
     void	           	reset();
@@ -35,4 +35,4 @@ namespace mysf
   };
 }
 
-#endif // !INPUT_HPP_
+#endif // !EVENT_HPP_

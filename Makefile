@@ -8,7 +8,7 @@ LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-s
 SRC				= src/Engine.cpp \
 						src/GraphicLayerSet.cpp \
 						src/GraphicRender.cpp \
-						src/Input.cpp \
+						src/Event.cpp \
 						src/Joysticks.cpp \
 						src/Key.cpp \
 						src/Layer.cpp \

@@ -13,10 +13,10 @@ namespace mysf
 
   }
 
-  void GraphicLayerSet::update(const sf::Time & deltaTime, const Input & input)
+  void GraphicLayerSet::update(const sf::Time & deltaTime, const Event & event)
   {
     for (unsigned int i = 0; i < _layers.size(); ++i)
-      _layers[i].update(deltaTime, input);
+      _layers[i].update(deltaTime, event);
   }
 
   void GraphicLayerSet::draw(sf::RenderTarget & target, sf::RenderStates states) const

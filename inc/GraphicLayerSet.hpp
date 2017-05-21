@@ -6,7 +6,7 @@
 # include <SFML/Graphics.hpp>
 
 # include "Layer.hpp"
-# include "Input.hpp"
+# include "Event.hpp"
 
 namespace mysf
 {
@@ -18,7 +18,7 @@ namespace mysf
     GraphicLayerSet & operator=(const GraphicLayerSet &) = delete;
     virtual ~GraphicLayerSet();
 
-    void		update(const sf::Time & deltaTime, const Input & input);
+    void		update(const sf::Time & deltaTime, const Event & event);
     void		draw(sf::RenderTarget & target, sf::RenderStates states) const;
 
     void		resize(unsigned int nbLayer);

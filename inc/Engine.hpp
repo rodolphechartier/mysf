@@ -2,7 +2,7 @@
 # define ENGINE_HPP_
 
 # include "GraphicRender.hpp"
-# include "Input.hpp"
+# include "Event.hpp"
 
 # include "Context.hpp"
 
@@ -29,9 +29,7 @@ namespace mysf
     GraphicRender *	_grender;
 
   private:
-    sf::Clock _clock;
-    sf::Event _event;
-    Input _input;
+    Event _event;
   };
 }
 

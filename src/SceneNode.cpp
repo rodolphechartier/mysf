@@ -48,11 +48,11 @@ namespace mysf
     return getWorldTransform() * sf::Vector2f();
   }
 
-  void SceneNode::update(const sf::Time & deltaTime, const Input & input)
+  void SceneNode::update(const sf::Time & deltaTime, const Event & event)
   {
-    updateCurrent(deltaTime, input);
+    updateCurrent(deltaTime, event);
     for (auto it = _child.begin(); it != _child.end(); ++it)
-      (*it)->update(deltaTime, input);
+      (*it)->update(deltaTime, event);
   }
 
   void SceneNode::draw(sf::RenderTarget & target, sf::RenderStates states) const

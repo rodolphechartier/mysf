@@ -13,9 +13,9 @@ namespace mysf
 
   }
 
-  GraphicRender * GraphicRender::update(const sf::Time & deltaTime, const Input & input)
+  GraphicRender * GraphicRender::update(const sf::Time & deltaTime, const Event & event)
   {
-    _ctx.gls.update(deltaTime, input);
+    _ctx.gls.update(deltaTime, event);
     return this;
   }
 

@@ -5,7 +5,7 @@
 
 # include <list>
 
-# include "Input.hpp"
+# include "Event.hpp"
 
 namespace mysf
 {
@@ -23,11 +23,11 @@ namespace mysf
     sf::Transform	getWorldTransform() const;
     sf::Vector2f	getWorldPosition() const;
 
-    virtual void	update(const sf::Time & deltaTime, const Input & input);
+    virtual void	update(const sf::Time & deltaTime, const Event & event);
     virtual void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
 
   protected:
-    virtual void	updateCurrent(const sf::Time & deltaTime, const Input & input) = 0;
+    virtual void	updateCurrent(const sf::Time & deltaTime, const Event & event) = 0;
     virtual void	drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 
   protected:

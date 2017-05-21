@@ -23,18 +23,18 @@ namespace mysf
 
   Layer::~Layer()
   {
-    _list.clear();
+
   }
 
-  void Layer::update(const sf::Time & deltaTime, const Input & input)
+  void Layer::update(const sf::Time & deltaTime, const Event & event)
   {
-    for (std::list<SceneNode *>::iterator it = _list.begin(); it != _list.end(); ++it)
-      (*it)->update(deltaTime, input);
+    for (auto it = _list.begin(); it != _list.end(); ++it)
+      (*it)->update(deltaTime, event);
   }
 
   void Layer::draw(sf::RenderTarget & target, sf::RenderStates states) const
   {
-    for (std::list<SceneNode *>::const_iterator it = _list.begin(); it != _list.end(); ++it)
+    for (auto it = _list.begin(); it != _list.end(); ++it)
       (*it)->draw(target, states);
   }
 
@@ -42,6 +42,11 @@ namespace mysf
   {
     _list.push_back(node);
   }
+
+	void Layer::remove(SceneNode * node)
+	{
+		_list.erase(std::find(_list.begin(), _list.end(), node));
+	}
 
   void Layer::clear()
   {

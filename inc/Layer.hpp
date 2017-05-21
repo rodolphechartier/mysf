@@ -2,11 +2,12 @@
 # define LAYER_HPP_
 
 # include <list>
+# include <algorithm>
 
 # include <SFML/Graphics.hpp>
 
 # include "SceneNode.hpp"
-# include "Input.hpp"
+# include "Event.hpp"
 
 namespace mysf
 {
@@ -18,10 +19,11 @@ namespace mysf
     Layer & operator=(const Layer & o);
     virtual ~Layer();
 
-    void	update(const sf::Time & deltaTime, const Input & input);
+    void	update(const sf::Time & deltaTime, const Event & event);
     void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
 
     void	add(SceneNode * node);
+		void 	remove(SceneNode * node);
     void	clear();
 
   private:
