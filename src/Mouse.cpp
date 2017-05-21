@@ -110,6 +110,30 @@ namespace mysf
     return _scrolled;
   }
 
+  bool Mouse::isScrolled(WheelDir dir) const
+  {
+		if (_scrolled == false)
+			return false;
+		switch (dir)
+		{
+			case Up:
+				return _wheelTick.y > 0;
+				break;
+			case Down:
+				return _wheelTick.y < 0;
+				break;
+			case Right:
+				return _wheelTick.x > 0;
+				break;
+			case Left:
+				return _wheelTick.x < 0;
+				break;
+			default:
+				break;
+		}
+		return false;
+  }
+
   const sf::Vector2i & Mouse::getPos() const
   {
     return _pos;

@@ -18,7 +18,6 @@ namespace mysf
     void	update(const sf::Event & event);
     void	reset();
 
-    bool  operator[](sf::Keyboard::Key key) const;
     bool	isDown(sf::Keyboard::Key key) const;
 
   protected:

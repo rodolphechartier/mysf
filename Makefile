@@ -11,6 +11,7 @@ SRC				= src/Engine.cpp \
 						src/Event.cpp \
 						src/Joysticks.cpp \
 						src/Key.cpp \
+						src/Binding.cpp \
 						src/Layer.cpp \
 						src/Mouse.cpp \
 						src/SceneNode.cpp \

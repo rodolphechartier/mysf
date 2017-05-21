@@ -8,53 +8,55 @@
 
 # include <SFML/Window.hpp>
 
-# include "Input.hpp"
+# include "Event.hpp"
 
 namespace mysf
 {
+	struct Input
+	{
+		enum Type
+		{
+			KeyboardKey,
+			MouseButton,
+			MouseWheel,
+			JoystickButton,
+			JoystickAxis
+		};
+
+		Type type;
+
+		union
+		{
+			unsigned int 				value;
+
+			sf::Keyboard::Key 	keycode;
+			sf::Mouse::Button 	mButton;
+			Mouse::WheelDir 		wheelDir;
+			unsigned int 				jButton;
+			sf::Joystick::Axis 	axis;
+		};
+	};
+
   class Binding
   {
-	public:
-		enum InputType
-		{
-			KeyboardInput,
-			MouseInput,
-			JoystickInput
-		};
-
-		struct InputCode
-		{
-			InputCode(InputType inputType_, unsigned int code_)
-				: inputType(inputType_), code(code_) {}
-
-			InputType inputType;
-			union
-			{
-				unsigned int code;
-				sf::Keyboard::Key kcode;
-				sf::Mouse::Button mcode;
-				unsigned int jcode;
-			};
-		};
-
   public:
     explicit Binding(unsigned int joystickId = 0);
     Binding(const Binding & o);
     Binding & operator=(const Binding & o);
     virtual ~Binding();
 
-		bool isDown(unsigned int action, const Input & input) const;
+		const std::vector<Input> * getInput(unsigned int action, const Event & event) const;
 
-		void setBind(unsigned int action, const InputCode & bind);
-		void setBind(unsigned int action, const std::vector<InputCode> & bind);
-		void setBind(unsigned int action, const std::vector<std::vector<InputCode>> & bind);
 		void setNbAction(unsigned int size);
+		void setBind(unsigned int action, const Input & bind);
+		void setBind(unsigned int action, const std::vector<Input> & bind);
+		void setBind(unsigned int action, const std::vector<std::vector<Input>> & bind);
 
 		void setJoystickId(unsigned int joystickId);
 		unsigned int getJoystickId() const;
 
 	protected:
-		std::vector<std::vector<std::vector<InputCode>>> _bind;
+		std::vector<std::vector<std::vector<Input>>> _bind;
 		unsigned int _joystickId;
   };
 }

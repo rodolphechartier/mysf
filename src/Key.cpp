@@ -48,11 +48,6 @@ namespace mysf
       _down[i] = false;
   }
 
-  bool Key::operator[](sf::Keyboard::Key key) const
-  {
-    return _down[key];
-  }
-
   bool Key::isDown(sf::Keyboard::Key key) const
   {
     return _down[key];

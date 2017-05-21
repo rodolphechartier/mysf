@@ -57,22 +57,12 @@ namespace mysf
       _axis[i] = 0.f;
 	}
 
-  void Joysticks::Joystick::setButton(unsigned int button, bool value)
-  {
-    _down[button] = value;
-  }
-
-  bool Joysticks::Joystick::operator[](unsigned int button) const
+  bool Joysticks::Joystick::isDown(unsigned int button) const
 	{
     return _down[button];
 	}
 
-  float & Joysticks::Joystick::operator[](sf::Joystick::Axis axis)
-	{
-    return _axis[axis];
-	}
-
-  const float & Joysticks::Joystick::operator[](sf::Joystick::Axis axis) const
+  float Joysticks::Joystick::getAxis(sf::Joystick::Axis axis) const
 	{
     return _axis[axis];
 	}
@@ -112,13 +102,13 @@ namespace mysf
     switch (event.type)
       {
       case sf::Event::JoystickButtonPressed:
-        _joysticks[event.joystickButton.joystickId].setButton(event.joystickButton.button, true);
+        _joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = true;
         break;
       case sf::Event::JoystickButtonReleased:
-        _joysticks[event.joystickButton.joystickId].setButton(event.joystickButton.button, false);
+        _joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = false;
         break;
       case sf::Event::JoystickMoved:
-        _joysticks[event.joystickMove.joystickId][event.joystickMove.axis] = event.joystickMove.position;
+        _joysticks[event.joystickMove.joystickId]._axis[event.joystickMove.axis] = event.joystickMove.position;
         break;
       case sf::Event::JoystickConnected:
         connect(event.joystickConnect.joystickId);

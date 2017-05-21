@@ -30,7 +30,7 @@ namespace mysf
 
 	}
 
-	bool Binding::isDown(unsigned int action, const Input & input) const
+	const std::vector<Input> * Binding::getInput(unsigned int action, const Event & event) const
 	{
 		bool stop;
 
@@ -38,30 +38,42 @@ namespace mysf
 		{
 			stop = false;
 			for (unsigned int j = 0; j < _bind[action][i].size() && !stop; ++j)
-				switch (_bind[action][i][j].inputType)
+			{
+				const Input & input = _bind[action][i][j];
+
+				switch (input.type)
 				{
-					case KeyboardInput:
-						if (input.key()[_bind[action][i][j].kcode] == false)
-							stop = true;
+					case Input::KeyboardKey:
+						stop = (event.key().isDown(input.keycode) == false);
 						break;
-					case MouseInput:
-						if (input.mouse()[_bind[action][i][j].mcode] == false)
-							stop = true;
+					case Input::MouseButton:
+						stop = (event.mouse().isDown(input.mButton) == false);
 						break;
-					case JoystickInput:
-						if (input.joysticks().isConnected(_joystickId) == false || input.joysticks()[_joystickId][_bind[action][i][j].jcode] == false)
-							stop = true;
+					case Input::MouseWheel:
+						stop = (event.mouse().isScrolled(input.wheelDir) == false);
+						break;
+					case Input::JoystickButton:
+						stop = (event.joysticks().isConnected(_joystickId) == false || event.joysticks()[_joystickId].isDown(input.jButton) == false);
+						break;
+					case Input::JoystickAxis:
+						stop = (event.joysticks().isConnected(_joystickId) == false || event.joysticks()[_joystickId].getAxis(input.axis) == 0.f);
 						break;
 					default:
-						return false;
+						return 0;
 				}
+			}
 			if (!stop)
-				return true;
+				return &_bind[action][i];
 		}
-		return false;
+		return 0;
 	}
 
-	void Binding::setBind(unsigned int action, const InputCode & bind)
+	void Binding::setNbAction(unsigned int size)
+	{
+		_bind.resize(size);
+	}
+
+	void Binding::setBind(unsigned int action, const Input & bind)
 	{
 		if (action >= _bind.size())
 			_bind.resize(action + 1);
@@ -69,7 +81,7 @@ namespace mysf
 		_bind[action][0].resize(1, bind);
 	}
 
-	void Binding::setBind(unsigned int action, const std::vector<InputCode> & bind)
+	void Binding::setBind(unsigned int action, const std::vector<Input> & bind)
 	{
 		if (action >= _bind.size())
 			_bind.resize(action + 1);
@@ -77,16 +89,11 @@ namespace mysf
 		_bind[action][0] = bind;
 	}
 
-	void Binding::setBind(unsigned int action, const std::vector<std::vector<InputCode>> & bind)
+	void Binding::setBind(unsigned int action, const std::vector<std::vector<Input>> & bind)
 	{
 		if (action >= _bind.size())
 			_bind.resize(action + 1);
 		_bind[action] = bind;
-	}
-
-	void Binding::setNbAction(unsigned int size)
-	{
-		_bind.resize(size);
 	}
 
 	void Binding::setJoystickId(unsigned int joystickId)

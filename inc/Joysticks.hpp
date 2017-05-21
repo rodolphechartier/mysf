@@ -12,6 +12,8 @@ namespace mysf
   public:
     class Joystick
     {
+			friend class Joysticks;
+
     public:
       Joystick();
       Joystick(const Joystick & o);
@@ -24,12 +26,8 @@ namespace mysf
 
       void reset();
 
-      // Cant return a bool & std::vector<bool> (template specialization bit per bit)
-      void setButton(unsigned int button, bool value);
-      bool operator[](unsigned int button) const;
-
-      float & operator[](sf::Joystick::Axis axis);
-      const float & operator[](sf::Joystick::Axis axis) const;
+			bool 		isDown(unsigned int button) const;
+			float 	getAxis(sf::Joystick::Axis axis) const;
 
     private:
       bool _isConnected;
