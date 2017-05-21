@@ -16,22 +16,21 @@ namespace mysf
     void			update(const sf::Event & event);
     void			reset();
 
-		bool			operator[](sf::Mouse::Button button) const;
     bool			isDown(sf::Mouse::Button button) const;
     bool			isInside() const;
-    bool			isMouseMoved() const;
-    bool			isWheelMoved() const;
-    int				getWheelTick() const;
+    bool			isMoved() const;
+    bool			isScrolled() const;
 
     const sf::Vector2i &	getPos() const;
+    const sf::Vector2i &	getWheelTick() const;
 
   protected:
-    std::vector<bool>	_down;
+    std::vector<bool>		_down;
     bool	           	_inside;
-    bool	           	_wheelMoved;
-    bool          		_mouseMoved;
-    int	          		_wheelTick;
-    sf::Vector2i    	_pos;
+    bool          		_moved;
+    bool	           	_scrolled;
+    sf::Vector2i		_pos;
+    sf::Vector2i       		_wheelTick;
   };
 }
 

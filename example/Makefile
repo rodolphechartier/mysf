@@ -18,8 +18,11 @@ RM				= rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): cplib $(OBJ)
 	$(CC)  $(CPPFLAGS) $(LIB) $(OBJ) -o $(NAME)
+
+cplib:
+	cp ../libmysf.so ../libmysf.a .
 
 clean:
 	$(RM) $(OBJ)
@@ -29,4 +32,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY		= all $(NAME) clean fclean re
+.PHONY		= all $(NAME) cplib clean fclean re

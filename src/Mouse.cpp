@@ -5,9 +5,10 @@ namespace mysf
   Mouse::Mouse()
     : _down(sf::Mouse::ButtonCount, false)
     , _inside(false)
-    , _wheelMoved(false)
-    , _wheelTick(0)
+    , _moved(false)
+    , _scrolled(false)
     , _pos(0, 0)
+    , _wheelTick(0, 0)
   {
 
   }
@@ -15,9 +16,10 @@ namespace mysf
   Mouse::Mouse(const Mouse & o)
     : _down(o._down)
     , _inside(o._inside)
-    , _wheelMoved(o._wheelMoved)
-    , _wheelTick(o._wheelTick)
+    , _moved(o._moved)
+    , _scrolled(o._scrolled)
     , _pos(o._pos)
+    , _wheelTick(o._wheelTick)
   {
 
   }
@@ -28,9 +30,10 @@ namespace mysf
       return *this;
     _down = o._down;
     _inside = o._inside;
-    _wheelMoved = o._wheelMoved;
-    _wheelTick = o._wheelTick;
+    _moved = o._moved;
+    _scrolled = o._scrolled;
     _pos = o._pos;
+    _wheelTick = o._wheelTick;
     return *this;
   }
 
@@ -41,43 +44,43 @@ namespace mysf
 
   void Mouse::update(const sf::Event & event)
   {
-    _wheelMoved = false;
-    _mouseMoved = false;
+    _moved = false;
+    _scrolled = false;
     switch (event.type)
       {
-      case sf::Event::MouseWheelMoved:
-      	_wheelMoved = true;
-      	_wheelTick = event.mouseWheel.delta;
-      	_pos.x = event.mouseWheel.x;
-      	_pos.y = event.mouseWheel.y;
-      	_inside = true;
-      	break;
       case sf::Event::MouseButtonPressed:
       	_down[event.mouseButton.button] = true;
-      	_pos.x = event.mouseButton.x;
-      	_pos.y = event.mouseButton.y;
-      	_inside = true;
       	break;
       case sf::Event::MouseButtonReleased:
       	_down[event.mouseButton.button] = false;
-      	_pos.x = event.mouseButton.x;
-      	_pos.y = event.mouseButton.y;
-      	_inside = true;
-      	break;
-      case sf::Event::MouseMoved:
-      	_pos.x = event.mouseMove.x;
-      	_pos.y = event.mouseMove.y;
-      	_inside = true;
-      	_mouseMoved = true;
       	break;
       case sf::Event::MouseEntered:
       	_inside = true;
       	break;
       case sf::Event::MouseLeft:
       	_inside = false;
+	break;
+      case sf::Event::MouseMoved:
+      	_moved = true;
+      	_pos.x = event.mouseMove.x;
+      	_pos.y = event.mouseMove.y;
+      	break;
+      case sf::Event::MouseWheelScrolled:
+      	_scrolled = true;
+	switch (event.mouseWheelScroll.wheel)
+	  {
+	  case sf::Mouse::HorizontalWheel:
+	    _wheelTick.x = event.mouseWheel.delta;
+	    _wheelTick.y = 0;
+	    break;
+	  case sf::Mouse::VerticalWheel:
+	    _wheelTick.x = 0;
+	    _wheelTick.y = event.mouseWheel.delta;
+	    break;
+	  }
       	break;
       default:
-	       break;
+	break;
       }
   }
 
@@ -86,11 +89,6 @@ namespace mysf
     for (unsigned int i = 0; i < _down.size(); ++i)
       _down[i] = false;
   }
-
-	bool Mouse::operator[](sf::Mouse::Button button) const
-	{
-		return _down[button];
-	}
 
   bool Mouse::isDown(sf::Mouse::Button button) const
   {
@@ -102,23 +100,23 @@ namespace mysf
     return _inside;
   }
 
-  bool Mouse::isMouseMoved() const
+  bool Mouse::isMoved() const
   {
-    return _mouseMoved;
+    return _moved;
   }
 
-  bool Mouse::isWheelMoved() const
+  bool Mouse::isScrolled() const
   {
-    return _wheelMoved;
-  }
-
-  int Mouse::getWheelTick() const
-  {
-    return _wheelTick;
+    return _scrolled;
   }
 
   const sf::Vector2i & Mouse::getPos() const
   {
     return _pos;
+  }
+
+  const sf::Vector2i & Mouse::getWheelTick() const
+  {
+    return _wheelTick;
   }
 }
