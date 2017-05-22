@@ -5,10 +5,14 @@
 
 # include <SFML/Window.hpp>
 
+# include "EventType.hpp"
+
 namespace mysf
 {
   class Joysticks
   {
+		typedef void (Joysticks::*updateFct)(const sf::Event & event);
+
   public:
     class Joystick
     {
@@ -44,6 +48,9 @@ namespace mysf
     void	update(const sf::Event & event);
     void	reset();
 
+		void 							setEventType(const EventType & eventType);
+		const EventType &	getEventType() const;
+
     const Joystick & operator[](unsigned int joystick) const;
     unsigned int size() const;
     unsigned int nbConnected() const;
@@ -53,8 +60,17 @@ namespace mysf
     void connect(unsigned int joystick);
     void disconnect(unsigned int joystick);
 
+		void _updatePressed(const sf::Event & event);
+		void _updateReleased(const sf::Event & event);
+		void _updateOnPressed(const sf::Event & event);
+		void _updateOnReleased(const sf::Event & event);
+
+		std::vector<updateFct> _update;
+
   protected:
-    std::vector<Joystick> _joysticks;
+		EventType							_eventType;
+
+		std::vector<Joystick> _joysticks;
     unsigned int          _nbConnected;
   };
 }

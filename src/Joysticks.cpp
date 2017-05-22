@@ -68,25 +68,37 @@ namespace mysf
 	}
 
   Joysticks::Joysticks()
-    : _joysticks()
+    : _update(EventType::EventTypeCount)
+		, _eventType(EventType::Pressed)
+		, _joysticks()
     , _nbConnected(0)
   {
     for (unsigned int i = 0; i < sf::Joystick::Count; ++i)
       if (sf::Joystick::isConnected(i))
         connect(i);
+		_update[EventType::Pressed] = &Joysticks::_updatePressed;
+		_update[EventType::Released] = &Joysticks::_updateReleased;
+		_update[EventType::OnPressed] = &Joysticks::_updateOnPressed;
+		_update[EventType::OnReleased] = &Joysticks::_updateOnReleased;
   }
 
   Joysticks::Joysticks(const Joysticks & o)
-    : _joysticks(o._joysticks)
+    : _update(EventType::EventTypeCount)
+		, _eventType(o._eventType)
+		, _joysticks(o._joysticks)
     , _nbConnected(o._nbConnected)
   {
-
-  }
+		_update[EventType::Pressed] = &Joysticks::_updatePressed;
+		_update[EventType::Released] = &Joysticks::_updateReleased;
+		_update[EventType::OnPressed] = &Joysticks::_updateOnPressed;
+		_update[EventType::OnReleased] = &Joysticks::_updateOnReleased;
+}
 
   Joysticks & Joysticks::operator=(const Joysticks & o)
   {
     if (&o == this)
       return *this;
+		_eventType = o._eventType;
     _joysticks = o._joysticks;
     _nbConnected = o._nbConnected;
     return *this;
@@ -99,14 +111,9 @@ namespace mysf
 
   void Joysticks::update(const sf::Event & event)
   {
+		(this->*_update[_eventType])(event);
     switch (event.type)
       {
-      case sf::Event::JoystickButtonPressed:
-        _joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = true;
-        break;
-      case sf::Event::JoystickButtonReleased:
-        _joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = false;
-        break;
       case sf::Event::JoystickMoved:
         _joysticks[event.joystickMove.joystickId]._axis[event.joystickMove.axis] = event.joystickMove.position;
         break;
@@ -126,6 +133,17 @@ namespace mysf
     for (unsigned int i = 0; i < _joysticks.size(); ++i)
       _joysticks[i].reset();
   }
+
+	void Joysticks::setEventType(const EventType & eventType)
+	{
+		_eventType = eventType;
+		reset();
+	}
+
+	const EventType & Joysticks::getEventType() const
+	{
+		return _eventType;
+	}
 
   const Joysticks::Joystick & Joysticks::operator[](unsigned int joystick) const
   {
@@ -164,4 +182,80 @@ namespace mysf
     if (!_nbConnected)
       _joysticks.clear();
   }
+
+	void Joysticks::_updatePressed(const sf::Event & event)
+	{
+		switch (event.type)
+			{
+			case sf::Event::JoystickButtonPressed:
+				_joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = true;
+				break;
+			case sf::Event::JoystickButtonReleased:
+				_joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = false;
+				break;
+			default:
+				break;
+			}
+	}
+
+	void Joysticks::_updateReleased(const sf::Event & event)
+	{
+		switch (event.type)
+			{
+			case sf::Event::JoystickButtonPressed:
+				_joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = false;
+				break;
+			case sf::Event::JoystickButtonReleased:
+				_joysticks[event.joystickButton.joystickId]._down[event.joystickButton.button] = true;
+				break;
+			default:
+				break;
+			}
+	}
+
+	void Joysticks::_updateOnPressed(const sf::Event & event)
+	{
+		static std::vector<int> key(sf::Joystick::Count, -1);
+		static int joystickId = -1;
+
+		if (joystickId != -1 && key[joystickId] != -1)
+			{
+				_joysticks[joystickId]._down[key[joystickId]] = false;
+				key[joystickId] = -1;
+				joystickId = -1;
+			}
+		switch (event.type)
+			{
+			case sf::Event::JoystickButtonPressed:
+				key[joystickId] = static_cast<int>(event.mouseButton.button);
+				joystickId = event.joystickButton.joystickId;
+				_joysticks[joystickId]._down[key[joystickId]] = true;
+				break;
+			default:
+				break;
+			}
+	}
+
+	void Joysticks::_updateOnReleased(const sf::Event & event)
+	{
+		static std::vector<int> key(sf::Joystick::Count, -1);
+		static int joystickId = -1;
+
+		if (joystickId != -1 && key[joystickId] != -1)
+			{
+				_joysticks[joystickId]._down[key[joystickId]] = false;
+				key[joystickId] = -1;
+				joystickId = -1;
+			}
+		switch (event.type)
+			{
+			case sf::Event::JoystickButtonReleased:
+				key[joystickId] = static_cast<int>(event.mouseButton.button);
+				joystickId = event.joystickButton.joystickId;
+				_joysticks[joystickId]._down[key[joystickId]] = true;
+				break;
+			default:
+				break;
+			}
+	}
 }

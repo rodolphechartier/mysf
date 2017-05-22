@@ -1,12 +1,18 @@
 #ifndef MOUSE_HPP_
 # define MOUSE_HPP_
 
+# include <vector>
+
 # include <SFML/Window.hpp>
+
+# include "EventType.hpp"
 
 namespace mysf
 {
   class Mouse
   {
+		typedef void (Mouse::*updateFct)(const sf::Event & event);
+
 	public:
 		enum WheelDir
 		{
@@ -25,6 +31,9 @@ namespace mysf
     void			update(const sf::Event & event);
     void			reset();
 
+		void 							setEventType(const EventType & eventType);
+		const EventType &	getEventType() const;
+
     bool			isDown(sf::Mouse::Button button) const;
     bool			isInside() const;
     bool			isMoved() const;
@@ -34,8 +43,18 @@ namespace mysf
     const sf::Vector2i &	getPos() const;
     const sf::Vector2i &	getWheelTick() const;
 
+	private:
+		void _updatePressed(const sf::Event & event);
+		void _updateReleased(const sf::Event & event);
+		void _updateOnPressed(const sf::Event & event);
+		void _updateOnReleased(const sf::Event & event);
+
+		std::vector<updateFct> _update;
+
   protected:
-    std::vector<bool> 		_down;
+		EventType							_eventType;
+
+		std::vector<bool> 		_down;
     bool	           			_inside;
     bool          				_moved;
     bool	           			_scrolled;
