@@ -58,6 +58,13 @@ namespace mysf
       }
   }
 
+	void Event::loop()
+	{
+		_key.loop();
+		_mouse.loop();
+		_joysticks.loop();
+	}
+
   void Event::reset()
   {
     _key.reset();
@@ -65,14 +72,29 @@ namespace mysf
     _joysticks.reset();
   }
 
-  const Key & Event::key() const
+  Key & Event::key()
   {
     return _key;
+  }
+
+	const Key & Event::key() const
+  {
+    return _key;
+  }
+
+	Mouse & Event::mouse()
+  {
+    return _mouse;
   }
 
   const Mouse & Event::mouse() const
   {
     return _mouse;
+  }
+
+	Joysticks & Event::joysticks()
+  {
+    return _joysticks;
   }
 
   const Joysticks & Event::joysticks() const

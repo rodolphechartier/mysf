@@ -37,6 +37,7 @@ namespace mysf
   {
 		static sf::Event event;
 
+		_event.loop();
     while (_ctx.win.pollEvent(event))
       _event.update(event);
   }

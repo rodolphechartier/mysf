@@ -1,6 +1,7 @@
 #ifndef KEY_HPP_
 # define KEY_HPP_
 
+# include <iostream>
 # include <vector>
 
 # include <SFML/Window.hpp>
@@ -20,6 +21,7 @@ namespace mysf
     virtual ~Key();
 
     void	update(const sf::Event & event);
+		void 	loop();
     void	reset();
 
 		void 							setEventType(const EventType & eventType);
@@ -29,7 +31,6 @@ namespace mysf
 
 	private:
 		void _updatePressed(const sf::Event & event);
-		void _updateReleased(const sf::Event & event);
 		void _updateOnPressed(const sf::Event & event);
 		void _updateOnReleased(const sf::Event & event);
 
@@ -37,6 +38,8 @@ namespace mysf
 
   protected:
 		EventType					_eventType;
+		sf::Keyboard::Key _key;
+
     std::vector<bool>	_down;
   };
 }

@@ -27,8 +27,6 @@ namespace mysf
   protected:
     Context _ctx;
     GraphicRender *	_grender;
-
-  private:
     Event _event;
   };
 }

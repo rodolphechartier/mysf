@@ -29,6 +29,7 @@ namespace mysf
     virtual ~Mouse();
 
     void			update(const sf::Event & event);
+		void 			loop();
     void			reset();
 
 		void 							setEventType(const EventType & eventType);
@@ -45,7 +46,6 @@ namespace mysf
 
 	private:
 		void _updatePressed(const sf::Event & event);
-		void _updateReleased(const sf::Event & event);
 		void _updateOnPressed(const sf::Event & event);
 		void _updateOnReleased(const sf::Event & event);
 
@@ -53,6 +53,7 @@ namespace mysf
 
   protected:
 		EventType							_eventType;
+		sf::Mouse::Button 		_button;
 
 		std::vector<bool> 		_down;
     bool	           			_inside;

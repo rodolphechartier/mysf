@@ -2,8 +2,8 @@
 
 namespace mysf
 {
-	Binding::Binding(unsigned int joystickId)
-		: _bind()
+	Binding::Binding(unsigned int nbAction, unsigned int joystickId)
+		: _bind(nbAction)
 		, _joystickId(joystickId)
 	{
 

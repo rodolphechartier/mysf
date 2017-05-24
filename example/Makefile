@@ -18,16 +18,19 @@ RM				= rm -f
 
 all: $(NAME)
 
-$(NAME): cplib $(OBJ)
+$(NAME): make_lib $(OBJ)
 	$(CC)  $(CPPFLAGS) $(LIB) $(OBJ) -o $(NAME)
 
-cplib:
+make_lib:
+	make -C ../
 	cp ../libmysf.so ../libmysf.a .
 
 clean:
+	make clean -C ../
 	$(RM) $(OBJ)
 
 fclean: clean
+	make fclean -C ../
 	$(RM) $(NAME)
 
 re: fclean all

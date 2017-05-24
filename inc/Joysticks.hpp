@@ -46,6 +46,7 @@ namespace mysf
     virtual ~Joysticks();
 
     void	update(const sf::Event & event);
+		void 	loop();
     void	reset();
 
 		void 							setEventType(const EventType & eventType);
@@ -61,7 +62,6 @@ namespace mysf
     void disconnect(unsigned int joystick);
 
 		void _updatePressed(const sf::Event & event);
-		void _updateReleased(const sf::Event & event);
 		void _updateOnPressed(const sf::Event & event);
 		void _updateOnReleased(const sf::Event & event);
 
@@ -69,6 +69,7 @@ namespace mysf
 
   protected:
 		EventType							_eventType;
+		std::vector<int>			_buttons;
 
 		std::vector<Joystick> _joysticks;
     unsigned int          _nbConnected;

@@ -18,11 +18,16 @@ namespace mysf
     virtual ~Event();
 
     void	           	update(const sf::Event & event);
+		void 							loop();
     void	           	reset();
 
+		Key &				  	  key();
     const Key &		    key() const;
+		Mouse &	    			mouse();
     const Mouse &	    mouse() const;
+	 	Joysticks &				joysticks();
     const Joysticks & joysticks() const;
+
     bool		          isClosed() const;
     bool		          isFocused() const;
 

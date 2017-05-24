@@ -6,7 +6,6 @@ namespace mysf
 	enum EventType
 	{
 		Pressed,
-		Released,
 		OnPressed,
 		OnReleased,
 		EventTypeCount

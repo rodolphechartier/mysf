@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "../inc/Mysf.hpp"
 
 class Node : public mysf::SpriteNode
@@ -14,14 +16,13 @@ class Node : public mysf::SpriteNode
 public:
   explicit Node()
 		: mysf::SpriteNode()
-		, _bind()
-		, _speed(500.f)
+		, _bind(ActionCount)
+		, _speed(10)
 	{
-		_bind.setNbAction(ActionCount);
-		_bind.setBind(Up, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::Z));
-		_bind.setBind(Left, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::Q));
-		_bind.setBind(Down, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::S));
-		_bind.setBind(Right, mysf::Binding::InputCode(mysf::Binding::KeyboardInput, sf::Keyboard::D));
+		_bind.setBind(Up, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::Z));
+		_bind.setBind(Left, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::Q));
+		_bind.setBind(Down, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::S));
+		_bind.setBind(Right, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::D));
 	}
 
   Node(const Node &) = delete;
@@ -29,25 +30,26 @@ public:
   virtual ~Node() {}
 
 protected:
-  virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Input & input)
+  virtual void updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & event)
   {
     sf::Vector2f pos(getPosition());
-    const float move = deltaTime.asSeconds() * _speed;
+		// const float move = deltaTime.asSeconds() * _speed;
+		const unsigned int move = _speed;
 
-    if (_bind.isDown(Up, input))
+    if (_bind.getInput(Up, event))
       pos.y -= move;
-    if (_bind.isDown(Left, input))
+    if (_bind.getInput(Left, event))
       pos.x -= move;
-    if (_bind.isDown(Down, input))
+    if (_bind.getInput(Down, event))
       pos.y += move;
-    if (_bind.isDown(Right, input))
+    if (_bind.getInput(Right, event))
       pos.x += move;
     setPosition(pos);
   }
 
 private:
 	mysf::Binding _bind;
-  float _speed;
+  unsigned int _speed;
 };
 
 class Render : public mysf::GraphicRender
@@ -84,6 +86,7 @@ public:
   {
     _grender = new Render(_ctx);
 
+		_event.key().setEventType(mysf::OnPressed);
     _ctx.win.create(sf::VideoMode(800, 450), "Test");
     if (_ctx.thl.setDefault("../rsc/default.png") == false)
       return false;

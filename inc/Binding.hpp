@@ -23,6 +23,13 @@ namespace mysf
 			JoystickAxis
 		};
 
+		explicit Input(Type type_, unsigned int value_)
+			: type(type_)
+			, value(value_)
+		{
+
+		}
+
 		Type type;
 
 		union
@@ -40,7 +47,7 @@ namespace mysf
   class Binding
   {
   public:
-    explicit Binding(unsigned int joystickId = 0);
+    explicit Binding(unsigned int nbAction = 0, unsigned int joystickId = 0);
     Binding(const Binding & o);
     Binding & operator=(const Binding & o);
     virtual ~Binding();

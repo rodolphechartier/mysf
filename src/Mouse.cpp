@@ -5,6 +5,7 @@ namespace mysf
   Mouse::Mouse()
     : _update(EventType::EventTypeCount)
 		, _eventType(EventType::Pressed)
+		, _button(sf::Mouse::ButtonCount)
 		, _down(sf::Mouse::ButtonCount, false)
     , _inside(false)
     , _moved(false)
@@ -13,7 +14,6 @@ namespace mysf
     , _wheelTick(0, 0)
   {
 		_update[EventType::Pressed] = &Mouse::_updatePressed;
-		_update[EventType::Released] = &Mouse::_updateReleased;
 		_update[EventType::OnPressed] = &Mouse::_updateOnPressed;
 		_update[EventType::OnReleased] = &Mouse::_updateOnReleased;
   }
@@ -21,6 +21,7 @@ namespace mysf
   Mouse::Mouse(const Mouse & o)
     : _update(EventType::EventTypeCount)
 		, _eventType(o._eventType)
+		, _button(o._button)
 		, _down(o._down)
     , _inside(o._inside)
     , _moved(o._moved)
@@ -29,7 +30,6 @@ namespace mysf
     , _wheelTick(o._wheelTick)
   {
 		_update[EventType::Pressed] = &Mouse::_updatePressed;
-		_update[EventType::Released] = &Mouse::_updateReleased;
 		_update[EventType::OnPressed] = &Mouse::_updateOnPressed;
 		_update[EventType::OnReleased] = &Mouse::_updateOnReleased;
   }
@@ -39,6 +39,7 @@ namespace mysf
     if (this == &o)
       return *this;
 		_eventType = o._eventType;
+		_button = o._button;
 		_down = o._down;
     _inside = o._inside;
     _moved = o._moved;
@@ -91,8 +92,18 @@ namespace mysf
 			}
   }
 
+	void Mouse::loop()
+	{
+		if (_button != sf::Mouse::ButtonCount)
+		{
+			_down[_button] = false;
+			_button = sf::Mouse::ButtonCount;
+		}
+	}
+
   void Mouse::reset()
   {
+		_button = sf::Mouse::ButtonCount;
     for (unsigned int i = 0; i < _down.size(); ++i)
       _down[i] = false;
   }
@@ -177,35 +188,13 @@ namespace mysf
 			}
 	}
 
-	void Mouse::_updateReleased(const sf::Event & event)
-	{
-		switch (event.type)
-			{
-			case sf::Event::MouseButtonPressed:
-				_down[event.mouseButton.button] = false;
-				break;
-			case sf::Event::MouseButtonReleased:
-				_down[event.mouseButton.button] = true;
-				break;
-			default:
-				break;
-			}
-	}
-
 	void Mouse::_updateOnPressed(const sf::Event & event)
 	{
-		static int key = -1;
-
-		if (key != -1)
-			{
-				_down[key] = false;
-				key = -1;
-			}
 		switch (event.type)
 			{
 			case sf::Event::MouseButtonPressed:
-				key = static_cast<int>(event.mouseButton.button);
-      	_down[static_cast<unsigned int>(key)] = true;
+				_button = event.mouseButton.button;
+      	_down[_button] = true;
 				break;
 			default:
 				break;
@@ -214,18 +203,11 @@ namespace mysf
 
 	void Mouse::_updateOnReleased(const sf::Event & event)
 	{
-		static int key = -1;
-
-		if (key != -1)
-			{
-				_down[key] = false;
-				key = -1;
-			}
 		switch (event.type)
 			{
 			case sf::Event::MouseButtonReleased:
-				key = static_cast<int>(event.mouseButton.button);
-      	_down[static_cast<unsigned int>(key)] = true;
+				_button = event.mouseButton.button;
+      	_down[_button] = true;
 				break;
 			default:
 				break;
