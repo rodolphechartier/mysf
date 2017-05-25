@@ -5,7 +5,7 @@
 
 # include <SFML/Graphics.hpp>
 
-# include "Layer.hpp"
+# include "GraphicLayer.hpp"
 # include "Event.hpp"
 
 namespace mysf
@@ -26,11 +26,11 @@ namespace mysf
     void		sub(unsigned int nbLayer);
     void		clear();
 
-    Layer & operator[](unsigned int layer);
-    const Layer & operator[](unsigned int layer) const;
+    GraphicLayer & operator[](unsigned int layer);
+    const GraphicLayer & operator[](unsigned int layer) const;
 
   protected:
-    std::vector<Layer> _layers;
+    std::vector<GraphicLayer> _layers;
   };
 }
 

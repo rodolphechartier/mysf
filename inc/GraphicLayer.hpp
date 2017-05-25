@@ -1,5 +1,5 @@
-#ifndef LAYER_HPP_
-# define LAYER_HPP_
+#ifndef GRAPHIC_LAYER_HPP_
+# define GRAPHIC_LAYER_HPP_
 
 # include <list>
 # include <algorithm>
@@ -11,13 +11,13 @@
 
 namespace mysf
 {
-  class Layer
+  class GraphicLayer
   {
   public:
-    Layer();
-    Layer(const Layer & o);
-    Layer & operator=(const Layer & o);
-    virtual ~Layer();
+    GraphicLayer();
+    GraphicLayer(const GraphicLayer & o);
+    GraphicLayer & operator=(const GraphicLayer & o);
+    virtual ~GraphicLayer();
 
     void	update(const sf::Time & deltaTime, const Event & event);
     void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
@@ -31,4 +31,4 @@ namespace mysf
   };
 }
 
-#endif // !LAYER_HPP_
+#endif // !GRAPHIC_LAYER_HPP_

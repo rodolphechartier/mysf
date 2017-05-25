@@ -1,19 +1,19 @@
-#include "Layer.hpp"
+#include "GraphicLayer.hpp"
 
 namespace mysf
 {
-  Layer::Layer()
+  GraphicLayer::GraphicLayer()
   {
 
   }
 
-  Layer::Layer(const Layer & o)
+  GraphicLayer::GraphicLayer(const GraphicLayer & o)
     : _list(o._list)
   {
 
   }
 
-  Layer & Layer::operator=(const Layer & o)
+  GraphicLayer & GraphicLayer::operator=(const GraphicLayer & o)
   {
     if (&o == this)
       return *this;
@@ -21,34 +21,34 @@ namespace mysf
     return *this;
   }
 
-  Layer::~Layer()
+  GraphicLayer::~GraphicLayer()
   {
 
   }
 
-  void Layer::update(const sf::Time & deltaTime, const Event & event)
+  void GraphicLayer::update(const sf::Time & deltaTime, const Event & event)
   {
     for (auto it = _list.begin(); it != _list.end(); ++it)
       (*it)->update(deltaTime, event);
   }
 
-  void Layer::draw(sf::RenderTarget & target, sf::RenderStates states) const
+  void GraphicLayer::draw(sf::RenderTarget & target, sf::RenderStates states) const
   {
     for (auto it = _list.begin(); it != _list.end(); ++it)
       (*it)->draw(target, states);
   }
 
-  void Layer::add(SceneNode * node)
+  void GraphicLayer::add(SceneNode * node)
   {
     _list.push_back(node);
   }
 
-	void Layer::remove(SceneNode * node)
+	void GraphicLayer::remove(SceneNode * node)
 	{
 		_list.erase(std::find(_list.begin(), _list.end(), node));
 	}
 
-  void Layer::clear()
+  void GraphicLayer::clear()
   {
     _list.clear();
   }

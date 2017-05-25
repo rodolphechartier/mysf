@@ -50,12 +50,12 @@ namespace mysf
       _layers[i].clear();
   }
 
-  Layer & GraphicLayerSet::operator[](unsigned int layer)
+  GraphicLayer & GraphicLayerSet::operator[](unsigned int layer)
   {
     return _layers[layer];
   }
 
-  const Layer & GraphicLayerSet::operator[](unsigned int layer) const
+  const GraphicLayer & GraphicLayerSet::operator[](unsigned int layer) const
   {
     return _layers[layer];
   }

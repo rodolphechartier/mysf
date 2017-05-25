@@ -6,13 +6,13 @@ CPPFLAGS	+= -I /usr/local/include
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
 SRC				= src/Engine.cpp \
+						src/GraphicLayer.cpp \
 						src/GraphicLayerSet.cpp \
 						src/GraphicRender.cpp \
 						src/Event.cpp \
 						src/Joysticks.cpp \
 						src/Key.cpp \
 						src/Binding.cpp \
-						src/Layer.cpp \
 						src/Mouse.cpp \
 						src/SceneNode.cpp \
 						src/SpriteNode.cpp
