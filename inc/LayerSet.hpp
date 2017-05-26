@@ -19,6 +19,11 @@ namespace mysf
     LayerSet & operator=(const LayerSet &) = delete;
     virtual ~LayerSet() {}
 
+		unsigned int size() const
+		{
+			return _layers.size();
+		}
+
     void		resize(unsigned int nbLayer)
 	  {
 	    clear();
