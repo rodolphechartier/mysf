@@ -3,7 +3,7 @@
 namespace mysf
 {
   GraphicLayerSet::GraphicLayerSet(unsigned int nbLayer)
-    : _layers(nbLayer)
+    : LayerSet(nbLayer)
   {
 
   }
@@ -23,40 +23,5 @@ namespace mysf
   {
     for (unsigned int i = 0; i < _layers.size(); ++i)
       _layers[i].draw(target, states);
-  }
-
-  void GraphicLayerSet::resize(unsigned int nbLayer)
-  {
-    clear();
-    _layers.resize(nbLayer);
-  }
-
-  void GraphicLayerSet::add(unsigned int nbLayer)
-  {
-    _layers.resize(_layers.size() + nbLayer);
-  }
-
-  void GraphicLayerSet::sub(unsigned int nbLayer)
-  {
-    if (_layers.size() != nbLayer)
-      for (unsigned int i = _layers.size() - nbLayer - 1; i < _layers.size(); ++i)
-	     _layers[i].clear();
-    _layers.resize(_layers.size() - nbLayer);
-  }
-
-  void GraphicLayerSet::clear()
-  {
-    for (unsigned int i = 0; i < _layers.size(); ++i)
-      _layers[i].clear();
-  }
-
-  GraphicLayer & GraphicLayerSet::operator[](unsigned int layer)
-  {
-    return _layers[layer];
-  }
-
-  const GraphicLayer & GraphicLayerSet::operator[](unsigned int layer) const
-  {
-    return _layers[layer];
   }
 }

@@ -6,12 +6,13 @@
 
 # include <SFML/Graphics.hpp>
 
+# include "Layer.hpp"
 # include "SceneNode.hpp"
 # include "Event.hpp"
 
 namespace mysf
 {
-  class GraphicLayer
+  class GraphicLayer : public Layer<SceneNode>
   {
   public:
     GraphicLayer();
@@ -21,13 +22,6 @@ namespace mysf
 
     void	update(const sf::Time & deltaTime, const Event & event);
     void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
-
-    void	add(SceneNode * node);
-		void 	remove(SceneNode * node);
-    void	clear();
-
-  private:
-    std::list<SceneNode *>	_list;
   };
 }
 

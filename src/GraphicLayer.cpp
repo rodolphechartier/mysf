@@ -8,7 +8,7 @@ namespace mysf
   }
 
   GraphicLayer::GraphicLayer(const GraphicLayer & o)
-    : _list(o._list)
+    : Layer(o)
   {
 
   }
@@ -17,7 +17,7 @@ namespace mysf
   {
     if (&o == this)
       return *this;
-    _list = o._list;
+		Layer::operator=(o);
     return *this;
   }
 
@@ -36,20 +36,5 @@ namespace mysf
   {
     for (auto it = _list.begin(); it != _list.end(); ++it)
       (*it)->draw(target, states);
-  }
-
-  void GraphicLayer::add(SceneNode * node)
-  {
-    _list.push_back(node);
-  }
-
-	void GraphicLayer::remove(SceneNode * node)
-	{
-		_list.erase(std::find(_list.begin(), _list.end(), node));
-	}
-
-  void GraphicLayer::clear()
-  {
-    _list.clear();
   }
 }
