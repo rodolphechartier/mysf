@@ -4,6 +4,7 @@
 # include <SFML/Window.hpp>
 
 # include "GraphicLayerSet.hpp"
+# include "SoundPlayer.hpp"
 # include "ResourceHolder.hpp"
 
 namespace mysf
@@ -12,6 +13,7 @@ namespace mysf
   {
     sf::RenderWindow  win;
     GraphicLayerSet	  gls;
+		SoundPlayer				spl;
     TextureHolder	    thl;
     SoundHolder		    shl;
     FontHolder		    fhl;

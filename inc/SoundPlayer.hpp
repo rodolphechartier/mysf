@@ -7,7 +7,7 @@
 
 namespace mysf
 {
-	class SoundPlayer
+	class SoundPlayer : public sf::Listener
 	{
 	public:
 		SoundPlayer();
