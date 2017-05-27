@@ -12,19 +12,16 @@ namespace mysf
 
 	}
 
-	void SoundPlayer::play(const sf::SoundBuffer & soundBuffer, const SoundProperties & properties)
+	void SoundPlayer::play(const sf::Sound & sound)
+	{
+		_sounds.push_back(sf::Sound(sound));
+		_sounds.back().play();
+	}
+
+	void SoundPlayer::play(const sf::SoundBuffer & soundBuffer)
 	{
 		_sounds.push_back(sf::Sound(soundBuffer));
-		sf::Sound & sound = _sounds.back();
-
-		sound.setVolume(properties.volume);
-		sound.setPitch(properties.pitch);
-		sound.setAttenuation(properties.attenuation);
-		sound.setMinDistance(properties.minDistance);
-		sound.setLoop(properties.loop);
-		sound.setRelativeToListener(properties.relative);
-		sound.setPosition(properties.position);
-		sound.play();
+		_sounds.back().play();
 	}
 
 	void SoundPlayer::removeStoppedSounds()
