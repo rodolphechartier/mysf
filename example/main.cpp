@@ -17,12 +17,15 @@ public:
   explicit Node()
 		: mysf::SpriteNode()
 		, _bind(ActionCount)
-		, _speed(10)
+		, _speed(1)
 	{
-		_bind.setBind(Up, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::Z));
-		_bind.setBind(Left, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::Q));
-		_bind.setBind(Down, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::S));
-		_bind.setBind(Right, mysf::Input(mysf::Input::KeyboardKey, sf::Keyboard::D));
+		std::map<std::string, unsigned int> bind;
+
+		bind["Up"] = Up;
+		bind["Left"] = Left;
+		bind["Down"] = Down;
+		bind["Right"] = Right;
+		_bind.load("key.conf", bind);
 	}
 
   Node(const Node &) = delete;
@@ -86,7 +89,7 @@ public:
   {
     _grender = new Render(_ctx);
 
-		_event.key().setEventType(mysf::OnPressed);
+		// _event.key().setEventType(mysf::OnPressed);
     _ctx.win.create(sf::VideoMode(800, 450), "Test");
     if (_ctx.thl.setDefault("../rsc/default.png") == false)
       return false;
