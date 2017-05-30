@@ -46,7 +46,9 @@ namespace mysf
 
 		const std::vector<Input> * getInput(unsigned int action, const Event & event) const;
 
+    // syntax "action = key1 + key2 | ... # comment"
 		bool load(const std::string & filename, const std::map<std::string, unsigned int> & bind);
+
 		void setNbAction(unsigned int size);
 		void setBind(unsigned int action, const Input & bind);
 		void setBind(unsigned int action, const std::vector<Input> & bind);
@@ -56,6 +58,8 @@ namespace mysf
 		unsigned int getJoystickId() const;
 
 	private:
+		std::vector<std::vector<Input>> _parseActionOr(std::string line, const std::map<std::string, Input> & sfbind) const;
+		std::vector<Input> _parseActionAnd(std::string line, const std::map<std::string, Input> & sfbind) const;
 		void _eraseSpace(std::string & str) const;
 		void _initSfbind(std::map<std::string, Input> & sfbind) const;
 

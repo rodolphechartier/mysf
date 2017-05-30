@@ -68,7 +68,7 @@ namespace mysf
 		return 0;
 	}
 
-	bool Binding::load(const std::string & filename, const std::map<std::string, unsigned int> &)
+	bool Binding::load(const std::string & filename, const std::map<std::string, unsigned int> & bind)
 	{
 		std::map<std::string, Input> sfbind;
 		std::ifstream file;
@@ -85,7 +85,16 @@ namespace mysf
 			_eraseSpace(line);
 			if (line.size())
 			{
-				
+				std::size_t pos;
+				unsigned int action;
+
+				pos = line.find_first_of("=");
+				if (pos != std::string::npos)
+				{
+			    action = bind.at(line.substr(0, pos));
+			    line = line.substr(pos + 1);
+					setBind(action, _parseActionOr(line, sfbind));
+				}
 			}
 		}
 
@@ -129,6 +138,40 @@ namespace mysf
 	unsigned int Binding::getJoystickId() const
 	{
 		return _joystickId;
+	}
+
+	std::vector<std::vector<Input>> Binding::_parseActionOr(std::string line, const std::map<std::string, Input> & sfbind) const
+	{
+		std::vector<std::vector<Input>> key;
+
+		while (line.size())
+		{
+			std::size_t pos;
+
+			pos = line.find('|');
+			key.push_back(_parseActionAnd(line.substr(0, pos), sfbind));
+			if (pos == std::string::npos)
+				return key;
+			line = line.substr(pos + 1);
+		}
+		return key;
+	}
+
+	std::vector<Input> Binding::_parseActionAnd(std::string line, const std::map<std::string, Input> & sfbind) const
+	{
+		std::vector<Input> key;
+
+		while (line.size())
+		{
+			std::size_t pos;
+
+			pos = line.find('+');
+			key.push_back(sfbind.at(line.substr(0, pos)));
+			if (pos == std::string::npos)
+				return key;
+			line = line.substr(pos + 1);
+		}
+		return key;
 	}
 
   void Binding::_eraseSpace(std::string & str) const
