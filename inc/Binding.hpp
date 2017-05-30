@@ -56,6 +56,7 @@ namespace mysf
 		unsigned int getJoystickId() const;
 
 	private:
+		void _eraseSpace(std::string & str) const;
 		void _initSfbind(std::map<std::string, Input> & sfbind) const;
 
 	protected:

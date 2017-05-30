@@ -82,7 +82,11 @@ namespace mysf
 		while (std::getline(file, line))
 		{
 			line = line.substr(0, line.find_first_of("#"));
-
+			_eraseSpace(line);
+			if (line.size())
+			{
+				
+			}
 		}
 
 		file.close();
@@ -126,6 +130,19 @@ namespace mysf
 	{
 		return _joystickId;
 	}
+
+  void Binding::_eraseSpace(std::string & str) const
+  {
+    std::size_t pos, size;
+
+    while ((pos = str.find_first_of(" \n\t")) != std::string::npos)
+    {
+			size = str.find_first_not_of(" \n\t", pos);
+			if (size != std::string::npos)
+			  size -= pos;
+			str.erase(pos, size);
+    }
+  }
 
 	void Binding::_initSfbind(std::map<std::string, Input> & sfbind) const
 	{
