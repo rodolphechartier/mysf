@@ -2,6 +2,7 @@
 
 #include "../inc/Mysf.hpp"
 
+// Creating node where inputs are handle and sprite is display
 class Node : public mysf::SpriteNode
 {
 	enum Action
@@ -28,10 +29,6 @@ public:
 		_bind.load("key.conf", bind);
 	}
 
-  Node(const Node &) = delete;
-  Node & operator=(const Node &) = delete;
-  virtual ~Node() {}
-
 protected:
   virtual void updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & event)
   {
@@ -55,13 +52,11 @@ private:
   unsigned int _speed;
 };
 
+// Creating a GraphicRender to be run by the engine
 class Render : public mysf::GraphicRender
 {
 public:
   explicit Render(mysf::Context & ctx) : mysf::GraphicRender(ctx) {}
-  Render(const Render &) = delete;
-  Render & operator=(const Render &) = delete;
-  virtual ~Render() {}
 
   virtual bool init()
   {
@@ -77,14 +72,10 @@ private:
   Node _def;
 };
 
+// Creating the engine that will handle your differents GraphicRenders
 class Main : public mysf::Engine
 {
 public:
-  Main() : mysf::Engine() {}
-  Main(const Main &) = delete;
-  Main & operator=(const Main &) = delete;
-  virtual ~Main() {}
-
   virtual bool init(int /* ac */, char ** /* av */)
   {
     _grender = new Render(_ctx);
@@ -97,6 +88,7 @@ public:
   }
 };
 
+// Instantiate Engine, initialize it and run it
 int main(int ac, char ** av)
 {
   Main test;
