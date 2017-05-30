@@ -20,7 +20,7 @@ namespace mysf
     virtual ~GraphicLayerSet();
 
     void	update(const sf::Time & deltaTime, const Event & event);
-    void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
+    void	draw(sf::RenderTarget & target, sf::RenderStates states = sf::RenderStates()) const;
   };
 }
 

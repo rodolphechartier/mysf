@@ -21,6 +21,6 @@ namespace mysf
 
   void GraphicRender::draw() const
   {
-    _ctx.gls.draw(_ctx.win, sf::RenderStates());
+    _ctx.gls.draw(_ctx.win);
   }
 }
