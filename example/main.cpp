@@ -64,6 +64,8 @@ public:
     _ctx.gls.clear();
 
     _def.setTexture(_ctx.thl.getDefault());
+		_def.setColor(sf::Color::Green);
+		// _def.setTextureRect(sf::IntRect(0, 0, 100, 100));
     _ctx.gls[0].add(&_def);
     return true;
   }

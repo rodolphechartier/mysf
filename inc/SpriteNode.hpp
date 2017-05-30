@@ -12,12 +12,11 @@ namespace mysf
   public:
     SpriteNode();
     explicit SpriteNode(const sf::Texture & texture);
-    explicit SpriteNode(const sf::Texture & texture, const sf::IntRect & rectanlge);
+    SpriteNode(const sf::Texture & texture, const sf::IntRect & rectangle);
     SpriteNode(const SpriteNode & o) = delete;
     SpriteNode & operator=(const SpriteNode & o) = delete;
     virtual ~SpriteNode();
 
-    // Direct calls to sf::Sprite
     void setTexture(const sf::Texture & texture, bool resetRect = false);
     void setTextureRect(const sf::IntRect & rectangle);
     void setColor(const sf::Color & color);
@@ -31,8 +30,14 @@ namespace mysf
     // virtual void	updateCurrent(const sf::Time & deltaTime, const Input & input) = 0;
     virtual void	drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const;
 
-  protected:
-    sf::Sprite _sprite;
+	private:
+		void _updatePositions();
+		void _updateTexCoords();
+
+	private:
+		sf::Vertex				 	_vertices[4];
+		const sf::Texture *	_texture;
+		sf::IntRect 				_textureRect;
   };
 }
 
