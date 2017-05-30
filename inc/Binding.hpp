@@ -23,24 +23,16 @@ namespace mysf
 			JoystickAxis
 		};
 
-		explicit Input(Type type_, unsigned int value_)
-			: type(type_)
-			, value(value_)
-		{
-
-		}
-
 		Type type;
-
 		union
 		{
-			unsigned int 				value;
+			unsigned int 					value;
 
-			sf::Keyboard::Key 	keycode;
-			sf::Mouse::Button 	mButton;
-			Mouse::WheelDir 		wheelDir;
-			unsigned int 				jButton;
-			sf::Joystick::Axis 	axis;
+			sf::Keyboard::Key 		keycode;
+			sf::Mouse::Button 		mButton;
+			mysf::Mouse::WheelDir wheelDir;
+			unsigned int 					jButton;
+			sf::Joystick::Axis 		axis;
 		};
 	};
 
@@ -54,6 +46,7 @@ namespace mysf
 
 		const std::vector<Input> * getInput(unsigned int action, const Event & event) const;
 
+		bool load(const std::string & filename, const std::map<std::string, unsigned int> & bind);
 		void setNbAction(unsigned int size);
 		void setBind(unsigned int action, const Input & bind);
 		void setBind(unsigned int action, const std::vector<Input> & bind);
@@ -61,6 +54,9 @@ namespace mysf
 
 		void setJoystickId(unsigned int joystickId);
 		unsigned int getJoystickId() const;
+
+	private:
+		void _initSfbind(std::map<std::string, Input> & sfbind) const;
 
 	protected:
 		std::vector<std::vector<std::vector<Input>>> _bind;
