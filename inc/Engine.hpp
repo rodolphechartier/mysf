@@ -25,7 +25,6 @@ namespace mysf
     void	_draw();
 
   protected:
-    Context _ctx;
     GraphicRender *	_grender;
     Event _event;
   };

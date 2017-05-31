@@ -2,6 +2,8 @@
 
 namespace mysf
 {
+	Context ctx;
+
   Engine::Engine()
     : _grender(0)
   {
@@ -20,12 +22,12 @@ namespace mysf
     int ret = 0;
 
     _draw(); // 1st render
-    while (_ctx.win.isOpen())
+    while (ctx.win.isOpen())
       {
 	       _processEvents();
       	if ((ret = _update(clock.restart())))
       	  {
-      	    _ctx.win.close();
+      	    ctx.win.close();
       	    return ret - 1;
       	  }
       	_draw();
@@ -38,7 +40,7 @@ namespace mysf
 		static sf::Event event;
 
 		_event.loop();
-    while (_ctx.win.pollEvent(event))
+    while (ctx.win.pollEvent(event))
       _event.update(event);
   }
 
@@ -63,9 +65,9 @@ namespace mysf
 
   void Engine::_draw()
   {
-    _ctx.win.clear();
+    ctx.win.clear();
     if (_grender)
       _grender->draw();
-    _ctx.win.display();
+    ctx.win.display();
   }
 }

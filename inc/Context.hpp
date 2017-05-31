@@ -18,6 +18,8 @@ namespace mysf
     SoundHolder		    shl;
     FontHolder		    fhl;
   };
+
+	extern Context ctx;
 }
 
 #endif // !CONTEXT_HPP_

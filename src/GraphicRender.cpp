@@ -2,8 +2,7 @@
 
 namespace mysf
 {
-  GraphicRender::GraphicRender(Context & ctx)
-    : _ctx(ctx)
+  GraphicRender::GraphicRender()
   {
 
   }
@@ -15,12 +14,12 @@ namespace mysf
 
   GraphicRender * GraphicRender::update(const sf::Time & deltaTime, const Event & event)
   {
-    _ctx.gls.update(deltaTime, event);
+    ctx.gls.update(deltaTime, event);
     return this;
   }
 
   void GraphicRender::draw() const
   {
-    _ctx.gls.draw(_ctx.win);
+    ctx.gls.draw(ctx.win);
   }
 }

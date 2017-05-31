@@ -8,7 +8,7 @@ namespace mysf
   class GraphicRender
   {
   public:
-    explicit GraphicRender(Context & ctx);
+    GraphicRender();
     GraphicRender(const GraphicRender &) = delete;
     GraphicRender & operator=(const GraphicRender &) = delete;
     virtual ~GraphicRender();
@@ -17,9 +17,6 @@ namespace mysf
 
     virtual GraphicRender * update(const sf::Time & deltaTime, const Event & event);
     virtual void draw() const;
-
-  protected:
-    Context & _ctx;
   };
 }
 
