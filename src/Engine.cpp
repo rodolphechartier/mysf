@@ -2,8 +2,6 @@
 
 namespace mysf
 {
-	Context ctx;
-
   Engine::Engine()
     : _grender(0)
   {

@@ -6,6 +6,7 @@ CPPFLAGS	+= -I /usr/local/include
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
 SRC				= src/Engine.cpp \
+						src/Context.cpp \
 						src/GraphicLayer.cpp \
 						src/GraphicLayerSet.cpp \
 						src/GraphicRender.cpp \
