@@ -4,6 +4,7 @@ namespace mysf
 {
   Engine::Engine()
     : _grender(0)
+		, _speed(1.f)
   {
 		ctx.win.setKeyRepeatEnabled(false);
   }
@@ -33,6 +34,32 @@ namespace mysf
     return ret;
   }
 
+	void Engine::pause(bool isPaused)
+	{
+		_speed = isPaused ? 0.f : 1.f;
+	}
+
+	void Engine::setSpeed(float speed)
+	{
+		_speed = speed;
+	}
+
+	void Engine::multiplySpeed(float speed)
+	{
+		_speed *= speed;
+	}
+
+	void Engine::divideSpeed(float speed)
+	{
+		_speed /= speed;
+	}
+
+	float Engine::getSpeed() const
+	{
+		return _speed;
+	}
+
+
   void Engine::_processEvents()
   {
 		static sf::Event event;
@@ -49,7 +76,7 @@ namespace mysf
 
     if (!_grender)
       return 2;
-    if ((ret = _grender->update(deltaTime, _event)) != _grender)
+    if ((ret = _grender->update(deltaTime * _speed, _event)) != _grender)
       {
       	delete _grender;
       	if ((_grender = ret) == 0)

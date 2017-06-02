@@ -18,7 +18,7 @@ public:
   explicit Node()
 		: mysf::SpriteNode()
 		, _bind(ActionCount)
-		, _speed(1)
+		, _speed(50.f)
 	{
 		std::map<std::string, unsigned int> bind;
 
@@ -30,11 +30,10 @@ public:
 	}
 
 protected:
-  virtual void updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & event)
+  virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
   {
     sf::Vector2f pos(getPosition());
-		// const float move = deltaTime.asSeconds() * _speed;
-		const unsigned int move = _speed;
+		const float move = deltaTime.asSeconds() * _speed;
 
     if (_bind.getInput(Up, event))
       pos.y -= move;
@@ -49,7 +48,7 @@ protected:
 
 private:
 	mysf::Binding _bind;
-  unsigned int _speed;
+  float _speed;
 };
 
 // Creating a GraphicRender to be run by the engine
@@ -62,7 +61,7 @@ public:
     mysf::ctx.gls.clear();
 
     _def.setTexture(mysf::ctx.thl.getDefault());
-		_def.setColor(sf::Color::Green);
+		// _def.setColor(sf::Color::Green);
 		// _def.setTextureRect(sf::IntRect(0, 0, 100, 100));
     mysf::ctx.gls[0].add(&_def);
     return true;
