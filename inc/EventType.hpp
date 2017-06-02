@@ -1,5 +1,5 @@
-#ifndef EVENT_TYPE_HPP_
-# define EVENT_TYPE_HPP_
+#ifndef MYSF_EVENT_TYPE_HPP_
+# define MYSF_EVENT_TYPE_HPP_
 
 namespace mysf
 {
@@ -12,4 +12,4 @@ namespace mysf
 	};
 }
 
-#endif // !EVENT_TYPE_HPP_
+#endif // !MYSF_EVENT_TYPE_HPP_

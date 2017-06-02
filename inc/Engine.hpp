@@ -1,5 +1,5 @@
-#ifndef ENGINE_HPP_
-# define ENGINE_HPP_
+#ifndef MYSF_ENGINE_HPP_
+# define MYSF_ENGINE_HPP_
 
 # include "GraphicRender.hpp"
 # include "Event.hpp"
@@ -37,4 +37,4 @@ namespace mysf
   };
 }
 
-#endif // !ENGINE_HPP_
+#endif // !MYSF_ENGINE_HPP_

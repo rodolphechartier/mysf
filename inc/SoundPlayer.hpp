@@ -1,5 +1,5 @@
-#ifndef SOUND_PLAYER_HPP_
-# define SOUND_PLAYER_HPP_
+#ifndef MYSF_SOUND_PLAYER_HPP_
+# define MYSF_SOUND_PLAYER_HPP_
 
 # include <list>
 
@@ -31,4 +31,4 @@ namespace mysf
 	};
 }
 
-#endif // !SOUND_PLAYER_HPP_
+#endif // !MYSF_SOUND_PLAYER_HPP_

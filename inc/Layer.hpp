@@ -1,5 +1,5 @@
-#ifndef LAYER_HPP_
-# define LAYER_HPP_
+#ifndef MYSF_LAYER_HPP_
+# define MYSF_LAYER_HPP_
 
 # include <list>
 # include <algorithm>
@@ -41,4 +41,4 @@ namespace mysf
   };
 }
 
-#endif // !LAYER_HPP_
+#endif // !MYSF_LAYER_HPP_

@@ -1,5 +1,5 @@
-#ifndef GRAPHIC_LAYER_HPP_
-# define GRAPHIC_LAYER_HPP_
+#ifndef MYSF_GRAPHIC_LAYER_HPP_
+# define MYSF_GRAPHIC_LAYER_HPP_
 
 # include <list>
 # include <algorithm>
@@ -25,4 +25,4 @@ namespace mysf
   };
 }
 
-#endif // !GRAPHIC_LAYER_HPP_
+#endif // !MYSF_GRAPHIC_LAYER_HPP_

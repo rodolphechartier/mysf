@@ -1,5 +1,5 @@
-#ifndef KEY_HPP_
-# define KEY_HPP_
+#ifndef MYSF_KEY_HPP_
+# define MYSF_KEY_HPP_
 
 # include <vector>
 
@@ -43,4 +43,4 @@ namespace mysf
   };
 }
 
-#endif // !KEY_HPP_
+#endif // !KMYSF_EY_HPP_

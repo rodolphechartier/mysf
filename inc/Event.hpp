@@ -1,5 +1,5 @@
-#ifndef EVENT_HPP_
-# define EVENT_HPP_
+#ifndef MYSF_EVENT_HPP_
+# define MYSF_EVENT_HPP_
 
 # include <SFML/Window.hpp>
 
@@ -40,4 +40,4 @@ namespace mysf
   };
 }
 
-#endif // !EVENT_HPP_
+#endif // !MYSF_EVENT_HPP_

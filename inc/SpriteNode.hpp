@@ -1,5 +1,5 @@
-#ifndef SPRITE_NODE_HPP_
-# define SPRITE_NODE_HPP_
+#ifndef MYSF_SPRITE_NODE_HPP_
+# define MYSF_SPRITE_NODE_HPP_
 
 # include <SFML/Graphics.hpp>
 
@@ -41,4 +41,4 @@ namespace mysf
   };
 }
 
-#endif // !SPRITE_NODE_HPP_
+#endif // !SMYSF_PRITE_NODE_HPP_

@@ -1,5 +1,5 @@
-#ifndef SCENE_NODE_HPP_
-# define SCENE_NODE_HPP_
+#ifndef MYSF_SCENE_NODE_HPP_
+# define MYSF_SCENE_NODE_HPP_
 
 # include <SFML/Graphics.hpp>
 
@@ -36,4 +36,4 @@ namespace mysf
   };
 }
 
-#endif // !SCENE_NODE_HPP_
+#endif // !MYSF_SCENE_NODE_HPP_

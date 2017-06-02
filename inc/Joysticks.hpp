@@ -1,5 +1,5 @@
-#ifndef JOYSTICKS_HPP_
-# define JOYSTICKS_HPP_
+#ifndef MYSF_JOYSTICKS_HPP_
+# define MYSF_JOYSTICKS_HPP_
 
 # include <vector>
 
@@ -76,4 +76,4 @@ namespace mysf
   };
 }
 
-#endif // !JOYSTICKS_HPP_
+#endif // !MYSF_JOYSTICKS_HPP_

@@ -1,5 +1,5 @@
-#ifndef MOUSE_HPP_
-# define MOUSE_HPP_
+#ifndef MYSF_MOUSE_HPP_
+# define MYSF_MOUSE_HPP_
 
 # include <vector>
 
@@ -64,4 +64,4 @@ namespace mysf
   };
 }
 
-#endif // !MOUSE_HPP_
+#endif // !MYSF_MOUSE_HPP_

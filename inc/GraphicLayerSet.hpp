@@ -1,5 +1,5 @@
-#ifndef GRAPHIC_LAYER_SET_HPP_
-# define GRAPHIC_LAYER_SET_HPP_
+#ifndef MYSF_GRAPHIC_LAYER_SET_HPP_
+# define MYSF_GRAPHIC_LAYER_SET_HPP_
 
 # include <vector>
 
@@ -24,4 +24,4 @@ namespace mysf
   };
 }
 
-#endif // !GRAPHIC_LAYER_SET_HPP_
+#endif // !MYSF_GRAPHIC_LAYER_SET_HPP_

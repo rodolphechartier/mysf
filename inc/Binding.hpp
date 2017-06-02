@@ -1,5 +1,5 @@
-#ifndef BINDING_HPP_
-# define BINDING_HPP_
+#ifndef MYSF_BINDING_HPP_
+# define MYSF_BINDING_HPP_
 
 # include <fstream>
 # include <vector>
@@ -69,4 +69,4 @@ namespace mysf
   };
 }
 
-#endif // !BINDING_HPP_
+#endif // !MYSF_BINDING_HPP_

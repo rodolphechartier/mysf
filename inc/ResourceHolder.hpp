@@ -1,5 +1,5 @@
-#ifndef RESOURCE_HOLDER_HPP_
-# define RESOURCE_HOLDER_HPP_
+#ifndef MYSF_RESOURCE_HOLDER_HPP_
+# define MYSF_RESOURCE_HOLDER_HPP_
 
 # include <SFML/Graphics.hpp>
 # include <SFML/Audio.hpp>
@@ -121,4 +121,4 @@ namespace mysf
   typedef ResourceHolder<sf::Font, unsigned int>	FontHolder;
 }
 
-#endif // !RESOURCE_HOLDER_HPP_
+#endif // !MYSF_RESOURCE_HOLDER_HPP_

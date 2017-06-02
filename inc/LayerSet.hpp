@@ -1,5 +1,5 @@
-#ifndef LAYER_SET_HPP_
-# define LAYER_SET_HPP_
+#ifndef MYSF_LAYER_SET_HPP_
+# define MYSF_LAYER_SET_HPP_
 
 # include <vector>
 
@@ -64,4 +64,4 @@ namespace mysf
   };
 }
 
-#endif // !LAYER_SET_HPP_
+#endif // !MYSF_LAYER_SET_HPP_

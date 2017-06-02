@@ -1,5 +1,5 @@
-#ifndef GRAPHIC_RENDER_HPP_
-# define GRAPHIC_RENDER_HPP_
+#ifndef MYSF_GRAPHIC_RENDER_HPP_
+# define MYSF_GRAPHIC_RENDER_HPP_
 
 # include "Context.hpp"
 
@@ -20,4 +20,4 @@ namespace mysf
   };
 }
 
-#endif // !GRAPHIC_RENDER_HPP_
+#endif // !MYSF_GRAPHIC_RENDER_HPP_

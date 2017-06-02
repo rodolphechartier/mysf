@@ -1,5 +1,5 @@
-#ifndef CONTEXT_HPP_
-# define CONTEXT_HPP_
+#ifndef MYSF_CONTEXT_HPP_
+# define MYSF_CONTEXT_HPP_
 
 # include <SFML/Window.hpp>
 
@@ -22,4 +22,4 @@ namespace mysf
 	extern Context ctx;
 }
 
-#endif // !CONTEXT_HPP_
+#endif // !MYSF_CONTEXT_HPP_
