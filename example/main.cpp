@@ -18,7 +18,7 @@ public:
   explicit Node()
 		: mysf::SpriteNode()
 		, _bind(ActionCount)
-		, _speed(50.f)
+		, _speed(1.f)
 	{
 		std::map<std::string, unsigned int> bind;
 
@@ -30,10 +30,11 @@ public:
 	}
 
 protected:
-  virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
+  virtual void updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & event)
   {
     sf::Vector2f pos(getPosition());
-		const float move = deltaTime.asSeconds() * _speed;
+		// const float move = deltaTime.asSeconds() * _speed;
+		const unsigned int move = (unsigned int)_speed;
 
     if (_bind.getInput(Up, event))
       pos.y -= move;
@@ -58,7 +59,6 @@ public:
   virtual bool init()
   {
     mysf::ctx.gls.resize(1);
-    mysf::ctx.gls.clear();
 
     _def.setTexture(mysf::ctx.thl.getDefault());
 		// _def.setColor(sf::Color::Green);
@@ -79,7 +79,8 @@ public:
   {
     _grender = new Render;
 
-		// _event.key().setEventType(mysf::OnPressed);
+		_event.key().setEventType(mysf::OnPressed);
+		// _event.mouse().setEventType(mysf::OnPressed);
     mysf::ctx.win.create(sf::VideoMode(800, 450), "Test");
     if (mysf::ctx.thl.setDefault("../rsc/default.png") == false)
       return false;

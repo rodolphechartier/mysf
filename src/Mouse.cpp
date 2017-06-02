@@ -94,7 +94,7 @@ namespace mysf
 
 	void Mouse::loop()
 	{
-		if (_button != sf::Mouse::ButtonCount)
+		if (_eventType != EventType::Pressed && _button != sf::Mouse::ButtonCount)
 		{
 			_down[_button] = false;
 			_button = sf::Mouse::ButtonCount;

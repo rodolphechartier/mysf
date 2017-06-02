@@ -131,12 +131,13 @@ namespace mysf
 
 	void Joysticks::loop()
 	{
-		for (unsigned int i = 0; i < _buttons.size(); ++i)
-			if (_buttons[i] != -1)
-			{
-				_joysticks[i]._down[_buttons[i]] = false;
-				_buttons[i] = -1;
-			}
+		if (_eventType != EventType::Pressed)
+			for (unsigned int i = 0; i < _buttons.size(); ++i)
+				if (_buttons[i] != -1)
+				{
+					_joysticks[i]._down[_buttons[i]] = false;
+					_buttons[i] = -1;
+				}
 	}
 
   void Joysticks::reset()

@@ -6,7 +6,7 @@ namespace mysf
     : _grender(0)
 		, _speed(1.f)
   {
-		ctx.win.setKeyRepeatEnabled(false);
+
   }
 
   Engine::~Engine()
@@ -20,7 +20,10 @@ namespace mysf
 		sf::Clock clock;
     int ret = 0;
 
-    _draw(); // 1st render
+		// Doesn't work if put in contructor
+		ctx.win.setKeyRepeatEnabled(false);
+
+		_draw(); // 1st render
     while (ctx.win.isOpen())
       {
 	       _processEvents();
@@ -58,7 +61,6 @@ namespace mysf
 	{
 		return _speed;
 	}
-
 
   void Engine::_processEvents()
   {

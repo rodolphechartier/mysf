@@ -46,7 +46,7 @@ namespace mysf
 
 	void Key::loop()
 	{
-		if (_key != sf::Keyboard::Unknown)
+		if (_eventType != EventType::Pressed && _key != sf::Keyboard::Unknown)
 		{
 			_down[_key] = false;
 			_key = sf::Keyboard::Unknown;

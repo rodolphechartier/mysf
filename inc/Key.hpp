@@ -1,7 +1,6 @@
 #ifndef KEY_HPP_
 # define KEY_HPP_
 
-# include <iostream>
 # include <vector>
 
 # include <SFML/Window.hpp>
