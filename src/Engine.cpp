@@ -5,7 +5,7 @@ namespace mysf
   Engine::Engine()
     : _grender(0)
   {
-
+		ctx.win.setKeyRepeatEnabled(false);
   }
 
   Engine::~Engine()

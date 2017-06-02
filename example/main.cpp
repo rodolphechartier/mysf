@@ -56,17 +56,15 @@ private:
 class Render : public mysf::GraphicRender
 {
 public:
-  explicit Render(mysf::Context & ctx) : mysf::GraphicRender(ctx) {}
-
   virtual bool init()
   {
-    _ctx.gls.resize(1);
-    _ctx.gls.clear();
+    mysf::ctx.gls.resize(1);
+    mysf::ctx.gls.clear();
 
-    _def.setTexture(_ctx.thl.getDefault());
+    _def.setTexture(mysf::ctx.thl.getDefault());
 		_def.setColor(sf::Color::Green);
 		// _def.setTextureRect(sf::IntRect(0, 0, 100, 100));
-    _ctx.gls[0].add(&_def);
+    mysf::ctx.gls[0].add(&_def);
     return true;
   }
 
@@ -80,11 +78,11 @@ class Main : public mysf::Engine
 public:
   virtual bool init(int /* ac */, char ** /* av */)
   {
-    _grender = new Render(_ctx);
+    _grender = new Render;
 
 		// _event.key().setEventType(mysf::OnPressed);
-    _ctx.win.create(sf::VideoMode(800, 450), "Test");
-    if (_ctx.thl.setDefault("../rsc/default.png") == false)
+    mysf::ctx.win.create(sf::VideoMode(800, 450), "Test");
+    if (mysf::ctx.thl.setDefault("../rsc/default.png") == false)
       return false;
     return _grender->init();
   }
