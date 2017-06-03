@@ -16,25 +16,41 @@ There's an example directory that contains a project wich you can run to test if
 
 # Documentation
 
-* **Engine and Context**
+### **Engine and Context**
 
-Engine
+The `mysf::Engine` is the main class of the library. It handles the loop game, process events and call update and draw funtions of its `_grender` instance.
+
+`mysf::Engine` was design to be inherited to override its `virtual bool init(int ac, char ** av);` function (ac and av were design to be the main arguments, but we can decide to not use them). Within the function, we can create our window (wich is in the Gloabal Context, we will see that later in the documentation), instanciate your own GraphicRender, set the default sprites and plenty other things.
+If There's no _grender instance in the Engine, nothing will happend. So you have to give the `mysf::GraphicRender * _grender` protected attribut an instance in the init function.
+
+Then in the main function, you just have to instantiate, initialize and run the Engine like so:
+
+```
+int main(int ac, char ** av)
+{
+  mysf::Engine engine;
+
+  if (engine.init(ac, av) == false)
+    return 1;
+  return engine.run();
+}
+```
 
 Context (+ Window)
 ResourceHolder (Texture / Sound / Font)
 
-* **GraphicRender and GraphicLayers**
+### **GraphicRender and GraphicLayers**
 
 GraphicRender
 GraphicLayerSet
 GraphicLayer
 
-* **SceneNode**
+### **SceneNode**
 
 SceneNode
 SpriteNode
 
-* **Event**
+### **Event**
 
 Event
 Key
@@ -42,7 +58,7 @@ Mouse
 Joystick
 Binding (Input / EventType)
 
-* **Sound**
+### **Sound**
 
 SoundPlayer
 

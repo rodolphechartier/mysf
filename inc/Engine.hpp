@@ -16,7 +16,7 @@ namespace mysf
     Engine & operator=(const Engine &) = delete;
     virtual ~Engine();
 
-    virtual bool init(int ac, char ** av) = 0;
+    virtual bool init(int ac, char ** av);
     int run();
 
 		void pause(bool isPaused);

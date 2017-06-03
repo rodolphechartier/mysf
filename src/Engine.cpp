@@ -15,6 +15,13 @@ namespace mysf
       delete _grender;
   }
 
+	bool Engine::init(int /* ac */, char ** /* av */)
+	{
+		_grender = new GraphicRender;
+
+		return _grender->init();
+	}
+
   int Engine::run()
   {
 		sf::Clock clock;

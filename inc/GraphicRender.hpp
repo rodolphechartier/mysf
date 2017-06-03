@@ -13,7 +13,7 @@ namespace mysf
     GraphicRender & operator=(const GraphicRender &) = delete;
     virtual ~GraphicRender();
 
-    virtual bool init() = 0;
+    virtual bool init();
 
     virtual GraphicRender * update(const sf::Time & deltaTime, const Event & event);
     virtual void draw() const;
