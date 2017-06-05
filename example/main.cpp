@@ -79,9 +79,9 @@ public:
   {
     _grender = new Render;
 
+		mysf::ctx.win = new sf::RenderWindow(sf::VideoMode(800, 450), "Test");
 		_event.key().setEventType(mysf::OnPressed);
 		// _event.mouse().setEventType(mysf::OnPressed);
-    mysf::ctx.win.create(sf::VideoMode(800, 450), "Test");
     if (mysf::ctx.thl.setDefault("../rsc/default.png") == false)
       return false;
     return _grender->init();
