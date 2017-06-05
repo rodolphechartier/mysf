@@ -7,6 +7,6 @@
 # include "GraphicRender.hpp"
 # include "Event.hpp"
 # include "Binding.hpp"
-# include "SpriteNode.hpp"
+# include "SceneNode.hpp"
 
 #endif // !MYSF_HPP_

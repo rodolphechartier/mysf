@@ -3,7 +3,7 @@
 #include "../inc/Mysf.hpp"
 
 // Creating node where inputs are handle and sprite is display
-class Node : public mysf::SpriteNode
+class Node : public mysf::SceneNode
 {
 	enum Action
 	{
@@ -16,7 +16,7 @@ class Node : public mysf::SpriteNode
 
 public:
   explicit Node()
-		: mysf::SpriteNode()
+		: mysf::SceneNode()
 		, _bind(ActionCount)
 		, _speed(1.f)
 	{
@@ -27,6 +27,10 @@ public:
 		bind["Down"] = Down;
 		bind["Right"] = Right;
 		_bind.load("key.conf", bind);
+
+    _sprite.setTexture(mysf::ctx.thl.getDefault());
+		// _sprite.setColor(sf::Color::Green);
+		// _sprite.setTextureRect(sf::IntRect(0, 0, 100, 100));
 	}
 
 protected:
@@ -47,7 +51,13 @@ protected:
     setPosition(pos);
   }
 
+	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
+	{
+		target.draw(_sprite, states);
+	}
+
 private:
+	sf::Sprite _sprite;
 	mysf::Binding _bind;
   float _speed;
 };
@@ -56,19 +66,14 @@ private:
 class Render : public mysf::GraphicRender
 {
 public:
-  virtual bool init()
-  {
+	Render()
+	{
     mysf::ctx.gls.resize(1);
-
-    _def.setTexture(mysf::ctx.thl.getDefault());
-		// _def.setColor(sf::Color::Green);
-		// _def.setTextureRect(sf::IntRect(0, 0, 100, 100));
-    mysf::ctx.gls[0].add(&_def);
-    return true;
+    mysf::ctx.gls[0].add(&_node);
   }
 
 private:
-  Node _def;
+  Node _node;
 };
 
 // Creating the engine that will handle your differents GraphicRenders
@@ -77,13 +82,14 @@ class Main : public mysf::Engine
 public:
   virtual bool init(int /* ac */, char ** /* av */)
   {
-    _grender = new Render;
+		if (mysf::ctx.thl.setDefault("../rsc/default.png") == false)
+			return false;
 
 		mysf::ctx.win = new sf::RenderWindow(sf::VideoMode(800, 450), "Test");
-		_event.key().setEventType(mysf::OnPressed);
+		// _event.key().setEventType(mysf::OnPressed);
 		// _event.mouse().setEventType(mysf::OnPressed);
-    if (mysf::ctx.thl.setDefault("../rsc/default.png") == false)
-      return false;
+
+		_grender = new Render;
     return _grender->init();
   }
 };
