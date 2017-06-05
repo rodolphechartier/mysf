@@ -117,7 +117,7 @@ namespace mysf
   };
 
   typedef ResourceHolder<sf::Texture, unsigned int>	TextureHolder;
-  typedef ResourceHolder<sf::SoundBuffer, unsigned int>	SoundHolder;
+  typedef ResourceHolder<sf::SoundBuffer, unsigned int>	SoundBufferHolder;
   typedef ResourceHolder<sf::Font, unsigned int>	FontHolder;
 }
 

@@ -11,12 +11,15 @@ namespace mysf
 
   Engine::~Engine()
   {
+		if (ctx.win)
+			delete ctx.win;
     if (_grender)
       delete _grender;
   }
 
 	bool Engine::init(int /* ac */, char ** /* av */)
 	{
+		ctx.win = new sf::RenderWindow(sf::VideoMode(800, 450), "Mysf");
 		_grender = new GraphicRender;
 
 		return _grender->init();
@@ -28,15 +31,15 @@ namespace mysf
     int ret = 0;
 
 		// Doesn't work if put in contructor
-		ctx.win.setKeyRepeatEnabled(false);
+		ctx.win->setKeyRepeatEnabled(false);
 
 		_draw(); // 1st render
-    while (ctx.win.isOpen())
+    while (ctx.win->isOpen())
       {
 	       _processEvents();
       	if ((ret = _update(clock.restart())))
       	  {
-      	    ctx.win.close();
+      	    ctx.win->close();
       	    return ret - 1;
       	  }
       	_draw();
@@ -74,7 +77,7 @@ namespace mysf
 		static sf::Event event;
 
 		_event.loop();
-    while (ctx.win.pollEvent(event))
+    while (ctx.win->pollEvent(event))
       _event.update(event);
   }
 
@@ -99,9 +102,9 @@ namespace mysf
 
   void Engine::_draw()
   {
-    ctx.win.clear();
+    ctx.win->clear();
     if (_grender)
       _grender->draw();
-    ctx.win.display();
+    ctx.win->display();
   }
 }

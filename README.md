@@ -22,7 +22,7 @@ The `mysf::Engine` is the main class of the library. It handles the loop game, p
 
 `mysf::Engine` was design to be inherited to override its `virtual bool init(int ac, char ** av);` function (ac and av were design to be the main arguments, but we can decide to not use them). Within the function, we can create our window (wich is in the Gloabal Context, we will see that later in the documentation), instanciate your own GraphicRender, set the default sprites and plenty other things.
 
-If There's no _grender instance in the Engine, nothing will happend. So you have to give the `mysf::GraphicRender * _grender` protected attribut an instance in the init function.
+If There's no _grender instance in the Engine, nothing will happend. So you have to give the `mysf::GraphicRender * _grender` protected attribut an instance in the init function and init the GraphicRender instance via its `virtual bool init();` function.
 
 Then in the main function, you just have to instantiate, initialize and run the Engine like so:
 
@@ -37,7 +37,15 @@ int main(int ac, char ** av)
 }
 ```
 
-Context (+ Window)
+The `mysf::Context ctx` is a global structure defined in the Context.hpp file. It contains:
+* `sf::RenderWindow win` - The main window
+* `mysf::GraphicLayerSet gls`
+* `mysf::SoundPlayer spl`
+* `mysf::TextureHolder thl`
+* `mysf::SoundBufferHolder shl`
+* `mysf::FontHolder fhl`
+
+
 ResourceHolder (Texture / Sound / Font)
 
 ### **GraphicRender and GraphicLayers**

@@ -2,6 +2,7 @@
 # define MYSF_LAYER_SET_HPP_
 
 # include <vector>
+# include <iostream>
 
 # include <SFML/Graphics.hpp>
 

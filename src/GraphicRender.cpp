@@ -25,6 +25,6 @@ namespace mysf
 
   void GraphicRender::draw() const
   {
-    ctx.gls.draw(ctx.win);
+    ctx.gls.draw(*(ctx.win));
   }
 }

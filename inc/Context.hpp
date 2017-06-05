@@ -11,12 +11,12 @@ namespace mysf
 {
   struct Context
   {
-    sf::RenderWindow  win;
-    GraphicLayerSet	  gls;
-		SoundPlayer				spl;
-    TextureHolder	    thl;
-    SoundHolder		    shl;
-    FontHolder		    fhl;
+    sf::RenderWindow *	win;
+    GraphicLayerSet 		gls;
+		SoundPlayer					spl;
+    TextureHolder	    	thl;
+    SoundBufferHolder		shl;
+    FontHolder		    	fhl;
   };
 
 	extern Context ctx;
