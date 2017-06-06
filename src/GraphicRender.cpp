@@ -19,12 +19,12 @@ namespace mysf
 
   GraphicRender * GraphicRender::update(const sf::Time & deltaTime, const Event & event)
   {
-    ctx.gls.update(deltaTime, event);
+    _gls.update(deltaTime, event);
     return this;
   }
 
-  void GraphicRender::draw() const
+  void GraphicRender::draw(sf::RenderTarget & target, sf::RenderStates states) const
   {
-    ctx.gls.draw(*(ctx.win));
+		_gls.draw(target, states);
   }
 }

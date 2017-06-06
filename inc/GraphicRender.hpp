@@ -1,7 +1,7 @@
 #ifndef MYSF_GRAPHIC_RENDER_HPP_
 # define MYSF_GRAPHIC_RENDER_HPP_
 
-# include "Context.hpp"
+# include "GraphicLayerSet.hpp"
 
 namespace mysf
 {
@@ -16,7 +16,10 @@ namespace mysf
     virtual bool init();
 
     virtual GraphicRender * update(const sf::Time & deltaTime, const Event & event);
-    virtual void draw() const;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates states = sf::RenderStates()) const;
+
+	protected:
+		GraphicLayerSet 	_gls;
   };
 }
 

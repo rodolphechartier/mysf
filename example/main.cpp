@@ -27,10 +27,11 @@ public:
 		bind["Down"] = Down;
 		bind["Right"] = Right;
 		_bind.load("key.conf", bind);
+	}
 
-    _sprite.setTexture(mysf::ctx.thl.getDefault());
-		// _sprite.setColor(sf::Color::Green);
-		// _sprite.setTextureRect(sf::IntRect(0, 0, 100, 100));
+	void setTexture(const sf::Texture & texture)
+	{
+		_sprite.setTexture(texture);
 	}
 
 protected:
@@ -68,11 +69,20 @@ class Render : public mysf::GraphicRender
 public:
 	Render()
 	{
-    mysf::ctx.gls.resize(1);
-    mysf::ctx.gls[0].add(&_node);
+    _gls.resize(1);
+    _gls[0].add(&_node);
   }
 
+	virtual bool init()
+	{
+		if (_thl.setDefault("../rsc/default.png") == false)
+			return false;
+		_node.setTexture(_thl.getDefault());
+		return true;
+	}
+
 private:
+	mysf::TextureHolder _thl;
   Node _node;
 };
 
@@ -82,14 +92,10 @@ class Main : public mysf::Engine
 public:
   virtual bool init(int /* ac */, char ** /* av */)
   {
-		if (mysf::ctx.thl.setDefault("../rsc/default.png") == false)
-			return false;
-
-		mysf::ctx.win = new sf::RenderWindow(sf::VideoMode(800, 450), "Test");
+		_window = new sf::RenderWindow(sf::VideoMode(800, 450), "Test");
+		_grender = new Render;
 		// _event.key().setEventType(mysf::OnPressed);
 		// _event.mouse().setEventType(mysf::OnPressed);
-
-		_grender = new Render;
     return _grender->init();
   }
 };
