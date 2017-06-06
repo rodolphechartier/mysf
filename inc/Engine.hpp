@@ -32,10 +32,10 @@ namespace mysf
     void	_draw();
 
   protected:
-		sf::RenderWindow * _window;
-    GraphicRender *	_grender;
-    Event _event;
-		float _speed;
+		sf::RenderWindow * 	_window;
+    GraphicRender *			_grender;
+    Event 							_event;
+		float 							_speed;
   };
 }
 

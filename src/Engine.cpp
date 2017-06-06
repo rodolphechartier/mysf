@@ -3,7 +3,8 @@
 namespace mysf
 {
   Engine::Engine()
-    : _grender(0)
+    : _window(0)
+		, _grender(0)
 		, _speed(1.f)
   {
 
