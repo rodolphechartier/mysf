@@ -18,10 +18,11 @@ public:
   explicit Node()
 		: mysf::SceneNode()
 		, _bind(ActionCount)
-		, _speed(1.f)
+		, _speed(100.f)
 	{
 		std::map<std::string, unsigned int> bind;
 
+		// Assign string to value (bind[string] = enumValue)
 		bind["Up"] = Up;
 		bind["Left"] = Left;
 		bind["Down"] = Down;
@@ -35,11 +36,10 @@ public:
 	}
 
 protected:
-  virtual void updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & event)
+  virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
   {
     sf::Vector2f pos(getPosition());
-		// const float move = deltaTime.asSeconds() * _speed;
-		const unsigned int move = (unsigned int)_speed;
+		const float move = deltaTime.asSeconds() * _speed;
 
     if (_bind.getInput(Up, event))
       pos.y -= move;
