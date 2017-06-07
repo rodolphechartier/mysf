@@ -15,19 +15,18 @@ namespace mysf
 		SoundPlayer & operator=(const SoundPlayer &) = delete;
 		virtual ~SoundPlayer();
 
-		void setNbLayer(unsigned int nbLayer);
-		unsigned int getNbLayer() const;
+		static void 				setNbLayer(unsigned int nbLayer);
+		static unsigned int	getNbLayer();
+		static void 				setLayerVolume(float volume, unsigned int layer);
+		static float				getLayerVolume(unsigned int layer);
 
-		void setLayerVolume(float volume, unsigned int layer);
-		float getLayerVolume(unsigned int layer) const;
-
-		void play(const sf::Sound & sound);
-		void play(const sf::Sound & sound, unsigned int layer);
-		void removeStoppedSounds();
+		void 								play(const sf::Sound & sound);
+		void 								play(const sf::Sound & sound, unsigned int layer);
+		void 								removeStoppedSounds();
 
 	private:
-		std::list<sf::Sound> 	_sounds;
-		std::vector<float> 		_volumes;
+		static std::vector<float> 		_volumes;
+		std::list<sf::Sound>				 	_sounds;
 	};
 }
 

@@ -2,6 +2,8 @@
 
 namespace mysf
 {
+	std::vector<float> SoundPlayer::_volumes;
+
 	SoundPlayer::SoundPlayer()
 	{
 
@@ -17,7 +19,7 @@ namespace mysf
 		_volumes.resize(nbLayer);
 	}
 
-	unsigned int SoundPlayer::getNbLayer() const
+	unsigned int SoundPlayer::getNbLayer()
 	{
 		return _volumes.size();
 	}
@@ -27,7 +29,7 @@ namespace mysf
 		_volumes[layer] = volume;
 	}
 
-	float SoundPlayer::getLayerVolume(unsigned int layer) const
+	float SoundPlayer::getLayerVolume(unsigned int layer)
 	{
 		return _volumes[layer];
 	}
