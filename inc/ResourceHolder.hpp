@@ -9,7 +9,7 @@
 
 namespace mysf
 {
-  template <typename Resource, typename Identifier>
+  template <typename Resource, typename Identifier = unsigned int>
   class ResourceHolder
   {
   public:
@@ -104,7 +104,7 @@ namespace mysf
 
     const Resource & operator[](const Identifier id) const
     {
-      typename std::map<Identifier, Resource *>::const_iterator found = _resourceArr.find(id);
+      auto found = _resourceArr.find(id);
 
       if (found == _resourceArr.end())
 	      return _default;
@@ -116,9 +116,9 @@ namespace mysf
     Resource _default;
   };
 
-  typedef ResourceHolder<sf::Texture, unsigned int>	TextureHolder;
-  typedef ResourceHolder<sf::SoundBuffer, unsigned int>	SoundBufferHolder;
-  typedef ResourceHolder<sf::Font, unsigned int>	FontHolder;
+  typedef ResourceHolder<sf::Texture> 		TextureHolder;
+  typedef ResourceHolder<sf::SoundBuffer>	SoundBufferHolder;
+  typedef ResourceHolder<sf::Font> 				FontHolder;
 }
 
 #endif // !MYSF_RESOURCE_HOLDER_HPP_
