@@ -19,6 +19,7 @@ namespace mysf
 
   GraphicRender * GraphicRender::update(const sf::Time & deltaTime, const Event & event)
   {
+		_spl.removeStoppedSounds();
     _gls.update(deltaTime, event);
     return this;
   }

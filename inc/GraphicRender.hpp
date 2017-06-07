@@ -2,6 +2,7 @@
 # define MYSF_GRAPHIC_RENDER_HPP_
 
 # include "GraphicLayerSet.hpp"
+# include "SoundPlayer.hpp"
 
 namespace mysf
 {
@@ -20,6 +21,7 @@ namespace mysf
 
 	protected:
 		GraphicLayerSet 	_gls;
+		SoundPlayer 			_spl;
   };
 }
 
