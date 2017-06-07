@@ -98,7 +98,7 @@ namespace mysf
 
 	sf::FloatRect AnimSprite::getLocalBounds() const
 	{
-		// TODO
+		return _sprites[_index].getLocalBounds();
 	}
 
 	sf::FloatRect AnimSprite::getGlobalBounds() const
@@ -123,9 +123,10 @@ namespace mysf
 
 	void AnimSprite::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	{
+		static sf::Clock clock;
 		static sf::Time timer;
 
-		for (timer += _clock.restart(); timer >= _speed; timer -= _speed)
+		for (timer += clock.restart(); timer >= _speed; timer -= _speed)
 			_index = (_index + 1) % _sprites.size();
 		target.draw(_sprites[_index], states);
 	}
@@ -137,13 +138,19 @@ namespace mysf
 		{
 			sf::IntRect rectangle;
 
-			// no margin
+			// without margin
 			rectangle.width = _textureRect.width / (_size.x ? _size.x : 1);
 			rectangle.height = _textureRect.height / (_size.y ? _size.y : 1);
 			rectangle.left = rectangle.width * (i % (_size.x ? _size.x : 1));
 			rectangle.top = rectangle.height * (i / (_size.y ? _size.y : 1));
 
-			_sprites[i].setTexture(_texture);
+			// margin
+			rectangle.width -= (_margin.x / 2);
+			rectangle.height -= (_margin.y / 2);
+			rectangle.left += (_margin.x / 2);
+			rectangle.top += (_margin.y / 2);
+
+			_sprites[i].setTexture(*_texture);
 			_sprites[i].setTextureRect(rectangle);
 			_sprites[i].setColor(_color);
 		}

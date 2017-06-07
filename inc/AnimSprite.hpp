@@ -1,6 +1,10 @@
 #ifndef MYSF_ANIMSPRITE_HPP_
 # define MYSF_ANIMSPRITE_HPP_
 
+# include <vector>
+
+# include <SFML/Graphics.hpp>
+
 namespace mysf
 {
 	class AnimSprite : public sf::Transformable, public sf::Drawable
@@ -46,7 +50,6 @@ namespace mysf
 		sf::Time								_speed;
 
 		std::vector<sf::Sprite>	_sprites;
-		sf::Clock 							_clock;
 		mutable unsigned int		_index;
 	};
 }
