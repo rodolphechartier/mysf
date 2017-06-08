@@ -1,5 +1,5 @@
-#ifndef MYSF_ANIMSPRITE_HPP_
-# define MYSF_ANIMSPRITE_HPP_
+#ifndef MYSF_ANIMATION_HPP_
+# define MYSF_ANIMATION_HPP_
 
 # include <vector>
 
@@ -7,15 +7,15 @@
 
 namespace mysf
 {
-	class AnimSprite : public sf::Transformable, public sf::Drawable
+	class Animation : public sf::Transformable, public sf::Drawable
 	{
 	public:
-		explicit AnimSprite(unsigned int nb = 1);
-		explicit AnimSprite(const sf::Texture & texture, unsigned int nb = 1);
-		explicit AnimSprite(const sf::Texture & texture, const sf::IntRect & rectangle, unsigned int nb = 1);
-		AnimSprite(const AnimSprite & o) = default;
-		AnimSprite & operator=(const AnimSprite & o) = default;
-		virtual ~AnimSprite() = default;
+		explicit Animation(unsigned int nb = 1);
+		explicit Animation(const sf::Texture & texture, unsigned int nb = 1);
+		explicit Animation(const sf::Texture & texture, const sf::IntRect & rectangle, unsigned int nb = 1);
+		Animation(const Animation & o) = default;
+		Animation & operator=(const Animation & o) = default;
+		virtual ~Animation() = default;
 
 		void setTexture(const sf::Texture & texture, bool resetRect = false);
 		void setTextureRect(const sf::IntRect & rectangle);
@@ -49,4 +49,4 @@ namespace mysf
 	};
 }
 
-#endif // !MYSF_ANIMSPRITE_HPP_
+#endif // !MYSF_ANIMATION_HPP_
