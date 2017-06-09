@@ -29,9 +29,9 @@ namespace mysf
 		const sf::Color & getColor() const;
 		const sf::Time & getSpeed() const;
 
+		void reset();
 		sf::FloatRect getLocalBounds() const;
 		sf::FloatRect getGlobalBounds() const;
-
 
 	private:
 		virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const;
@@ -46,6 +46,7 @@ namespace mysf
 
 		std::vector<sf::Sprite>	_sprites;
 		mutable unsigned int		_index;
+		mutable bool						_isPaused;
 	};
 }
 

@@ -8,5 +8,6 @@
 # include "Event.hpp"
 # include "Binding.hpp"
 # include "SceneNode.hpp"
+# include "Animation.hpp"
 
 #endif // !MYSF_HPP_

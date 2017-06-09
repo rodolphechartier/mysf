@@ -9,6 +9,7 @@ namespace mysf
 		, _speed(sf::seconds(1.f))
 		, _sprites(nb > 0 ? nb : 1)
 		, _index(0)
+		, _isPaused(true)
 	{
 
 	}
@@ -17,6 +18,7 @@ namespace mysf
 		: _speed(sf::seconds(1.f))
 		, _sprites(nb > 0 ? nb : 1)
 		, _index(0)
+		, _isPaused(true)
 	{
 		setTexture(texture);
 	}
@@ -25,6 +27,7 @@ namespace mysf
 		: _speed(sf::seconds(1.f))
 		, _sprites(nb > 0 ? nb : 1)
 		, _index(0)
+		, _isPaused(true)
 	{
 		setTexture(texture);
 		setTextureRect(rectangle);
@@ -91,6 +94,12 @@ namespace mysf
 		return _speed;
 	}
 
+	void Animation::reset()
+	{
+		_index = 0;
+		_isPaused = true;
+	}
+
 	sf::FloatRect Animation::getLocalBounds() const
 	{
 		return _sprites[_index].getLocalBounds();
@@ -105,7 +114,12 @@ namespace mysf
 	{
 		static sf::Time timer;
 
-		while (timer < _clock.getElapsedTime())
+		if (_isPaused)
+		{
+			timer = _clock.getElapsedTime();
+			_isPaused = false;
+		}
+		else while (timer < _clock.getElapsedTime())
 		{
 			_index = (_index + 1) % _sprites.size();
 			timer += _speed;
