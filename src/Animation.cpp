@@ -2,32 +2,33 @@
 
 namespace mysf
 {
-	const sf::Clock Animation::_clock;
-
 	Animation::Animation(unsigned int nb)
 		: _texture(0)
-		, _speed(sf::seconds(1.f))
+		, _speed(sf::seconds(0.2f))
+		, _isPlaying(false)
+		, _isLooped(true)
 		, _sprites(nb > 0 ? nb : 1)
 		, _index(0)
-		, _isPaused(true)
 	{
 
 	}
 
 	Animation::Animation(const sf::Texture & texture, unsigned int nb)
-		: _speed(sf::seconds(1.f))
+		: _speed(sf::seconds(0.2f))
+		, _isPlaying(false)
+		, _isLooped(true)
 		, _sprites(nb > 0 ? nb : 1)
 		, _index(0)
-		, _isPaused(true)
 	{
 		setTexture(texture);
 	}
 
 	Animation::Animation(const sf::Texture & texture, const sf::IntRect & rectangle, unsigned int nb)
-		: _speed(sf::seconds(1.f))
+		: _speed(sf::seconds(0.2f))
+		, _isPlaying(false)
+		, _isLooped(true)
 		, _sprites(nb > 0 ? nb : 1)
 		, _index(0)
-		, _isPaused(true)
 	{
 		setTexture(texture);
 		setTextureRect(rectangle);
@@ -47,14 +48,14 @@ namespace mysf
 		if (_textureRect != rectangle)
 		{
 			_textureRect = rectangle;
-			update();
+			build();
 		}
 	}
 
 	void Animation::setNumber(unsigned int nb)
 	{
 		_sprites.resize(nb > 0 ? nb : 1);
-		update();
+		build();
 	}
 
 	void Animation::setColor(const sf::Color & color)
@@ -67,6 +68,11 @@ namespace mysf
 	void Animation::setSpeed(const sf::Time & speed)
 	{
 		_speed = speed;
+	}
+
+	void Animation::setLooped(bool isLooped)
+	{
+		_isLooped = isLooped;
 	}
 
 	const sf::Texture * Animation::getTexture() const
@@ -94,10 +100,14 @@ namespace mysf
 		return _speed;
 	}
 
-	void Animation::reset()
+	bool Animation::isPlaying() const
 	{
-		_index = 0;
-		_isPaused = true;
+		return _isPlaying;
+	}
+
+	bool Animation::isLooped() const
+	{
+		return _isLooped;
 	}
 
 	sf::FloatRect Animation::getLocalBounds() const
@@ -110,34 +120,54 @@ namespace mysf
 		return getTransform().transformRect(getLocalBounds());
 	}
 
+	void Animation::play()
+	{
+		_isPlaying = true;
+	}
+
+	void Animation::pause()
+	{
+		_isPlaying = false;
+	}
+
+	void Animation::stop()
+	{
+		_isPlaying = false;
+		_timer = sf::Time::Zero;
+		_index = 0;
+	}
+
+	void Animation::update(const sf::Time & deltaTime)
+	{
+		if (!_isPlaying)
+			return;
+		_timer += deltaTime;
+		while (_timer > _speed)
+		{
+			++_index;
+			if (!_isLooped && _index == _sprites.size())
+				stop();
+			else
+				_index %= _sprites.size();
+			_timer -= _speed;
+		}
+	}
+
 	void Animation::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	{
-		static sf::Time timer;
-
-		if (_isPaused)
-		{
-			timer = _clock.getElapsedTime();
-			_isPaused = false;
-		}
-		else while (timer < _clock.getElapsedTime())
-		{
-			_index = (_index + 1) % _sprites.size();
-			timer += _speed;
-		}
 		target.draw(_sprites[_index], states);
 	}
 
-	void Animation::update()
+	void Animation::build()
 	{
-		const unsigned int size = _textureRect.width / _sprites.size();
+		const float size = _textureRect.width / _sprites.size();
+		sf::FloatRect rectangle(_textureRect);
 
+		rectangle.width = size;
 		for (unsigned int i = 0; i < _sprites.size(); ++i)
 		{
-			sf::IntRect rectangle(_textureRect);
-
-			rectangle.left += i * size;
-			rectangle.width = size;
-			_sprites[i].setTextureRect(rectangle);
+			_sprites[i].setTextureRect(sf::IntRect(rectangle));
+			rectangle.left += size;
 		}
 	}
 }

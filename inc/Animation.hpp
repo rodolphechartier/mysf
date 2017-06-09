@@ -22,31 +22,38 @@ namespace mysf
 		void setNumber(unsigned int nb);
 		void setColor(const sf::Color & color);
 		void setSpeed(const sf::Time & speed);
+		void setLooped(bool isLooped = true);
 
 		const sf::Texture * getTexture() const;
 		const sf::IntRect & getTextureRect() const;
 		unsigned int getNumber() const;
 		const sf::Color & getColor() const;
 		const sf::Time & getSpeed() const;
+		bool isPlaying() const;
+		bool isLooped() const;
 
-		void reset();
 		sf::FloatRect getLocalBounds() const;
 		sf::FloatRect getGlobalBounds() const;
 
+		void play();
+		void pause();
+		void stop();
+		void update(const sf::Time & deltaTime);
+		virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const final;
+
 	private:
-		virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+		void build();
 
-		void update();
-
-		static const sf::Clock	_clock;
 		const sf::Texture *			_texture;
 		sf::IntRect							_textureRect;
 		sf::Color								_color;
 		sf::Time								_speed;
+		bool										_isPlaying;
+		bool 										_isLooped;
 
 		std::vector<sf::Sprite>	_sprites;
-		mutable unsigned int		_index;
-		mutable bool						_isPaused;
+		sf::Time								_timer;
+		unsigned int						_index;
 	};
 }
 
