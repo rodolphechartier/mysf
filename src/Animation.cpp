@@ -155,6 +155,7 @@ namespace mysf
 
 	void Animation::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	{
+		states.transform *= getTransform();
 		target.draw(_sprites[_index], states);
 	}
 

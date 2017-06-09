@@ -16,6 +16,7 @@ SRC				= src/Engine.cpp \
 						src/Mouse.cpp \
 						src/SceneNode.cpp \
 						src/Animation.cpp \
+						src/Animator.cpp \
 						src/SoundPlayer.cpp
 
 OBJ				= $(SRC:.cpp=.o)

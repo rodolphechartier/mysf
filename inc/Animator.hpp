@@ -5,23 +5,29 @@
 
 # include <SFML/Graphics.hpp>
 
+# include "Animation.hpp"
+
 namespace mysf
 {
 	class Animator : public sf::Drawable
 	{
 	public:
 		explicit Animator(unsigned int nb = 1);
-		Animator(const & Animator o) = default;
-		Animator & operator=(const & Animator o) = default;
+		Animator(const Animator & o) = default;
+		Animator & operator=(const Animator & o) = default;
 		virtual ~Animator() = default;
 
 		Animation & operator[](unsigned int state);
 		const Animation & operator[](unsigned int state) const;
+		Animation & current();
+		const Animation & current() const;
 
-		void setState(unsigned int state);
+		bool setState(unsigned int state);
 		unsigned int getState() const;
+		bool setDefaultState(unsigned int state);
+		unsigned int getDefaultState() const;
 
-		void resize();
+		void resize(unsigned int size);
 		void add(Animation & animation);
 		void clear();
 		unsigned int size() const;
@@ -32,6 +38,7 @@ namespace mysf
 	private:
 		std::vector<Animation>	_animations;
 		unsigned int						_state;
+		unsigned int 						_default;
 	};
 }
 
