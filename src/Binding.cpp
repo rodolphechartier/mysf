@@ -2,195 +2,202 @@
 
 namespace mysf
 {
-	Binding::Binding(unsigned int nbAction, unsigned int joystickId)
-		: _bind(nbAction)
-		, _joystickId(joystickId)
-	{
+  Binding::Binding(unsigned int nbAction, unsigned int joystickId)
+    : _bind(nbAction)
+    , _joystickId(joystickId)
+  {
 
-	}
+  }
 
-	Binding::Binding(const Binding & o)
-		: _bind(o._bind)
-		, _joystickId(o._joystickId)
-	{
+  Binding::Binding(const Binding & o)
+    : _bind(o._bind)
+    , _joystickId(o._joystickId)
+  {
 
-	}
+  }
 
-	Binding & Binding::operator=(const Binding & o)
-	{
-		if (this == &o)
-			return *this;
-		_bind = o._bind;
-		_joystickId = o._joystickId;
-		return *this;
-	}
+  Binding & Binding::operator=(const Binding & o)
+  {
+    if (this == &o)
+      return *this;
+    _bind = o._bind;
+    _joystickId = o._joystickId;
+    return *this;
+  }
 
-	Binding::~Binding()
-	{
+  Binding::~Binding()
+  {
 
-	}
+  }
 
-	const std::vector<Input> * Binding::getInput(unsigned int action, const Event & event) const
-	{
-		bool stop;
+  const std::vector<Input> * Binding::getInput(unsigned int action, const Event & event) const
+  {
+    bool stop;
 
-		for (unsigned int i = 0; i < _bind[action].size(); ++i)
-		{
-			stop = false;
-			for (unsigned int j = 0; j < _bind[action][i].size() && !stop; ++j)
-			{
-				const Input & input = _bind[action][i][j];
+    for (unsigned int i = 0; i < _bind[action].size(); ++i)
+      {
+	stop = false;
+	for (unsigned int j = 0; j < _bind[action][i].size() && !stop; ++j)
+	  {
+	    const Input & input = _bind[action][i][j];
 
-				switch (input.type)
-				{
-					case Input::KeyboardKey:
-						stop = (event.key().isDown(input.keycode) == false);
-						break;
-					case Input::MouseButton:
-						stop = (event.mouse().isDown(input.mButton) == false);
-						break;
-					case Input::MouseWheel:
-						stop = (event.mouse().isScrolled(input.wheelDir) == false);
-						break;
-					case Input::JoystickButton:
-						stop = (event.joysticks().isConnected(_joystickId) == false || event.joysticks()[_joystickId].isDown(input.jButton) == false);
-						break;
-					case Input::JoystickAxis:
-						stop = (event.joysticks().isConnected(_joystickId) == false || event.joysticks()[_joystickId].getAxis(input.axis) == 0.f);
-						break;
-					default:
-						return 0;
-				}
-			}
-			if (!stop)
-				return &_bind[action][i];
-		}
+	    switch (input.type)
+	      {
+	      case Input::KeyboardKey:
+		stop = (event.key().isDown(input.keycode) == false);
+		break;
+	      case Input::MouseButton:
+		stop = (event.mouse().isDown(input.mButton) == false);
+		break;
+	      case Input::MouseWheel:
+		stop = (event.mouse().isScrolled(input.wheelDir) == false);
+		break;
+	      case Input::JoystickButton:
+		stop = (event.joysticks().isConnected(_joystickId) == false || event.joysticks()[_joystickId].isDown(input.jButton) == false);
+		break;
+	      case Input::JoystickAxis:
+		stop = (event.joysticks().isConnected(_joystickId) == false || event.joysticks()[_joystickId].getAxis(input.axis) == 0.f);
+		break;
+	      default:
 		return 0;
-	}
+	      }
+	  }
+	if (!stop)
+	  return &_bind[action][i];
+      }
+    return 0;
+  }
 
-	bool Binding::load(const std::string & filename, const std::map<std::string, unsigned int> & bind)
-	{
-		std::map<std::string, Input> sfbind;
-		std::ifstream file;
-		std::string line;
+  bool Binding::load(const std::string & filename, const std::map<std::string, unsigned int> & bind)
+  {
+    std::map<std::string, Input> sfbind;
+    std::ifstream file;
+    std::string line;
 
-		file.open(filename.c_str());
-		if (file.is_open() == false)
-			return false;
-		_initSfbind(sfbind);
+    file.open(filename.c_str());
+    if (file.is_open() == false)
+      return false;
+    _initSfbind(sfbind);
 
-		while (std::getline(file, line))
-		{
-			line = line.substr(0, line.find_first_of("#"));
-			_eraseSpace(line);
-			if (line.size())
-			{
-				std::size_t pos;
-				unsigned int action;
+    for (unsigned int nbline = 1; std::getline(file, line); ++nbline)
+      {
+	line = line.substr(0, line.find_first_of("#"));
+	_eraseSpace(line);
+	if (line.size())
+	  {
+	    std::size_t pos;
+	    unsigned int action;
 
-				pos = line.find_first_of("=");
-				if (pos != std::string::npos)
-				{
-			    action = bind.at(line.substr(0, pos));
-			    line = line.substr(pos + 1);
-					setBind(action, _parseActionOr(line, sfbind));
-				}
-			}
-		}
+	    try
+	      {
+		pos = line.find_first_of("=");
+		if (pos != std::string::npos)
+		  {
+		    action = bind.at(line.substr(0, pos));
+		    line = line.substr(pos + 1);
+		    setBind(action, _parseActionOr(line, sfbind));
+		  }
+	      }
+	    catch (const std::out_of_range & e)
+	      {
+		std::cerr << filename << ": binding error l." << nbline << std::endl;
+	      }
+	  }
+      }
 
-		file.close();
-		return true;
-	}
+    file.close();
+    return true;
+  }
 
-	void Binding::setNbAction(unsigned int size)
-	{
-		_bind.resize(size);
-	}
+  void Binding::setNbAction(unsigned int size)
+  {
+    _bind.resize(size);
+  }
 
-	void Binding::setBind(unsigned int action, const Input & bind)
-	{
-		if (action >= _bind.size())
-			_bind.resize(action + 1);
-		_bind[action].resize(1);
-		_bind[action][0].resize(1, bind);
-	}
+  void Binding::setBind(unsigned int action, const Input & bind)
+  {
+    if (action >= _bind.size())
+      _bind.resize(action + 1);
+    _bind[action].resize(1);
+    _bind[action][0].resize(1, bind);
+  }
 
-	void Binding::setBind(unsigned int action, const std::vector<Input> & bind)
-	{
-		if (action >= _bind.size())
-			_bind.resize(action + 1);
-		_bind[action].resize(1);
-		_bind[action][0] = bind;
-	}
+  void Binding::setBind(unsigned int action, const std::vector<Input> & bind)
+  {
+    if (action >= _bind.size())
+      _bind.resize(action + 1);
+    _bind[action].resize(1);
+    _bind[action][0] = bind;
+  }
 
-	void Binding::setBind(unsigned int action, const std::vector<std::vector<Input>> & bind)
-	{
-		if (action >= _bind.size())
-			_bind.resize(action + 1);
-		_bind[action] = bind;
-	}
+  void Binding::setBind(unsigned int action, const std::vector<std::vector<Input>> & bind)
+  {
+    if (action >= _bind.size())
+      _bind.resize(action + 1);
+    _bind[action] = bind;
+  }
 
-	void Binding::setJoystickId(unsigned int joystickId)
-	{
-		_joystickId = joystickId;
-	}
+  void Binding::setJoystickId(unsigned int joystickId)
+  {
+    _joystickId = joystickId;
+  }
 
-	unsigned int Binding::getJoystickId() const
-	{
-		return _joystickId;
-	}
+  unsigned int Binding::getJoystickId() const
+  {
+    return _joystickId;
+  }
 
-	std::vector<std::vector<Input>> Binding::_parseActionOr(std::string line, const std::map<std::string, Input> & sfbind) const
-	{
-		std::vector<std::vector<Input>> key;
+  std::vector<std::vector<Input>> Binding::_parseActionOr(std::string line, const std::map<std::string, Input> & sfbind) const
+  {
+    std::vector<std::vector<Input>> key;
 
-		while (line.size())
-		{
-			std::size_t pos;
+    while (line.size())
+      {
+	std::size_t pos;
 
-			pos = line.find('|');
-			key.push_back(_parseActionAnd(line.substr(0, pos), sfbind));
-			if (pos == std::string::npos)
-				return key;
-			line = line.substr(pos + 1);
-		}
-		return key;
-	}
+	pos = line.find('|');
+	key.push_back(_parseActionAnd(line.substr(0, pos), sfbind));
+	if (pos == std::string::npos)
+	  return key;
+	line = line.substr(pos + 1);
+      }
+    return key;
+  }
 
-	std::vector<Input> Binding::_parseActionAnd(std::string line, const std::map<std::string, Input> & sfbind) const
-	{
-		std::vector<Input> key;
+  std::vector<Input> Binding::_parseActionAnd(std::string line, const std::map<std::string, Input> & sfbind) const
+  {
+    std::vector<Input> key;
 
-		while (line.size())
-		{
-			std::size_t pos;
+    while (line.size())
+      {
+	std::size_t pos;
 
-			pos = line.find('+');
-			key.push_back(sfbind.at(line.substr(0, pos)));
-			if (pos == std::string::npos)
-				return key;
-			line = line.substr(pos + 1);
-		}
-		return key;
-	}
+	pos = line.find('+');
+	key.push_back(sfbind.at(line.substr(0, pos)));
+	if (pos == std::string::npos)
+	  return key;
+	line = line.substr(pos + 1);
+      }
+    return key;
+  }
 
   void Binding::_eraseSpace(std::string & str) const
   {
     std::size_t pos, size;
 
     while ((pos = str.find_first_of(" \n\t")) != std::string::npos)
-    {
-			size = str.find_first_not_of(" \n\t", pos);
-			if (size != std::string::npos)
-			  size -= pos;
-			str.erase(pos, size);
-    }
+      {
+	size = str.find_first_not_of(" \n\t", pos);
+	if (size != std::string::npos)
+	  size -= pos;
+	str.erase(pos, size);
+      }
   }
 
-	void Binding::_initSfbind(std::map<std::string, Input> & sfbind) const
-	{
-		// KeyboardKey
-		sfbind["A"] = {Input::KeyboardKey, {sf::Keyboard::A}};
+  void Binding::_initSfbind(std::map<std::string, Input> & sfbind) const
+  {
+    // KeyboardKey
+    sfbind["A"] = {Input::KeyboardKey, {sf::Keyboard::A}};
     sfbind["B"] = {Input::KeyboardKey, {sf::Keyboard::B}};
     sfbind["C"] = {Input::KeyboardKey, {sf::Keyboard::C}};
     sfbind["D"] = {Input::KeyboardKey, {sf::Keyboard::D}};
@@ -292,29 +299,29 @@ namespace mysf
     sfbind["F15"] = {Input::KeyboardKey, {sf::Keyboard::F15}};
     sfbind["Pause"] = {Input::KeyboardKey, {sf::Keyboard::Pause}};
 
-		// MouseButton
-		sfbind["MouseLeft"] = {Input::MouseButton, {sf::Mouse::Left}};
-		sfbind["MouseRight"] = {Input::MouseButton, {sf::Mouse::Right}};
-		sfbind["MouseMiddle"] = {Input::MouseButton, {sf::Mouse::Middle}};
-		sfbind["MouseXButton1"] = {Input::MouseButton, {sf::Mouse::XButton1}};
-		sfbind["MouseXButton2"] = {Input::MouseButton, {sf::Mouse::XButton2}};
+    // MouseButton
+    sfbind["MouseLeft"] = {Input::MouseButton, {sf::Mouse::Left}};
+    sfbind["MouseRight"] = {Input::MouseButton, {sf::Mouse::Right}};
+    sfbind["MouseMiddle"] = {Input::MouseButton, {sf::Mouse::Middle}};
+    sfbind["MouseXButton1"] = {Input::MouseButton, {sf::Mouse::XButton1}};
+    sfbind["MouseXButton2"] = {Input::MouseButton, {sf::Mouse::XButton2}};
 
-		// MouseWheel
-		sfbind["MouseVertical"] = {Input::MouseButton, {sf::Mouse::VerticalWheel}};
-		sfbind["MouseHorizontal"] = {Input::MouseButton, {sf::Mouse::HorizontalWheel}};
+    // MouseWheel
+    sfbind["MouseVertical"] = {Input::MouseButton, {sf::Mouse::VerticalWheel}};
+    sfbind["MouseHorizontal"] = {Input::MouseButton, {sf::Mouse::HorizontalWheel}};
 
-		// JoystickButton
-		for (unsigned int i = 0; i < sf::Joystick::ButtonCount; ++i)
-			sfbind[std::string("Joystick") + std::to_string(i)] = {Input::JoystickButton, {i}};
+    // JoystickButton
+    for (unsigned int i = 0; i < sf::Joystick::ButtonCount; ++i)
+      sfbind[std::string("Joystick") + std::to_string(i)] = {Input::JoystickButton, {i}};
 
-		// JoystickAxis
-		sfbind["JoystickX"] = {Input::JoystickAxis, {sf::Joystick::X}};
-		sfbind["JoystickY"] = {Input::JoystickAxis, {sf::Joystick::Y}};
-		sfbind["JoystickZ"] = {Input::JoystickAxis, {sf::Joystick::Z}};
-		sfbind["JoystickR"] = {Input::JoystickAxis, {sf::Joystick::R}};
-		sfbind["JoystickU"] = {Input::JoystickAxis, {sf::Joystick::U}};
-		sfbind["JoystickV"] = {Input::JoystickAxis, {sf::Joystick::V}};
-		sfbind["JoystickPovX"] = {Input::JoystickAxis, {sf::Joystick::PovX}};
-		sfbind["JoystickPovY"] = {Input::JoystickAxis, {sf::Joystick::PovY}};
-	}
+    // JoystickAxis
+    sfbind["JoystickX"] = {Input::JoystickAxis, {sf::Joystick::X}};
+    sfbind["JoystickY"] = {Input::JoystickAxis, {sf::Joystick::Y}};
+    sfbind["JoystickZ"] = {Input::JoystickAxis, {sf::Joystick::Z}};
+    sfbind["JoystickR"] = {Input::JoystickAxis, {sf::Joystick::R}};
+    sfbind["JoystickU"] = {Input::JoystickAxis, {sf::Joystick::U}};
+    sfbind["JoystickV"] = {Input::JoystickAxis, {sf::Joystick::V}};
+    sfbind["JoystickPovX"] = {Input::JoystickAxis, {sf::Joystick::PovX}};
+    sfbind["JoystickPovY"] = {Input::JoystickAxis, {sf::Joystick::PovY}};
+  }
 }

@@ -17,7 +17,7 @@ namespace mysf
     SceneNode & operator=(const SceneNode & o) = delete;
     virtual ~SceneNode();
 
-    void		      addChild(SceneNode * child);
+    void		addChild(SceneNode * child);
     SceneNode *		subChild(const SceneNode & node);
 
     sf::Transform	getWorldTransform() const;

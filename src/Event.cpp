@@ -54,16 +54,16 @@ namespace mysf
       	_focus = true;
       	break;
       default:
-	      break;
+	break;
       }
   }
 
-	void Event::loop()
-	{
-		_key.loop();
-		_mouse.loop();
-		_joysticks.loop();
-	}
+  void Event::loop()
+  {
+    _key.loop();
+    _mouse.loop();
+    _joysticks.loop();
+  }
 
   void Event::reset()
   {
@@ -77,12 +77,12 @@ namespace mysf
     return _key;
   }
 
-	const Key & Event::key() const
+  const Key & Event::key() const
   {
     return _key;
   }
 
-	Mouse & Event::mouse()
+  Mouse & Event::mouse()
   {
     return _mouse;
   }
@@ -92,7 +92,7 @@ namespace mysf
     return _mouse;
   }
 
-	Joysticks & Event::joysticks()
+  Joysticks & Event::joysticks()
   {
     return _joysticks;
   }

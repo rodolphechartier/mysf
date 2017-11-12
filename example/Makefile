@@ -6,7 +6,7 @@ CPPFLAGS	+= -I /usr/local/include
 NAME			= a.out
 
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
-LIBMYSF		= -L ../ -lmysf
+LIBMYSF		= ./libmysf.so
 
 LIB				= $(LIBSFML) $(LIBMYSF)
 

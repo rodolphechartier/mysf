@@ -12,20 +12,20 @@ namespace mysf
 
   }
 
-	bool GraphicRender::init()
-	{
-		return true;
-	}
+  bool GraphicRender::init()
+  {
+    return true;
+  }
 
   GraphicRender * GraphicRender::update(const sf::Time & deltaTime, const Event & event)
   {
-		_spl.removeStoppedSounds();
+    _spl.removeStoppedSounds();
     _gls.update(deltaTime, event);
     return this;
   }
 
   void GraphicRender::draw(sf::RenderTarget & target, sf::RenderStates states) const
   {
-		_gls.draw(target, states);
+    _gls.draw(target, states);
   }
 }

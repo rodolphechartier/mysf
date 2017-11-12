@@ -19,9 +19,9 @@ namespace mysf
     virtual GraphicRender * update(const sf::Time & deltaTime, const Event & event);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates states = sf::RenderStates()) const;
 
-	protected:
-		GraphicLayerSet 	_gls;
-		SoundPlayer 			_spl;
+  protected:
+    GraphicLayerSet 	_gls;
+    SoundPlayer		_spl;
   };
 }
 

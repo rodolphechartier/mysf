@@ -2,64 +2,61 @@
 
 #include "../inc/Mysf.hpp"
 
+namespace Action
+{
+  enum
+    {
+      Up,
+      Left,
+      Down,
+      Right,
+      Quit,
+      ActionCount
+    };
+}
+
 // Creating node where inputs are handle and sprite is display
 class Node : public mysf::SceneNode
 {
-	enum Action
-	{
-		Up,
-		Left,
-		Down,
-		Right,
-		ActionCount
-	};
-
 public:
-  explicit Node()
-		: mysf::SceneNode()
-		, _bind(ActionCount)
-		, _speed(100.f)
-	{
-		std::map<std::string, unsigned int> bind;
+  explicit Node(mysf::Binding & bind)
+    : mysf::SceneNode()
+    , _bind(bind)
+    , _speed(100.f)
+  {
 
-		// Assign string to value (bind[string] = enumValue)
-		bind["Up"] = Up;
-		bind["Left"] = Left;
-		bind["Down"] = Down;
-		bind["Right"] = Right;
-		_bind.load("key.conf", bind);
-	}
+  }
 
-	void setTexture(const sf::Texture & texture)
-	{
-		_sprite.setTexture(texture);
-	}
+  void setTexture(const sf::Texture & texture)
+  {
+    _sprite.setTexture(texture);
+  }
 
 protected:
   virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
   {
     sf::Vector2f pos(getPosition());
-		const float move = deltaTime.asSeconds() * _speed;
+    const float move = deltaTime.asSeconds() * _speed;
 
-    if (_bind.getInput(Up, event))
+    if (_bind.getInput(Action::Up, event))
       pos.y -= move;
-    if (_bind.getInput(Left, event))
+    if (_bind.getInput(Action::Left, event))
       pos.x -= move;
-    if (_bind.getInput(Down, event))
+    if (_bind.getInput(Action::Down, event))
       pos.y += move;
-    if (_bind.getInput(Right, event))
+    if (_bind.getInput(Action::Right, event))
       pos.x += move;
     setPosition(pos);
   }
 
-	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
-	{
-		target.draw(_sprite, states);
-	}
+  virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
+  {
+    target.draw(_sprite, states);
+  }
 
 private:
-	sf::Sprite _sprite;
-	mysf::Binding _bind;
+  sf::Sprite _sprite;
+  mysf::Binding & _bind;
   float _speed;
 };
 
@@ -67,22 +64,46 @@ private:
 class Render : public mysf::GraphicRender
 {
 public:
-	Render()
-	{
+  Render(sf::RenderWindow & window)
+    : _window(window)
+    , _bind(Action::ActionCount)
+    , _node(_bind)
+  {
+    std::map<std::string, unsigned int> bind;
+
     _gls.resize(1);
     _gls[0].add(&_node);
+
+    // Assign string to value (bind[string] = enumValue)
+    bind["Up"] = Action::Up;
+    bind["Left"] = Action::Left;
+    bind["Down"] = Action::Down;
+    bind["Right"] = Action::Right;
+    bind["Quit"] = Action::Quit;
+    _bind.load("key.conf", bind);
   }
 
-	virtual bool init()
-	{
-		if (_thl.setDefault("../rsc/default.png") == false)
-			return false;
-		_node.setTexture(_thl.getDefault());
-		return true;
-	}
+  virtual bool init()
+  {
+    if (_thl.setDefault("../rsc/default.png") == false)
+      return false;
+    _node.setTexture(_thl.getDefault());
+    return true;
+  }
+
+  virtual GraphicRender * update(const sf::Time & deltaTime, const mysf::Event & event)
+  {
+    _spl.removeStoppedSounds();
+    _gls.update(deltaTime, event);
+    if (_bind.getInput(Action::Quit, event) || event.isClosed())
+      return 0;
+    return this;
+  }
 
 private:
-	mysf::TextureHolder _thl;
+  sf::RenderWindow & _window;
+  mysf::TextureHolder _thl;
+  mysf::Binding _bind;
   Node _node;
 };
 
@@ -92,10 +113,10 @@ class Main : public mysf::Engine
 public:
   virtual bool init(int /* ac */, char ** /* av */)
   {
-		_window = new sf::RenderWindow(sf::VideoMode(800, 450), "Test");
-		_grender = new Render;
-		// _event.key().setEventType(mysf::OnPressed);
-		// _event.mouse().setEventType(mysf::OnPressed);
+    _window = new sf::RenderWindow(sf::VideoMode(800, 450), "Test");
+    _grender = new Render(*_window);
+    // _event.key().setEventType(mysf::OnPressed);
+    // _event.mouse().setEventType(mysf::OnPressed);
     return _grender->init();
   }
 };
