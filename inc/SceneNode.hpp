@@ -24,7 +24,7 @@ namespace mysf
     sf::Vector2f getWorldPosition() const;
 
     virtual void update(const sf::Time & deltaTime, const Event & event) final;
-    virtual void raw(sf::RenderTarget & target, sf::RenderStates states) const final;
+    virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const final;
 
   protected:
     virtual void updateCurrent(const sf::Time & deltaTime, const Event & event) = 0;
