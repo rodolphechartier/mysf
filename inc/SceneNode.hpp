@@ -17,18 +17,18 @@ namespace mysf
     SceneNode & operator=(const SceneNode & o) = delete;
     virtual ~SceneNode();
 
-    void		addChild(SceneNode * child);
-    SceneNode *		subChild(const SceneNode & node);
+    void addChild(SceneNode * child);
+    SceneNode * subChild(const SceneNode & node);
 
-    sf::Transform	getWorldTransform() const;
-    sf::Vector2f	getWorldPosition() const;
+    sf::Transform getWorldTransform() const;
+    sf::Vector2f getWorldPosition() const;
 
-    virtual void	update(const sf::Time & deltaTime, const Event & event) final;
-    virtual void	draw(sf::RenderTarget & target, sf::RenderStates states) const final;
+    virtual void update(const sf::Time & deltaTime, const Event & event) final;
+    virtual void raw(sf::RenderTarget & target, sf::RenderStates states) const final;
 
   protected:
-    virtual void	updateCurrent(const sf::Time & deltaTime, const Event & event) = 0;
-    virtual void	drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const = 0;
+    virtual void updateCurrent(const sf::Time & deltaTime, const Event & event) = 0;
+    virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 
   protected:
     std::list<SceneNode *> _child;
