@@ -13,8 +13,8 @@ namespace mysf
   {
   public:
     SceneNode();
-    SceneNode(const SceneNode & o) = delete;
-    SceneNode & operator=(const SceneNode & o) = delete;
+    SceneNode(const SceneNode & o) = default;
+    SceneNode & operator=(const SceneNode & o) = default;
     virtual ~SceneNode();
 
     void addChild(SceneNode * child);

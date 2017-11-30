@@ -29,7 +29,7 @@ namespace mysf
 	delete _grender;
     }
 
-    virtual bool init(int ac, char ** av)
+    virtual bool init(int /* ac */, char ** /* av */)
     {
       _grender = new GraphicRender;
 
@@ -45,7 +45,7 @@ namespace mysf
       _window.setKeyRepeatEnabled(false);
 
       _draw(); // 1st render
-      while (_window->isOpen())
+      while (_window.isOpen())
 	{
 	  _processEvents();
 	  if ((ret = _update(clock.restart())))
@@ -116,10 +116,9 @@ namespace mysf
     {
       _window.clear();
       if (_grender)
-	_grender.draw(_window);
+	_grender->draw(_window);
       _window.display();
     }
-
 
   protected:
     Window _window;

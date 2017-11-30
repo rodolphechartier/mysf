@@ -30,7 +30,7 @@ namespace mysf
     ResourceHolder & operator=(const ResourceHolder & o)
     {
       if (&o == this)
-	     return *this;
+	return *this;
       _resourceArr = o._resourceArr;
       _default = o._default;
       return *this;
@@ -39,7 +39,7 @@ namespace mysf
     virtual ~ResourceHolder()
     {
       for (auto it = _resourceArr.begin(); it != _resourceArr.end(); ++it)
-	      delete it->second;
+	delete it->second;
     }
 
     bool load(const Identifier id, const std::string & filename)
@@ -47,9 +47,9 @@ namespace mysf
       Resource * resource = new Resource();
 
       if (resource->loadFromFile(filename) == false)
-	     return false;
+	return false;
       if (_resourceArr[id])
-	     delete _resourceArr[id];
+	delete _resourceArr[id];
       _resourceArr[id] = resource;
       return true;
     }
@@ -62,9 +62,16 @@ namespace mysf
       if (resource->loadFromFile(filename, secondParam) == false)
         return false;
       if (_resourceArr[id])
-	      delete _resourceArr[id];
+	delete _resourceArr[id];
       _resourceArr[id] = resource;
       return true;
+    }
+
+    void unload()
+    {
+      for (auto it = _resourceArr.begin(); it != _resourceArr.end(); ++it)
+        delete it->second;
+      _resourceArr.clear();
     }
 
     void unload(const Identifier id)
@@ -98,7 +105,7 @@ namespace mysf
       auto found = _resourceArr.find(id);
 
       if (found == _resourceArr.end())
-	     return _default;
+	return _default;
       return *(found->second);
     }
 
@@ -107,7 +114,7 @@ namespace mysf
       auto found = _resourceArr.find(id);
 
       if (found == _resourceArr.end())
-	      return _default;
+	return _default;
       return *(found->second);
     }
 
@@ -116,9 +123,9 @@ namespace mysf
     Resource _default;
   };
 
-  typedef ResourceHolder<sf::Texture> 		TextureHolder;
-  typedef ResourceHolder<sf::SoundBuffer>	SoundBufferHolder;
-  typedef ResourceHolder<sf::Font> 				FontHolder;
+  typedef ResourceHolder<sf::Texture> TextureHolder;
+  typedef ResourceHolder<sf::SoundBuffer> SoundBufferHolder;
+  typedef ResourceHolder<sf::Font> FontHolder;
 }
 
 #endif // !MYSF_RESOURCE_HOLDER_HPP_
