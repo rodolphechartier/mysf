@@ -33,6 +33,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) ./libmysf.so ./libmysf.a
 
 re: fclean all
 
