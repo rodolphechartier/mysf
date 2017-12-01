@@ -5,7 +5,7 @@ namespace mysf
   AnimNode::AnimNode(const sf::Time & frameTime, bool paused, bool looped)
     : _texture(0)
     , _vertices(0)
-    , _color(sf::Color())
+    , _color(sf::Color::White)
     , _frameTime(frameTime)
     , _currTime(sf::Time::Zero)
     , _currFrame(0)
@@ -18,7 +18,7 @@ namespace mysf
   AnimNode::AnimNode(const sf::Texture & texture, const sf::Time & frameTime, bool paused, bool looped)
     : _texture(&texture)
     , _vertices(0)
-    , _color(sf::Color())
+    , _color(sf::Color::White)
     , _frameTime(frameTime)
     , _currTime(sf::Time::Zero)
     , _currFrame(0)
@@ -43,37 +43,34 @@ namespace mysf
     return _texture;
   }
 
-  bool AnimNode::addFrame(const sf::IntRect & rect)
+  void AnimNode::addFrame(const sf::IntRect & rect)
   {
-    static VertexRect vr;
+    static sf::VertexArray varr(sf::Quads, 4);
 
-    if (!_texture)
-      return false;
-    vr.v[0].position = sf::Vector2f(0.f, 0.f);
-    vr.v[1].position = sf::Vector2f(0.f, static_cast<float>(rect.height));
-    vr.v[2].position = sf::Vector2f(static_cast<float>(rect.width), static_cast<float>(rect.height));
-    vr.v[3].position = sf::Vector2f(static_cast<float>(rect.width), 0.f);
+    varr[0].position = sf::Vector2f(0.f, 0.f);
+    varr[1].position = sf::Vector2f(0.f, static_cast<float>(rect.height));
+    varr[2].position = sf::Vector2f(static_cast<float>(rect.width), static_cast<float>(rect.height));
+    varr[3].position = sf::Vector2f(static_cast<float>(rect.width), 0.f);
 
     float left = static_cast<float>(rect.left) + 0.0001f;
     float right = left + static_cast<float>(rect.width);
     float top = static_cast<float>(rect.top);
     float bottom = top + static_cast<float>(rect.height);
 
-    vr.v[0].texCoords = sf::Vector2f(left, top);
-    vr.v[1].texCoords = sf::Vector2f(left, bottom);
-    vr.v[2].texCoords = sf::Vector2f(right, bottom);
-    vr.v[3].texCoords = sf::Vector2f(right, top);
+    varr[0].texCoords = sf::Vector2f(left, top);
+    varr[1].texCoords = sf::Vector2f(left, bottom);
+    varr[2].texCoords = sf::Vector2f(right, bottom);
+    varr[3].texCoords = sf::Vector2f(right, top);
 
-    if (vr.v[0].color != _color)
-      {
-	vr.v[0].color = _color;
-	vr.v[1].color = _color;
-	vr.v[2].color = _color;
-	vr.v[3].color = _color;
-      }
+    if (varr[0].color != _color)
+    {
+      varr[0].color = _color;
+      varr[1].color = _color;
+      varr[2].color = _color;
+      varr[3].color = _color;
+    }
 
-    _vertices.push_back(vr);
-    return true;
+    _vertices.push_back(varr);
   }
 
   void AnimNode::setFrameTime(const sf::Time & deltaTime)
@@ -121,12 +118,12 @@ namespace mysf
   {
     _color = color;
     for (unsigned int i = 0; i < _vertices.size(); ++i)
-      {
-	_vertices[i].v[0].color = _color;
-	_vertices[i].v[1].color = _color;
-	_vertices[i].v[2].color = _color;
-	_vertices[i].v[3].color = _color;
-      }
+    {
+      _vertices[i][0].color = _color;
+      _vertices[i][1].color = _color;
+      _vertices[i][2].color = _color;
+      _vertices[i][3].color = _color;
+    }
   }
 
   const sf::Color & AnimNode::getColor() const
@@ -136,9 +133,10 @@ namespace mysf
 
   sf::FloatRect AnimNode::getLocalBounds() const
   {
-    sf::Vector2f size(_vertices[_currFrame].v[2].position);
+    // sf::Vector2f size(_vertices[_currFrame][2].position);
 
-    return sf::FloatRect(0.f, 0.f, std::abs(size.x), std::abs(size.y));
+    return _vertices[_currFrame].getBounds();
+    // return sf::FloatRect(0.f, 0.f, std::abs(size.x), std::abs(size.y));
   }
 
   sf::FloatRect AnimNode::getGlobalBounds() const
@@ -157,12 +155,12 @@ namespace mysf
     if (_currFrame + 1 < _vertices.size())
       ++_currFrame;
     else
-      {
-	if (_looped)
-	  _currFrame = 0;
-	else
-	  _paused = true;
-      }
+    {
+      if (_looped)
+        _currFrame = 0;
+      else
+        _paused = true;
+    }
   }
 
   void AnimNode::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
@@ -170,6 +168,6 @@ namespace mysf
     if (!_texture)
       return ;
     states.texture = _texture;
-    target.draw(_vertices[_currFrame].v, 4, sf::Quads, states);
+    target.draw(_vertices[_currFrame], states);
   }
 }

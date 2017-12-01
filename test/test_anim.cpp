@@ -13,6 +13,12 @@ static const sf::Time frameTime(sf::seconds(0.2f));
 static const sf::Vector2u SpriteSize = sf::Vector2u(52, 89);
 static const sf::Vector2u WindowSize = sf::Vector2u(SpriteSize * Scale);
 
+template <typename T>
+std::ostream & operator<<(std::ostream & os, const sf::Rect<T> & rect)
+{
+  return os << "x: " << rect.left << "; y: " << rect.top << "; w: " << rect.width << "; h: " << rect.height;
+}
+
 class Render : public mysf::GraphicRender
 {
 public:
@@ -39,11 +45,11 @@ public:
       return false;
     }
     _anims.resize(_ac - 1);
-    for (int i = 1; i < _ac; ++i)
+    for (int i = 0; i < _ac - 1; ++i)
     {
-      if (_thl.load(i - 1, _av[i]) == false)
-        std::cerr << "Cannot load anim: " << _av[i] << std::endl;
-      _buildAnim(_anims[i - 1], _thl[i - 1]);
+      if (_thl.load(i, _av[i + 1]) == false)
+        std::cerr << "Cannot load anim: " << _av[i + 1] << std::endl;
+      _buildAnim(_anims[i], _thl[i]);
     }
     std::cout << "Animations Loaded" << std::endl;
     _window.create(sf::VideoMode(WindowSize.x, WindowSize.y), "Test");
@@ -59,7 +65,7 @@ public:
     if (event.key().isDown(sf::Keyboard::Left) || event.key().isDown(sf::Keyboard::Down))
     {
       _anims[_select].stop();
-      _gls[0].remove(&_anims[_select]);
+      _gls[0].sub(&_anims[_select]);
       _select = _select ? _select - 1 : _anims.size() - 1;
       _gls[0].add(&_anims[_select]);
       _anims[_select].play();
@@ -67,7 +73,7 @@ public:
     if (event.key().isDown(sf::Keyboard::Right) || event.key().isDown(sf::Keyboard::Up))
     {
       _anims[_select].stop();
-      _gls[0].remove(&_anims[_select]);
+      _gls[0].sub(&_anims[_select]);
       _select = (_select + 1) % _anims.size();
       _gls[0].add(&_anims[_select]);
       _anims[_select].play();
@@ -99,7 +105,7 @@ private:
 };
 
 // Creating the engine that will handle your differents GraphicRenders
-class Main : public mysf::Engine<>
+class Main : public mysf::Engine<sf::RenderWindow>
 {
 public:
   virtual bool init(int ac, char ** av)

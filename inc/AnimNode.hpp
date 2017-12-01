@@ -14,11 +14,6 @@ namespace mysf
 {
   class AnimNode : public SceneNode
   {
-    struct VertexRect
-    {
-      sf::Vertex v[4];
-    };
-
   public:
     explicit AnimNode(const sf::Time & frameTime = sf::seconds(0.2f), bool paused = false, bool looped = true);
     explicit AnimNode(const sf::Texture & texture, const sf::Time & frameTime = sf::seconds(0.2f), bool paused = false, bool looped = true);
@@ -28,7 +23,7 @@ namespace mysf
 
     void setTexture(const sf::Texture & texture);
     const sf::Texture * getTexture() const;
-    bool addFrame(const sf::IntRect & rect);
+    void addFrame(const sf::IntRect & rect);
     void setFrameTime(const sf::Time & deltaTime);
     const sf::Time & getFrameTime() const;
 
@@ -51,7 +46,7 @@ namespace mysf
 
   protected:
     const sf::Texture * _texture;
-    std::vector<VertexRect> _vertices;
+    std::vector<sf::VertexArray> _vertices;
     sf::Color _color;
 
     sf::Time _frameTime;

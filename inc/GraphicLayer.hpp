@@ -20,8 +20,8 @@ namespace mysf
     GraphicLayer & operator=(const GraphicLayer & o);
     virtual ~GraphicLayer();
 
-    void	update(const sf::Time & deltaTime, const Event & event);
-    void	draw(sf::RenderTarget & target, sf::RenderStates states) const;
+    void update(const sf::Time & deltaTime, const Event & event);
+    void draw(sf::RenderTarget & target, sf::RenderStates states) const;
   };
 }
 
