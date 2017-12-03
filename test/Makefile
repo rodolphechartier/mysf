@@ -1,5 +1,5 @@
 CC		= g++
-CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++14
+CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++11
 CPPFLAGS	+= -I ../inc
 CPPFLAGS	+= -I /usr/local/include
 LDFLAGS		= $(LIB)
@@ -12,29 +12,30 @@ SRC		= test_anim.cpp
 
 OBJ		= $(SRC:.cpp=.o)
 
+LIBNAME	= libmysf
 NAME		= anim.out
 
 RM		= rm -f
 LN		= ln -s
 
-all: libmysf $(NAME)
+all: $(LIBNAME) $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CPPFLAGS) $(LDFLAGS) $(OBJ) -o $(NAME)
 
-libmysf:
+$(LIBNAME):
 	make -C ../
-	$(RM) ./libmysf.so ./libmysf.a
-	$(LN) ../libmysf.so ./libmysf.so
-	$(LN) ../libmysf.a ./libmysf.a
+	$(RM) ./$(LIBNAME).so ./$(LIBNAME).a
+	$(LN) ../$(LIBNAME).so ./$(LIBNAME).so
+	$(LN) ../$(LIBNAME).a ./$(LIBNAME).a
 
 clean:
 	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
-	$(RM) ./libmysf.so ./libmysf.a
+	$(RM) ./$(LIBNAME).so ./$(LIBNAME).a
 
 re: fclean all
 
-.PHONY		= all $(NAME) clean fclean re
+.PHONY		= all $(NAME) $(LIBNAME) clean fclean re
