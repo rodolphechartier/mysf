@@ -1,4 +1,4 @@
-CC		= g++
+CC			= g++
 CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++11
 CPPFLAGS	+= -I ../inc
 CPPFLAGS	+= -I /usr/local/include
@@ -6,17 +6,17 @@ LDFLAGS		= $(LIB)
 
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 LIBMYSF		= -L ./ -lmysf
-LIB		= $(LIBSFML) $(LIBMYSF)
+LIB			= $(LIBSFML) $(LIBMYSF)
 
-SRC		= test_anim.cpp
+SRC			= test_anim.cpp
 
-OBJ		= $(SRC:.cpp=.o)
+OBJ			= $(SRC:.cpp=.o)
 
-LIBNAME	= libmysf
+LIBNAME		= libmysf
 NAME		= anim.out
 
-RM		= rm -f
-LN		= ln -s
+RM			= rm -f
+LN			= ln -s
 
 all: $(LIBNAME) $(NAME)
 

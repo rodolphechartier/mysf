@@ -1,38 +1,41 @@
-CC				= g++
-CPPFLAGS	+= -Wall -Wextra -pedantic -Werror -o3 -std=c++11
+CC			= g++
+CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++11
 CPPFLAGS	+= -I ../inc
 CPPFLAGS	+= -I /usr/local/include
-
-NAME			= a.out
+LDFLAGS		= $(LIB)
 
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
-LIBMYSF		= ./libmysf.so
+LIBMYSF		= -L ./ -lmysf
+LIB			= $(LIBSFML) $(LIBMYSF)
 
-LIB				= $(LIBSFML) $(LIBMYSF)
+SRC			= main.cpp
 
-SRC				= main.cpp
+OBJ			= $(SRC:.cpp=.o)
 
-OBJ				= $(SRC:.cpp=.o)
+LIBNAME		= libmysf
+NAME		= example.out
 
-RM				= rm -f
+RM			= rm -f
+LN			= ln -s
 
-all: $(NAME)
+all: $(LIBNAME) $(NAME)
 
-$(NAME): make_lib $(OBJ)
-	$(CC)  $(CPPFLAGS) $(LIB) $(OBJ) -o $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(CPPFLAGS) $(LDFLAGS) $(OBJ) -o $(NAME)
 
-make_lib:
+$(LIBNAME):
 	make -C ../
-	cp ../libmysf.so ../libmysf.a .
+	$(RM) ./$(LIBNAME).so ./$(LIBNAME).a
+	$(LN) ../$(LIBNAME).so ./$(LIBNAME).so
+	$(LN) ../$(LIBNAME).a ./$(LIBNAME).a
 
 clean:
-	make clean -C ../
 	$(RM) $(OBJ)
 
 fclean: clean
-	make fclean -C ../
 	$(RM) $(NAME)
+	$(RM) ./$(LIBNAME).so ./$(LIBNAME).a
 
 re: fclean all
 
-.PHONY		= all $(NAME) cplib clean fclean re
+.PHONY		= all $(NAME) $(LIBNAME) clean fclean re

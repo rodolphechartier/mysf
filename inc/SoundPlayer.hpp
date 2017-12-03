@@ -16,9 +16,9 @@ namespace mysf
 	virtual ~SoundPlayer();
 
 	static void setNbLayer(unsigned int nbLayer);
-	static unsigned intgetNbLayer();
+	static unsigned int getNbLayer();
 	static void setLayerVolume(float volume, unsigned int layer);
-	static floatgetLayerVolume(unsigned int layer);
+	static float getLayerVolume(unsigned int layer);
 
 	void play(const sf::Sound & sound);
 	void play(const sf::Sound & sound, unsigned int layer);
