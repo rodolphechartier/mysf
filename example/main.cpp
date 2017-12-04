@@ -92,10 +92,8 @@ public:
 	return true;
   }
 
-  virtual GraphicRender * onUpdate(const sf::Time & deltaTime, const mysf::Event & event)
+  virtual mysf::GraphicRender * onUpdate(const sf::Time & deltaTime, const mysf::Event & event)
   {
-	_spl.removeStoppedSounds();
-	_gls.update(deltaTime, event);
 	if (_bind.getInput(Action::Quit, event) || event.isClosed())
 	  return 0;
 	return this;
