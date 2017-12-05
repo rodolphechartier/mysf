@@ -85,14 +85,14 @@ public:
 
   virtual bool init()
   {
-	if (_thl.setDefault("../rsc/default.png") == false)
+	if (_thl.setDefault("../../rsc/default.png") == false)
 	  return false;
 	_window.create(sf::VideoMode(800, 450), "Test");
 	_node.setTexture(_thl.getDefault());
 	return true;
   }
 
-  virtual mysf::GraphicRender * onUpdate(const sf::Time & deltaTime, const mysf::Event & event)
+  virtual mysf::GraphicRender * onUpdate(const sf::Time & /* deltaTime */, const mysf::Event & event)
   {
 	if (_bind.getInput(Action::Quit, event) || event.isClosed())
 	  return 0;

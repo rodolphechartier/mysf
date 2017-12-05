@@ -1,6 +1,6 @@
 CC			= g++
 CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++11
-CPPFLAGS	+= -I ../inc
+CPPFLAGS	+= -I $(LIBPATH)inc
 CPPFLAGS	+= -I /usr/local/include
 LDFLAGS		= $(LIB)
 
@@ -13,7 +13,8 @@ SRC			= main.cpp
 OBJ			= $(SRC:.cpp=.o)
 
 LIBNAME		= libmysf
-NAME		= example.out
+LIBPATH		= ../../
+NAME		= basics.out
 
 RM			= rm -f
 LN			= ln -s
@@ -24,10 +25,10 @@ $(NAME): $(OBJ)
 	$(CC) $(CPPFLAGS) $(LDFLAGS) $(OBJ) -o $(NAME)
 
 $(LIBNAME):
-	make -C ../
+	make -C $(LIBPATH)
 	$(RM) ./$(LIBNAME).so ./$(LIBNAME).a
-	$(LN) ../$(LIBNAME).so ./$(LIBNAME).so
-	$(LN) ../$(LIBNAME).a ./$(LIBNAME).a
+	$(LN)  $(LIBPATH)$(LIBNAME).so ./$(LIBNAME).so
+	$(LN)  $(LIBPATH)$(LIBNAME).a ./$(LIBNAME).a
 
 clean:
 	$(RM) $(OBJ)
