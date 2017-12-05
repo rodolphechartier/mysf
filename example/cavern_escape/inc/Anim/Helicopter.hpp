@@ -7,7 +7,9 @@
 # include "SceneNode.hpp"
 # include "AnimNode.hpp"
 # include "ResourceHolder.hpp"
+# include "Binding.hpp"
 
+# include "Action.hpp"
 # include "HelicopterIdle.hpp"
 # include "HelicopterHit.hpp"
 # include "HelicopterDestroy.hpp"
@@ -23,7 +25,7 @@ class Helicopter : public mysf::SceneNode
 	};
 
 public:
-	Helicopter();
+	explicit Helicopter(const mysf::Binding & bind);
 	Helicopter(const Helicopter & o) = delete;
 	Helicopter & operator=(const Helicopter & o) = delete;
 	virtual ~Helicopter() = default;
@@ -34,8 +36,10 @@ private:
 	virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event) override;
 	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const override;
 
+	const mysf::Binding & _bind;
 	std::vector<std::unique_ptr<mysf::AnimNode>> _anims;
 	State _state;
+	float _speed;
 };
 
 #endif // !HELICOPTER_HPP_

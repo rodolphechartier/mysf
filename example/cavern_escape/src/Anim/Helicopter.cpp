@@ -1,7 +1,9 @@
 #include "Helicopter.hpp"
 
-Helicopter::Helicopter()
-	: _state(Helicopter::State::Idle)
+Helicopter::Helicopter(const mysf::Binding & bind)
+	: _bind(bind)
+	, _state(Helicopter::State::Idle)
+	, _speed(200.f)
 {
 
 }
@@ -18,6 +20,18 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 // TODO: manage _state
 void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
 {
+	sf::Vector2f pos(getPosition());
+	const float move = deltaTime.asSeconds() * _speed;
+
+	if (_bind.getInput(Action::Up, event))
+		pos.y -= move;
+	if (_bind.getInput(Action::Left, event))
+		pos.x -= move;
+	if (_bind.getInput(Action::Down, event))
+		pos.y += move;
+	if (_bind.getInput(Action::Right, event))
+		pos.x += move;
+	setPosition(pos);
 	_anims[_state]->update(deltaTime, event);
 }
 

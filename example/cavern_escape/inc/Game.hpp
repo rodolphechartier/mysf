@@ -8,6 +8,7 @@
 # include "Binding.hpp"
 
 # include "Resource.hpp"
+# include "Action.hpp"
 # include "Helicopter.hpp"
 
 class Game : public mysf::GraphicRender
@@ -20,6 +21,9 @@ public:
 
 	virtual bool init() override;
 	virtual mysf::GraphicRender * onUpdate(const sf::Time & deltaTime, const mysf::Event & event) override;
+
+private:
+	bool initBinding();
 
 private:
 	static const sf::Vector2u WindowSize;
