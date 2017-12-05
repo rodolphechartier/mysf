@@ -24,6 +24,7 @@ bool Game::init()
 	_thl.load(Resource::Texture::Helicopter, "rsc/img/helicopter.png");
 
 	_background.setTexture(_thl[Resource::Texture::Background]);
+	_background.setSize(sf::Vector2f(WindowSize));
 	if (_helicopter.init(_thl) == false)
 		return false;
 

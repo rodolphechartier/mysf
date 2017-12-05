@@ -49,6 +49,21 @@ namespace mysf
     return _sprite.getTextureRect();
   }
 
+  void SpriteNode::setSize(const sf::Vector2f & size)
+  {
+	const sf::Vector2f & currSize(getSize());
+
+	if (currSize.x && currSize.y)
+	  setScale(sf::Vector2f(size.x / currSize.x, size.y / currSize.y));
+  }
+
+  sf::Vector2f SpriteNode::getSize() const
+  {
+	const sf::FloatRect & rect(getLocalBounds());
+
+	return sf::Vector2f(rect.width, rect.height);
+  }
+
   const sf::Color & SpriteNode::getColor() const
   {
     return _sprite.getColor();

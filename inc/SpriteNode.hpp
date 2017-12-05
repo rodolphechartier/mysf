@@ -25,6 +25,8 @@ namespace mysf
     const sf::IntRect & getTextureRect() const;
     const sf::Color & getColor() const;
 
+	void setSize(const sf::Vector2f & size);
+	sf::Vector2f getSize() const;
     sf::FloatRect getLocalBounds() const;
     sf::FloatRect getGlobalBounds() const;
 
