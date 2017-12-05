@@ -6,6 +6,7 @@
 
 # include "SceneNode.hpp"
 # include "AnimNode.hpp"
+# include "ResourceHolder.hpp"
 
 # include "HelicopterIdle.hpp"
 # include "HelicopterHit.hpp"
@@ -13,7 +14,6 @@
 
 class Helicopter : public mysf::SceneNode
 {
-public:
 	enum State
 	{
 		Idle,
@@ -27,6 +27,8 @@ public:
 	Helicopter(const Helicopter & o) = delete;
 	Helicopter & operator=(const Helicopter & o) = delete;
 	virtual ~Helicopter() = default;
+
+	bool init(const mysf::TextureHolder & thl);
 
 private:
 	virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event) override;

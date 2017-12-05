@@ -3,10 +3,13 @@
 
 # include "AnimNode.hpp"
 
+# include "ResourceHolder.hpp"
+# include "Resource.hpp"
+
 class HelicopterIdle : public mysf::AnimNode
 {
 public:
-	HelicopterIdle();
+	explicit HelicopterIdle(const mysf::TextureHolder & thl);
 	HelicopterIdle(const HelicopterIdle & o) = delete;
 	HelicopterIdle & operator=(const HelicopterIdle & o) = delete;
 	virtual ~HelicopterIdle() = default;

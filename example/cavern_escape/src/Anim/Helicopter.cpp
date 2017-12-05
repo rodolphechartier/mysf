@@ -1,12 +1,18 @@
 #include "Helicopter.hpp"
 
 Helicopter::Helicopter()
-	: _anims(Helicopter::State::Size, 0)
-	, _state(Helicopter::State::Idle)
+	: _state(Helicopter::State::Idle)
 {
-	_anims[Helicopter::State::Idle].reset(new HelicopterIdle);
-	_anims[Helicopter::State::Hit].reset(new HelicopterHit);
-	_anims[Helicopter::State::Destroy].reset(new HelicopterDestroy);
+
+}
+
+bool Helicopter::init(const mysf::TextureHolder & thl)
+{
+	_anims.resize(Helicopter::State::Size);
+	_anims[Helicopter::State::Idle].reset(new HelicopterIdle(thl));
+	_anims[Helicopter::State::Hit].reset(new HelicopterHit(thl));
+	_anims[Helicopter::State::Destroy].reset(new HelicopterDestroy(thl));
+	return true;
 }
 
 // TODO: manage _state

@@ -8,6 +8,7 @@
 # include "Binding.hpp"
 
 # include "Resource.hpp"
+# include "Helicopter.hpp"
 
 class Game : public mysf::GraphicRender
 {
@@ -26,6 +27,8 @@ private:
 	sf::RenderWindow & _window;
 	mysf::TextureHolder _thl;
 	mysf::Binding _bind;
+
+	Helicopter _helicopter;
 };
 
 #endif // !GAME_HPP_
