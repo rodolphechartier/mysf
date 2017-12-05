@@ -6,6 +6,7 @@
 # include "GraphicRender.hpp"
 # include "ResourceHolder.hpp"
 # include "Binding.hpp"
+# include "SpriteNode.hpp"
 
 # include "Resource.hpp"
 # include "Action.hpp"
@@ -32,6 +33,7 @@ private:
 	mysf::TextureHolder _thl;
 	mysf::Binding _bind;
 
+	mysf::SpriteNode _background;
 	Helicopter _helicopter;
 };
 

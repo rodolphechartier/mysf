@@ -14,6 +14,7 @@ SRC			= src/GraphicLayer.cpp \
 			src/Binding.cpp \
 			src/Mouse.cpp \
 			src/SceneNode.cpp \
+			src/SpriteNode.cpp \
 			src/AnimNode.cpp \
 			src/SoundPlayer.cpp
 

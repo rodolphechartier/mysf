@@ -9,7 +9,8 @@ namespace Resource
 		{
 			None = -1,
 			First = 0,
-			Helicopter = First,
+			Background = First,
+			Helicopter,
 			Size
 		};
 	}

@@ -133,10 +133,7 @@ namespace mysf
 
   sf::FloatRect AnimNode::getLocalBounds() const
   {
-	// sf::Vector2f size(_vertices[_currFrame][2].position);
-
 	return _vertices[_currFrame].getBounds();
-	// return sf::FloatRect(0.f, 0.f, std::abs(size.x), std::abs(size.y));
   }
 
   sf::FloatRect AnimNode::getGlobalBounds() const

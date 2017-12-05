@@ -11,7 +11,7 @@ Game::Game(sf::RenderWindow & window)
 
 Game::~Game()
 {
-
+	_thl.unload();
 }
 
 bool Game::init()
@@ -20,12 +20,17 @@ bool Game::init()
 		return false;
 	if (_thl.setDefault("rsc/img/default.png") == false)
 		return false;
+	_thl.load(Resource::Texture::Background, "rsc/img/background.png");
 	_thl.load(Resource::Texture::Helicopter, "rsc/img/helicopter.png");
+
+	_background.setTexture(_thl[Resource::Texture::Background]);
 	if (_helicopter.init(_thl) == false)
 		return false;
 
-	_gls.resize(1);
-	_gls[0].add(&_helicopter);
+	_gls.resize(2);
+	_gls[0].add(&_background);
+	_gls[1].add(&_helicopter);
+
 	_window.create(sf::VideoMode(WindowSize.x, WindowSize.y), "Cavern Escape");
 	_window.setFramerateLimit(60);
 	return true;
