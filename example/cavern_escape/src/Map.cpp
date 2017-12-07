@@ -92,12 +92,13 @@ void Map::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
 void Map::genLine()
 {
 	static unsigned int nbGen = 0;
-	static int slope = 0;
+	static std::vector<int> slope(2, 0);
 	std::vector<unsigned int> line(2, 0);
 
 	if (nbGen > 24)
 	{
-		slope = (rand() % 5) - 2;
+		for (unsigned int i = 0; i < slope.size(); ++i)
+			slope[i] = (rand() % 5) - 2;
 		nbGen = 0;
 	}
 
@@ -119,10 +120,10 @@ void Map::genLine()
 		while (checkGenLine(line) == false)
 		{
 			for (unsigned int i = 0; i < line.size(); ++i)
-				line[i] = last[i] + (slope * (rand() % 3));
-				// line[i] = last[i] + (slope * (rand() % 4));
-				// line[i] = last[i] + (slope + ((rand() % 5) - 2));
-				// line[i] = last[i] + (slope + ((rand() % 9) - 4));
+				line[i] = last[i] + (slope[i] * (rand() % 3));
+				// line[i] = last[i] + (slope[i] * (rand() % 4));
+				// line[i] = last[i] + (slope[i] + ((rand() % 5) - 2));
+				// line[i] = last[i] + (slope[i] + ((rand() % 9) - 4));
 		}
 	}
 	++nbGen;
