@@ -1,9 +1,11 @@
 #include "Helicopter.hpp"
 
-Helicopter::Helicopter(const mysf::Binding & bind)
+Helicopter::Helicopter(const mysf::Binding & bind, const Map & map)
 	: _bind(bind)
+	, _map(map)
 	, _state(Helicopter::State::Idle)
 	, _speed(200.f)
+	, _life(1000)
 {
 
 }
@@ -14,7 +16,18 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 	_anims[Helicopter::State::Idle].reset(new HelicopterIdle(thl));
 	_anims[Helicopter::State::Hit].reset(new HelicopterHit(thl));
 	_anims[Helicopter::State::Destroy].reset(new HelicopterDestroy(thl));
+
+	for (unsigned int i = Helicopter::State::First; i < Helicopter::State::Size; ++i)
+		_anims[i]->stop();
 	return true;
+}
+
+void Helicopter::hit(unsigned int damage)
+{
+	_life = _life > damage ? 0 : _life - damage;
+	_anims[_state]->stop();
+	_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
+	_anims[_state]->play();
 }
 
 sf::FloatRect Helicopter::getLocalBounds() const
@@ -24,13 +37,13 @@ sf::FloatRect Helicopter::getLocalBounds() const
 
 sf::FloatRect Helicopter::getGlobalBounds() const
 {
-	return _anims[_state]->getGlobalBounds();
+    return getTransform().transformRect(getLocalBounds());
 }
 
-// TODO: manage _state
 void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
 {
 	sf::Vector2f pos(getPosition());
+	// const sf::Vector2f lastPos(pos);
 	const float move = deltaTime.asSeconds() * _speed;
 
 	if (_bind.getInput(Action::Up, event))
@@ -41,7 +54,13 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 		pos.y += move;
 	if (_bind.getInput(Action::Right, event))
 		pos.x += move;
+
 	setPosition(pos);
+	if (_map.intersects(getGlobalBounds()))
+	{
+		hit(5);
+		// setPosition(lastPos);
+	}
 	_anims[_state]->update(deltaTime, event);
 }
 

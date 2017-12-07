@@ -72,19 +72,14 @@ void Map::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
 
 		rect.left = x + _drawOffset;
 		rect.width = 1;
-		for (unsigned int i = 0; i < line.size(); i += 2)
+		for (unsigned int i = 0; i <= line.size(); i += 2)
 		{
 			rect.top = i ? line[i - 1] : 0;
-			rect.height = line[i] - rect.top;
+			rect.height = (i == line.size() ? _size.y : line[i]) - rect.top;
 			sprite.setTextureRect(rect);
 			sprite.setPosition(x, rect.top);
 			target.draw(sprite, states);
 		}
-		rect.top = line[line.size() - 1];
-		rect.height = _size.y - rect.top;
-		sprite.setTextureRect(rect);
-		sprite.setPosition(x, rect.top);
-		target.draw(sprite, states);
 		++x;
 	}
 }

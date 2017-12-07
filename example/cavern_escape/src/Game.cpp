@@ -4,7 +4,7 @@ const sf::Vector2u Game::WindowSize(1500, 800);
 
 Game::Game(sf::RenderWindow & window)
 	: _window(window)
-	, _helicopter(_bind)
+	, _helicopter(_bind, _map)
 {
 
 }
@@ -26,6 +26,7 @@ bool Game::init()
 
 	_background.setTexture(_thl[Resource::Texture::Background]);
 	_background.setSize(sf::Vector2f(WindowSize));
+	_helicopter.setPosition(sf::Vector2f(10, WindowSize.y / 2));
 	if (_helicopter.init(_thl) == false)
 		return false;
 	_map.setTexture(_thl[Resource::Texture::CavernWall]);
