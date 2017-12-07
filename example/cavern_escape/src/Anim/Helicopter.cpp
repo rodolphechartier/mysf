@@ -16,18 +16,18 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 	_anims[Helicopter::State::Idle].reset(new HelicopterIdle(thl));
 	_anims[Helicopter::State::Hit].reset(new HelicopterHit(thl));
 	_anims[Helicopter::State::Destroy].reset(new HelicopterDestroy(thl));
-
-	for (unsigned int i = Helicopter::State::First; i < Helicopter::State::Size; ++i)
-		_anims[i]->stop();
 	return true;
 }
 
 void Helicopter::hit(unsigned int damage)
 {
-	_life = _life > damage ? 0 : _life - damage;
-	_anims[_state]->stop();
-	_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
-	_anims[_state]->play();
+	if (_life)
+	{
+		_life = _life > damage ? 0 : _life - damage;
+		_anims[_state]->stop();
+		_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
+		_anims[_state]->play();
+	}
 }
 
 sf::FloatRect Helicopter::getLocalBounds() const
