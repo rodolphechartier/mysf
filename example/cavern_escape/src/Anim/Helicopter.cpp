@@ -17,6 +17,16 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 	return true;
 }
 
+sf::FloatRect Helicopter::getLocalBounds() const
+{
+	return _anims[_state]->getLocalBounds();
+}
+
+sf::FloatRect Helicopter::getGlobalBounds() const
+{
+	return _anims[_state]->getGlobalBounds();
+}
+
 // TODO: manage _state
 void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
 {

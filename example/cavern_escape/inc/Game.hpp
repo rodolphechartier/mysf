@@ -9,6 +9,7 @@
 # include "SpriteNode.hpp"
 
 # include "Resource.hpp"
+# include "Map.hpp"
 # include "Action.hpp"
 # include "Helicopter.hpp"
 
@@ -34,6 +35,7 @@ private:
 	mysf::Binding _bind;
 
 	mysf::SpriteNode _background;
+	Map _map;
 	Helicopter _helicopter;
 };
 

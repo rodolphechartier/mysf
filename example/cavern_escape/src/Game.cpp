@@ -21,15 +21,19 @@ bool Game::init()
 	if (_thl.setDefault("rsc/img/default.png") == false)
 		return false;
 	_thl.load(Resource::Texture::Background, "rsc/img/background.png");
+	_thl.load(Resource::Texture::CavernWall, "rsc/img/cavern_wall_01.png");
 	_thl.load(Resource::Texture::Helicopter, "rsc/img/helicopter.png");
 
 	_background.setTexture(_thl[Resource::Texture::Background]);
 	_background.setSize(sf::Vector2f(WindowSize));
 	if (_helicopter.init(_thl) == false)
 		return false;
+	_map.setTexture(_thl[Resource::Texture::CavernWall]);
+	_map.gen(WindowSize, _helicopter.getGlobalBounds().height + _helicopter.getGlobalBounds().width + 20);
 
 	_gls.resize(2);
 	_gls[0].add(&_background);
+	_gls[1].add(&_map);
 	_gls[1].add(&_helicopter);
 
 	_window.create(sf::VideoMode(WindowSize.x, WindowSize.y), "Cavern Escape");

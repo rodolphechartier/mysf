@@ -13,6 +13,7 @@ ANIMDIR		= $(SRCDIR)Anim/
 
 SRC			= $(SRCDIR)main.cpp \
 			$(SRCDIR)Game.cpp \
+			$(SRCDIR)Map.cpp \
 			$(ANIMDIR)Helicopter.cpp \
 			$(ANIMDIR)HelicopterIdle.cpp \
 			$(ANIMDIR)HelicopterHit.cpp \

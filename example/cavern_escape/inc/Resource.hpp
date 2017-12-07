@@ -10,6 +10,7 @@ namespace Resource
 			None = -1,
 			First = 0,
 			Background = First,
+			CavernWall,
 			Helicopter,
 			Size
 		};

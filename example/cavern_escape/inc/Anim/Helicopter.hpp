@@ -32,6 +32,9 @@ public:
 
 	bool init(const mysf::TextureHolder & thl);
 
+    sf::FloatRect getLocalBounds() const;
+    sf::FloatRect getGlobalBounds() const;
+
 private:
 	virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event) override;
 	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const override;
