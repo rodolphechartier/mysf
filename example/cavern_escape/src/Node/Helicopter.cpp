@@ -11,23 +11,29 @@ Helicopter::Helicopter(const mysf::Binding & bind, const sf::RenderWindow & wind
 
 }
 
-bool Helicopter::init(const mysf::TextureHolder & thl)
+bool Helicopter::init(mysf::GraphicLayerSet & gls, const mysf::TextureHolder & thl, const mysf::FontHolder & fhl)
 {
 	_anims.resize(Helicopter::State::Size);
 	_anims[Helicopter::State::Idle].reset(new HelicopterIdle(thl));
 	_anims[Helicopter::State::Hit].reset(new HelicopterHit(thl));
 	_anims[Helicopter::State::Destroy].reset(new HelicopterDestroy(thl));
 
-	addChild(&_life);
 	_life.setSize(sf::Vector2f(200.f, 10.f));
 	_life.setOrigin(_life.getSize() / 2.f);
 	_life.setPosition(sf::Vector2f(getGlobalBounds().width / 2.f, -15.f));
+	addChild(&_life);
+
+	_score.setCharacterSize(40);
+	_score.setPosition(sf::Vector2f(10.f, 10.f));
+	_score.setFont(fhl[Resource::Font::VcrOsd]);
+	gls[2].add(&_score);
 	return true;
 }
 
 void Helicopter::hit(unsigned int damage)
 {
 	_life.sub(damage);
+	_score.sub(damage * 5);
 	_anims[_state]->stop();
 	_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
 	_anims[_state]->play();
@@ -57,7 +63,7 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 	if (_bind.getInput(Action::Right, event))
 		pos.x += move;
 
-	colision(pos);
+	colision(deltaTime, pos);
 	if (_state != Helicopter::State::Destroy && _anims[_state]->isPlaying() == false)
 	{
 		_anims[_state]->stop();
@@ -72,8 +78,10 @@ void Helicopter::drawCurrent(sf::RenderTarget & target, sf::RenderStates states)
 	_anims[_state]->draw(target, states);
 }
 
-void Helicopter::colision(sf::Vector2f & pos)
+void Helicopter::colision(const sf::Time & deltaTime, sf::Vector2f & pos)
 {
+	static sf::Time lastHit(sf::Time::Zero);
+
 	if (pos.x < 0)
 		pos.x = 0;
 	if (pos.y < 0)
@@ -84,6 +92,12 @@ void Helicopter::colision(sf::Vector2f & pos)
 		pos.y = _window.getSize().y - getGlobalBounds().height - 1;
 
 	setPosition(pos);
-	if (_map.intersects(getGlobalBounds()))
-		hit(5);
+	if (lastHit > sf::seconds(1.f) && _map.intersects(getGlobalBounds()))
+	{
+		hit(100);
+		lastHit = sf::Time::Zero;
+	}
+	else
+		lastHit += deltaTime;
+
 }

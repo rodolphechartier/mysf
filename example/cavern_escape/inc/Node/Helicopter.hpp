@@ -4,6 +4,7 @@
 # include <vector>
 # include <memory>
 
+# include "GraphicLayerSet.hpp"
 # include "SceneNode.hpp"
 # include "AnimNode.hpp"
 # include "ResourceHolder.hpp"
@@ -15,6 +16,7 @@
 # include "HelicopterHit.hpp"
 # include "HelicopterDestroy.hpp"
 # include "Life.hpp"
+# include "Score.hpp"
 
 class Helicopter : public mysf::SceneNode
 {
@@ -33,7 +35,7 @@ public:
 	Helicopter & operator=(const Helicopter & o) = delete;
 	virtual ~Helicopter() = default;
 
-	bool init(const mysf::TextureHolder & thl);
+	bool init(mysf::GraphicLayerSet & gls, const mysf::TextureHolder & thl, const mysf::FontHolder & fhl);
 	void hit(unsigned int damage);
 
     sf::FloatRect getLocalBounds() const;
@@ -43,7 +45,7 @@ private:
 	virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event) override;
 	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const override;
 
-	void colision(sf::Vector2f & pos);
+	void colision(const sf::Time & deltaTime, sf::Vector2f & pos);
 
 	const mysf::Binding & _bind;
 	const sf::RenderWindow & _window;
@@ -53,6 +55,7 @@ private:
 	State _state;
 	float _speed;
 	Life _life;
+	Score _score;
 };
 
 #endif // !HELICOPTER_HPP_

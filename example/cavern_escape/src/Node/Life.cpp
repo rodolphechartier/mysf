@@ -6,7 +6,7 @@ Life::Life(unsigned int max)
 {
 	_shape.setFillColor(sf::Color::Green);
 	_shape.setOutlineColor(sf::Color::Black);
-	_shape.setOutlineThickness(3.f);
+	_shape.setOutlineThickness(2.f);
 }
 
 Life::~Life()

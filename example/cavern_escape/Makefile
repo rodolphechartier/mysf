@@ -15,6 +15,7 @@ SRC			= $(SRCDIR)main.cpp \
 			$(SRCDIR)Game.cpp \
 			$(SRCDIR)Map.cpp \
 			$(NODEDIR)Life.cpp \
+			$(NODEDIR)Score.cpp \
 			$(NODEDIR)Helicopter.cpp \
 			$(NODEDIR)HelicopterIdle.cpp \
 			$(NODEDIR)HelicopterHit.cpp \

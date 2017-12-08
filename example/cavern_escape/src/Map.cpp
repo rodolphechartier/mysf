@@ -1,7 +1,7 @@
 #include "Map.hpp"
 
 Map::Map()
-	: _speed(sf::seconds(0.0065f))
+	: _speed(sf::seconds(0.005f))
 	, _texture(0)
 	, _drawOffset(0)
 {

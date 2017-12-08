@@ -32,6 +32,10 @@ namespace Resource
 		{
 			None = -1,
 			First = 0,
+			VcrOsd = First,
+			ComfortaaRegular,
+			ComfortaaLight,
+			ComfortaaBold,
 			Size
 		};
 	}

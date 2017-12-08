@@ -32,6 +32,7 @@ private:
 
 	sf::RenderWindow & _window;
 	mysf::TextureHolder _thl;
+	mysf::FontHolder _fhl;
 	mysf::Binding _bind;
 
 	mysf::SpriteNode _background;
