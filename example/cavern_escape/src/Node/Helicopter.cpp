@@ -16,18 +16,20 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 	_anims[Helicopter::State::Idle].reset(new HelicopterIdle(thl));
 	_anims[Helicopter::State::Hit].reset(new HelicopterHit(thl));
 	_anims[Helicopter::State::Destroy].reset(new HelicopterDestroy(thl));
+
+	addChild(&_life);
+	_life.setSize(sf::Vector2f(200.f, 10.f));
+	_life.setOrigin(_life.getSize() / 2.f);
+	_life.setPosition(sf::Vector2f(getGlobalBounds().width / 2.f, -15.f));
 	return true;
 }
 
 void Helicopter::hit(unsigned int damage)
 {
-	if (_life)
-	{
-		_life = _life > damage ? 0 : _life - damage;
-		_anims[_state]->stop();
-		_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
-		_anims[_state]->play();
-	}
+	_life.sub(damage);
+	_anims[_state]->stop();
+	_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
+	_anims[_state]->play();
 }
 
 sf::FloatRect Helicopter::getLocalBounds() const
@@ -43,7 +45,6 @@ sf::FloatRect Helicopter::getGlobalBounds() const
 void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & event)
 {
 	sf::Vector2f pos(getPosition());
-	// const sf::Vector2f lastPos(pos);
 	const float move = deltaTime.asSeconds() * _speed;
 
 	if (_bind.getInput(Action::Up, event))
@@ -57,9 +58,13 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 
 	setPosition(pos);
 	if (_map.intersects(getGlobalBounds()))
-	{
 		hit(5);
-		// setPosition(lastPos);
+
+	if (_state != Helicopter::State::Destroy && _anims[_state]->isPlaying() == false)
+	{
+		_anims[_state]->stop();
+		_state = Helicopter::State::Idle;
+		_anims[_state]->play();
 	}
 	_anims[_state]->update(deltaTime, event);
 }

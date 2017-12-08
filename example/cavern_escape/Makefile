@@ -1,6 +1,6 @@
 CC			= g++
 CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++11
-CPPFLAGS	+= -I ../../inc/ -I ./inc/ -I ./inc/Anim/
+CPPFLAGS	+= -I ../../inc/ -I ./inc/ -I ./inc/Node/
 CPPFLAGS	+= -I /usr/local/include/
 LDFLAGS		= $(LIB)
 
@@ -9,15 +9,16 @@ LIBMYSF		= -L ../../ -lmysf
 LIB			= $(LIBSFML) $(LIBMYSF)
 
 SRCDIR		= src/
-ANIMDIR		= $(SRCDIR)Anim/
+NODEDIR		= $(SRCDIR)Node/
 
 SRC			= $(SRCDIR)main.cpp \
 			$(SRCDIR)Game.cpp \
 			$(SRCDIR)Map.cpp \
-			$(ANIMDIR)Helicopter.cpp \
-			$(ANIMDIR)HelicopterIdle.cpp \
-			$(ANIMDIR)HelicopterHit.cpp \
-			$(ANIMDIR)HelicopterDestroy.cpp
+			$(NODEDIR)Life.cpp \
+			$(NODEDIR)Helicopter.cpp \
+			$(NODEDIR)HelicopterIdle.cpp \
+			$(NODEDIR)HelicopterHit.cpp \
+			$(NODEDIR)HelicopterDestroy.cpp
 
 OBJ			= $(SRC:.cpp=.o)
 

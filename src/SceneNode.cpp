@@ -13,8 +13,7 @@ namespace mysf
 
   SceneNode::~SceneNode()
   {
-	for (auto it = _child.begin(); it != _child.end(); ++it)
-	  delete *it;
+
   }
 
   void SceneNode::addChild(SceneNode * child)

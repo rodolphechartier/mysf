@@ -14,6 +14,7 @@
 # include "HelicopterIdle.hpp"
 # include "HelicopterHit.hpp"
 # include "HelicopterDestroy.hpp"
+# include "Life.hpp"
 
 class Helicopter : public mysf::SceneNode
 {
@@ -44,10 +45,11 @@ private:
 
 	const mysf::Binding & _bind;
 	const Map & _map;
+
 	std::vector<std::unique_ptr<mysf::AnimNode>> _anims;
 	State _state;
 	float _speed;
-	unsigned int _life;
+	Life _life;
 };
 
 #endif // !HELICOPTER_HPP_

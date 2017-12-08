@@ -1,8 +1,6 @@
 #ifndef MAP_HPP_
 # define MAP_HPP_
 
-# include <iostream>
-
 # include <cstdlib>
 # include <ctime>
 # include <vector>
