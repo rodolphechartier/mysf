@@ -1,7 +1,8 @@
 #include "Helicopter.hpp"
 
-Helicopter::Helicopter(const mysf::Binding & bind, const Map & map)
+Helicopter::Helicopter(const mysf::Binding & bind, const sf::RenderWindow & window, const Map & map)
 	: _bind(bind)
+	, _window(window)
 	, _map(map)
 	, _state(Helicopter::State::Idle)
 	, _speed(200.f)
@@ -56,10 +57,7 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 	if (_bind.getInput(Action::Right, event))
 		pos.x += move;
 
-	setPosition(pos);
-	if (_map.intersects(getGlobalBounds()))
-		hit(5);
-
+	colision(pos);
 	if (_state != Helicopter::State::Destroy && _anims[_state]->isPlaying() == false)
 	{
 		_anims[_state]->stop();
@@ -72,4 +70,20 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 void Helicopter::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	_anims[_state]->draw(target, states);
+}
+
+void Helicopter::colision(sf::Vector2f & pos)
+{
+	if (pos.x < 0)
+		pos.x = 0;
+	if (pos.y < 0)
+		pos.y = 0;
+	if (pos.x >= _window.getSize().x - getGlobalBounds().width)
+		pos.x = _window.getSize().x - getGlobalBounds().width - 1;
+	if (pos.y >= _window.getSize().y - getGlobalBounds().height)
+		pos.y = _window.getSize().y - getGlobalBounds().height - 1;
+
+	setPosition(pos);
+	if (_map.intersects(getGlobalBounds()))
+		hit(5);
 }

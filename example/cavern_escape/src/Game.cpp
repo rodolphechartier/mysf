@@ -4,7 +4,7 @@ const sf::Vector2u Game::WindowSize(1500, 800);
 
 Game::Game(sf::RenderWindow & window)
 	: _window(window)
-	, _helicopter(_bind, _map)
+	, _helicopter(_bind, window, _map)
 {
 
 }
