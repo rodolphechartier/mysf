@@ -16,6 +16,8 @@ SRC			= src/GraphicLayer.cpp \
 			src/SceneNode.cpp \
 			src/SpriteNode.cpp \
 			src/TextNode.cpp \
+			src/ShapeNode.cpp \
+			src/CircleShapeNode.cpp \
 			src/AnimNode.cpp \
 			src/SoundPlayer.cpp
 

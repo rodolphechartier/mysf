@@ -1,5 +1,5 @@
-#ifndef SPRITENODE_HPP_
-# define SPRITENODE_HPP_
+#ifndef MYSF_SPRITENODE_HPP_
+# define MYSF_SPRITENODE_HPP_
 
 # include <SFML/Graphics.hpp>
 
@@ -39,4 +39,4 @@ namespace mysf
   };
 }
 
-#endif // !SPRITENODE_HPP_
+#endif // !MYSF_SPRITENODE_HPP_

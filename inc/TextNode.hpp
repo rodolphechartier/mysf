@@ -1,5 +1,5 @@
-#ifndef TEXTNODE_HPP_
-# define TEXTNODE_HPP_
+#ifndef MYSF_TEXTNODE_HPP_
+# define MYSF_TEXTNODE_HPP_
 
 # include <SFML/Graphics.hpp>
 
@@ -45,4 +45,4 @@ namespace mysf
   };
 }
 
-#endif // !TEXTNODE_HPP_
+#endif // !MYSF_TEXTNODE_HPP_
