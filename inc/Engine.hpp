@@ -58,7 +58,7 @@ namespace mysf
 	  return ret;
 	}
 
-	void pause(bool isPaused)
+	void pause(bool isPaused = true)
 	{
 	  _speed = isPaused ? 0.f : 1.f;
 	}

@@ -10,7 +10,7 @@ class Main : public mysf::Engine<sf::RenderWindow>
 public:
 	virtual bool init(int /* ac */, char ** /* av */) override
 	{
-		_grender = new Game(_window);
+		_grender = new Game(*dynamic_cast<mysf::Engine<sf::RenderWindow> *>(this), _window);
 
 		return _grender->init();
 	}

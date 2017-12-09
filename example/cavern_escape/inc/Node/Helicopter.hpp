@@ -20,6 +20,7 @@
 
 class Helicopter : public mysf::SceneNode
 {
+public:
 	enum State
 	{
 		First,
@@ -30,13 +31,14 @@ class Helicopter : public mysf::SceneNode
 	};
 
 public:
-	explicit Helicopter(const mysf::Binding & bind, const sf::RenderWindow & window, const Map & map);
+	explicit Helicopter(const mysf::Binding & bind, const sf::RenderWindow & window, const Map & map, Score & score);
 	Helicopter(const Helicopter & o) = delete;
 	Helicopter & operator=(const Helicopter & o) = delete;
 	virtual ~Helicopter() = default;
 
-	bool init(mysf::GraphicLayerSet & gls, const mysf::TextureHolder & thl, const mysf::FontHolder & fhl);
+	bool init(const mysf::TextureHolder & thl);
 	void hit(unsigned int damage);
+	State getState() const;
 
     sf::FloatRect getLocalBounds() const;
     sf::FloatRect getGlobalBounds() const;
@@ -50,12 +52,12 @@ private:
 	const mysf::Binding & _bind;
 	const sf::RenderWindow & _window;
 	const Map & _map;
+	Score & _score;
 
 	std::vector<std::unique_ptr<mysf::AnimNode>> _anims;
 	State _state;
 	float _speed;
 	Life _life;
-	Score _score;
 };
 
 #endif // !HELICOPTER_HPP_

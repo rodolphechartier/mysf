@@ -23,7 +23,7 @@ namespace mysf
     sf::Transform getWorldTransform() const;
     sf::Vector2f getWorldPosition() const;
 
-    virtual void update(const sf::Time & deltaTime, const Event & event) final;
+    void update(const sf::Time & deltaTime, const Event & event);
     virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const final;
 
   protected:

@@ -1,9 +1,10 @@
 #include "Helicopter.hpp"
 
-Helicopter::Helicopter(const mysf::Binding & bind, const sf::RenderWindow & window, const Map & map)
+Helicopter::Helicopter(const mysf::Binding & bind, const sf::RenderWindow & window, const Map & map, Score & score)
 	: _bind(bind)
 	, _window(window)
 	, _map(map)
+	, _score(score)
 	, _state(Helicopter::State::Idle)
 	, _speed(200.f)
 	, _life(1000)
@@ -11,7 +12,7 @@ Helicopter::Helicopter(const mysf::Binding & bind, const sf::RenderWindow & wind
 
 }
 
-bool Helicopter::init(mysf::GraphicLayerSet & gls, const mysf::TextureHolder & thl, const mysf::FontHolder & fhl)
+bool Helicopter::init(const mysf::TextureHolder & thl)
 {
 	_anims.resize(Helicopter::State::Size);
 	_anims[Helicopter::State::Idle].reset(new HelicopterIdle(thl));
@@ -22,11 +23,6 @@ bool Helicopter::init(mysf::GraphicLayerSet & gls, const mysf::TextureHolder & t
 	_life.setOrigin(_life.getSize() / 2.f);
 	_life.setPosition(sf::Vector2f(getGlobalBounds().width / 2.f, -15.f));
 	addChild(&_life);
-
-	_score.setCharacterSize(40);
-	_score.setPosition(sf::Vector2f(10.f, 10.f));
-	_score.setFont(fhl[Resource::Font::VcrOsd]);
-	gls[2].add(&_score);
 	return true;
 }
 
@@ -37,6 +33,11 @@ void Helicopter::hit(unsigned int damage)
 	_anims[_state]->stop();
 	_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
 	_anims[_state]->play();
+}
+
+Helicopter::State Helicopter::getState() const
+{
+	return _state;
 }
 
 sf::FloatRect Helicopter::getLocalBounds() const
