@@ -63,6 +63,11 @@ namespace mysf
 	  _speed = isPaused ? 0.f : 1.f;
 	}
 
+	void play(bool isPlayed = true)
+	{
+	  _speed = isPlayed ? 1.f : 0.f;
+	}
+
 	void setSpeed(float speed)
 	{
 	  _speed = speed;

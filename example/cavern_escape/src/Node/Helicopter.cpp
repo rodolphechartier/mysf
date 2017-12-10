@@ -19,9 +19,15 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 	_anims[Helicopter::State::Hit].reset(new HelicopterHit(thl));
 	_anims[Helicopter::State::Destroy].reset(new HelicopterDestroy(thl));
 
-	_life.setSize(sf::Vector2f(200.f, 10.f));
+	_hitbox.left = 64;
+	_hitbox.top = 8;
+	_hitbox.width = 171 - _hitbox.left;
+	_hitbox.height = 87 - _hitbox.top;
+
+	_life.setSize(sf::Vector2f(5.f, getLocalBounds().height));
+	_life.setSizeMax(_life.getSize());
 	_life.setOrigin(_life.getSize() / 2.f);
-	_life.setPosition(sf::Vector2f(getGlobalBounds().width / 2.f, -15.f));
+	_life.setPosition(sf::Vector2f(-15.f, getLocalBounds().height / 2.f));
 	addChild(&_life);
 	return true;
 }
@@ -38,6 +44,21 @@ void Helicopter::hit(unsigned int damage)
 Helicopter::State Helicopter::getState() const
 {
 	return _state;
+}
+
+void Helicopter::setHitbox(const sf::FloatRect & hitbox)
+{
+	_hitbox = hitbox;
+}
+
+sf::FloatRect Helicopter::getLocalHitbox() const
+{
+	return _hitbox;
+}
+
+sf::FloatRect Helicopter::getGlobalHitbox() const
+{
+	return getTransform().transformRect(getLocalHitbox());
 }
 
 sf::FloatRect Helicopter::getLocalBounds() const
@@ -93,12 +114,11 @@ void Helicopter::colision(const sf::Time & deltaTime, sf::Vector2f & pos)
 		pos.y = _window.getSize().y - getGlobalBounds().height - 1;
 
 	setPosition(pos);
-	if (lastHit > sf::seconds(1.f) && _map.intersects(getGlobalBounds()))
+	if (lastHit > sf::seconds(1.f) && _map.intersects(getGlobalHitbox()))
 	{
 		hit(100);
 		lastHit = sf::Time::Zero;
 	}
 	else
 		lastHit += deltaTime;
-
 }

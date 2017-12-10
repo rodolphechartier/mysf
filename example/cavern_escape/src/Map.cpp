@@ -90,7 +90,7 @@ void Map::genLine()
 	static std::vector<int> slope(2, 0);
 	std::vector<unsigned int> line(2, 0);
 
-	if (nbGen > 24)
+	if (nbGen > 64)
 	{
 		for (unsigned int i = 0; i < slope.size(); ++i)
 			slope[i] = (rand() % 5) - 2;
@@ -115,7 +115,8 @@ void Map::genLine()
 		while (checkGenLine(line) == false)
 		{
 			for (unsigned int i = 0; i < line.size(); ++i)
-				line[i] = last[i] + (slope[i] * (rand() % 3));
+				line[i] = last[i] + (slope[i] * (rand() % 2)) + (rand() % 3 - 1);
+				// line[i] = last[i] + (slope[i] * (rand() % 3));
 				// line[i] = last[i] + (slope[i] * (rand() % 4));
 				// line[i] = last[i] + (slope[i] + ((rand() % 5) - 2));
 				// line[i] = last[i] + (slope[i] + ((rand() % 9) - 4));

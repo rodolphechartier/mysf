@@ -18,6 +18,8 @@ SRC			= src/GraphicLayer.cpp \
 			src/TextNode.cpp \
 			src/ShapeNode.cpp \
 			src/CircleShapeNode.cpp \
+			src/RectangleShapeNode.cpp \
+			src/ConvexShapeNode.cpp \
 			src/AnimNode.cpp \
 			src/SoundPlayer.cpp
 

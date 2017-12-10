@@ -1,9 +1,9 @@
 #ifndef LIFE_HPP_
 # define LIFE_HPP_
 
-# include "SceneNode.hpp"
+# include "RectangleShapeNode.hpp"
 
-class Life : public mysf::SceneNode
+class Life : public mysf::RectangleShapeNode
 {
 public:
 	explicit Life(unsigned int max = 1000);
@@ -19,15 +19,13 @@ public:
 
 	operator bool() const;
 
-	void setSize(const sf::Vector2f & size);
-	const sf::Vector2f & getSize() const;
+	void setSizeMax(const sf::Vector2f & size);
+	const sf::Vector2f & getSizeMax() const;
 
 private:
-	virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event) override;
-    virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const override;
+	void update();
 
-	sf::RectangleShape _shape;
-	sf::Vector2f _size;
+	sf::Vector2f _sizeMax;
 
 	unsigned int _val;
 	unsigned int _max;

@@ -40,6 +40,9 @@ public:
 	void hit(unsigned int damage);
 	State getState() const;
 
+	void setHitbox(const sf::FloatRect & hitbox);
+	sf::FloatRect getLocalHitbox() const;
+	sf::FloatRect getGlobalHitbox() const;
     sf::FloatRect getLocalBounds() const;
     sf::FloatRect getGlobalBounds() const;
 
@@ -55,6 +58,7 @@ private:
 	Score & _score;
 
 	std::vector<std::unique_ptr<mysf::AnimNode>> _anims;
+	sf::FloatRect _hitbox;
 	State _state;
 	float _speed;
 	Life _life;

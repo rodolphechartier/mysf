@@ -28,7 +28,7 @@ public:
 
 private:
 	bool initBinding();
-	void gameover(const mysf::Event & event);
+	mysf::GraphicRender * gameover(const mysf::Event & event);
 
 private:
 	static const sf::Vector2u WindowSize;

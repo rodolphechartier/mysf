@@ -55,12 +55,20 @@ bool Game::init()
 	return true;
 }
 
-mysf::GraphicRender * Game::onUpdate(const sf::Time & /* deltaTime */, const mysf::Event & event)
+mysf::GraphicRender * Game::onUpdate(const sf::Time & deltaTime, const mysf::Event & event)
 {
+	static sf::Time time(sf::Time::Zero);
+
 	if (_bind.getInput(Action::Quit, event) || event.isClosed())
 		return 0;
 	if (_helicopter.getState() == Helicopter::State::Destroy)
-		gameover(event);
+		return gameover(event);
+	time += deltaTime;
+	if (time > sf::seconds(15.f))
+	{
+		_engine.multiplySpeed(1.01f);
+		time -= sf::seconds(15.f);
+	}
 	return this;
 }
 
@@ -76,18 +84,29 @@ bool Game::initBinding()
 	return _bind.load("rsc/conf/key.conf", bind);
 }
 
-void Game::gameover(const mysf::Event & /* event */)
+mysf::GraphicRender * Game::gameover(const mysf::Event & event)
 {
+	static bool called = false;
 	static mysf::TextNode text;
 
+	if (event.key().isDown(sf::Keyboard::R))
+	{
+		_engine.play();
+		return new Game(_engine, _window);
+	}
+	if (called)
+		return this;
+
 	_engine.pause();
-	text.setString("Game Over\nScore: " + std::to_string(_score.getValue()));
 	text.setCharacterSize(60);
+	text.setFont(_fhl[Resource::Font::VcrOsd]);
+	text.setString("Game Over\nScore: " + std::to_string(_score.getValue()));
 	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 	text.setPosition(sf::Vector2f(WindowSize) / 2.f);
-	text.setFont(_fhl[Resource::Font::VcrOsd]);
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
 	text.setOutlineThickness(2.f);
 	_gls[2].add(&text);
+	called = true;
+	return this;
 }

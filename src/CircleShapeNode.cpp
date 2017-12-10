@@ -38,14 +38,4 @@ namespace mysf
 	{
 		return _circle.getPoint(index);
 	}
-
-	void CircleShapeNode::updateCurrent(const sf::Time & /* deltaTime */, const Event & /* event */)
-	{
-
-	}
-
-	void CircleShapeNode::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
-	{
-		target.draw(_circle, states);
-	}
 }

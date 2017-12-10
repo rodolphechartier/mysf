@@ -4,9 +4,9 @@ Life::Life(unsigned int max)
 	: _val(max)
 	, _max(max)
 {
-	_shape.setFillColor(sf::Color::Green);
-	_shape.setOutlineColor(sf::Color::Black);
-	_shape.setOutlineThickness(2.f);
+	setFillColor(sf::Color::Green);
+	setOutlineColor(sf::Color::Black);
+	setOutlineThickness(2.f);
 }
 
 Life::~Life()
@@ -16,22 +16,14 @@ Life::~Life()
 
 void Life::add(unsigned int heal)
 {
-	float ratio;
-
 	_val = _val + heal >= _max ? _max : _val + heal;
-	ratio = static_cast<float>(_val) / _max;
-	_shape.setSize(sf::Vector2f(_size.x * ratio, _size.y));
-	_shape.setFillColor(sf::Color(255 * (1.f - ratio), 255 * ratio, 0));
+	update();
 }
 
 void Life::sub(unsigned int damage)
 {
-	float ratio;
-
 	_val = _val <= damage ? 0 : _val - damage;
-	ratio = static_cast<float>(_val) / _max;
-	_shape.setSize(sf::Vector2f(_size.x * ratio, _size.y));
-	_shape.setFillColor(sf::Color(255 * (1.f - ratio), 255 * ratio, 0));
+	update();
 }
 
 unsigned int Life::getValue() const
@@ -54,26 +46,21 @@ Life::operator bool() const
 	return static_cast<bool>(_val);
 }
 
-void Life::setSize(const sf::Vector2f & size)
+void Life::setSizeMax(const sf::Vector2f & size)
 {
-	float ratio;
-
-	_size = size;
-	ratio = static_cast<float>(_val) / _max;
-	_shape.setSize(sf::Vector2f(_size.x * ratio, _size.y));
+	_sizeMax = size;
 }
 
-const sf::Vector2f & Life::getSize() const
+const sf::Vector2f & Life::getSizeMax() const
 {
-	return _size;
+	return _sizeMax;
 }
 
-void Life::updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & /* event */)
+void Life::update()
 {
+	const float ratio = getRatio();
 
-}
-
-void Life::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
-{
-	target.draw(_shape, states);
+	setSize(sf::Vector2f(_sizeMax.x, _sizeMax.y * ratio));\
+	setOrigin(getSize() / 2.f);
+	setFillColor(sf::Color(255 * (1.f - ratio), 255 * ratio, 0));
 }

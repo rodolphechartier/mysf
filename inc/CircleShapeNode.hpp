@@ -21,10 +21,6 @@ namespace mysf
 		virtual std::size_t getPointCount() const override;
 		virtual sf::Vector2f getPoint(std::size_t index) const override;
 
-	protected:
-		virtual void updateCurrent(const sf::Time & deltaTime, const Event & event);
-		virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const;
-
 	private:
 		sf::CircleShape _circle;
 	};
