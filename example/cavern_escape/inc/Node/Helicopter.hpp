@@ -39,6 +39,7 @@ public:
 	bool init(const mysf::TextureHolder & thl);
 	void hit(unsigned int damage);
 	State getState() const;
+    bool isPlaying() const;
 
 	void setHitbox(const sf::FloatRect & hitbox);
 	sf::FloatRect getLocalHitbox() const;

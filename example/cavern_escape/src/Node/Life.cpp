@@ -60,7 +60,15 @@ void Life::update()
 {
 	const float ratio = getRatio();
 
-	setSize(sf::Vector2f(_sizeMax.x, _sizeMax.y * ratio));\
-	setOrigin(getSize() / 2.f);
-	setFillColor(sf::Color(255 * (1.f - ratio), 255 * ratio, 0));
+	if (_val)
+	{
+		setSize(sf::Vector2f(_sizeMax.x, _sizeMax.y * ratio));
+		setOrigin(getSize() / 2.f);
+		setFillColor(sf::Color(255 * (1.f - ratio), 255 * ratio, 0));
+	}
+	else
+	{
+		setSize(sf::Vector2f(0.f, 0.f));
+		setOutlineThickness(0.f);
+	}
 }

@@ -134,7 +134,7 @@ bool Map::checkGenLine(const std::vector<unsigned int> & line) const
 	{
 		if (i < line.size() - 1 && line[i] >= line[i + 1])
 			return false;
-		if (line[i] < 20 || line[i] >= _size.y - 20)
+		if (line[i] >= _size.y)
 			return false;
 		if (!(i % 2) && line[i + 1] - line[i] < _minSize)
 			return false;

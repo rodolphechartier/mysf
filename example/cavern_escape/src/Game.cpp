@@ -34,7 +34,7 @@ bool Game::init()
 
 	_background.setTexture(_thl[Resource::Texture::Background]);
 	_background.setSize(sf::Vector2f(WindowSize));
-	_helicopter.setPosition(sf::Vector2f(10, WindowSize.y / 2));
+	_helicopter.setPosition(sf::Vector2f(15.f, WindowSize.y / 2));
 	if (_helicopter.init(_thl) == false)
 		return false;
 	_score.setCharacterSize(40);
@@ -92,20 +92,24 @@ mysf::GraphicRender * Game::gameover(const mysf::Event & event)
 	if (event.key().isDown(sf::Keyboard::R))
 	{
 		_engine.play();
+		called = false;
 		return new Game(_engine, _window);
 	}
 	if (called)
+	{
+		if (_helicopter.isPlaying() == false)
+			_engine.pause();
 		return this;
+	}
 
-	_engine.pause();
-	text.setCharacterSize(60);
 	text.setFont(_fhl[Resource::Font::VcrOsd]);
-	text.setString("Game Over\nScore: " + std::to_string(_score.getValue()));
+	text.setCharacterSize(250);
+	text.setString("Game Over");
 	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 	text.setPosition(sf::Vector2f(WindowSize) / 2.f);
 	text.setFillColor(sf::Color::White);
 	text.setOutlineColor(sf::Color::Black);
-	text.setOutlineThickness(2.f);
+	text.setOutlineThickness(4.f);
 	_gls[2].add(&text);
 	called = true;
 	return this;

@@ -27,7 +27,7 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 	_life.setSize(sf::Vector2f(5.f, getLocalBounds().height));
 	_life.setSizeMax(_life.getSize());
 	_life.setOrigin(_life.getSize() / 2.f);
-	_life.setPosition(sf::Vector2f(-15.f, getLocalBounds().height / 2.f));
+	_life.setPosition(sf::Vector2f(-10.f, getLocalBounds().height / 2.f));
 	addChild(&_life);
 	return true;
 }
@@ -44,6 +44,11 @@ void Helicopter::hit(unsigned int damage)
 Helicopter::State Helicopter::getState() const
 {
 	return _state;
+}
+
+bool Helicopter::isPlaying() const
+{
+	return _anims[_state]->isPlaying();
 }
 
 void Helicopter::setHitbox(const sf::FloatRect & hitbox)
