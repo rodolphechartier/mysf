@@ -13,7 +13,7 @@ Map::~Map()
 
 }
 
-void Map::gen(const sf::Vector2u & size, unsigned int minSize)
+void Map::gen(const sf::Vector2f & size, unsigned int minSize)
 {
 	_size = size;
 	_minSize = minSize;

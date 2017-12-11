@@ -1,13 +1,14 @@
 #include "Game.hpp"
 
-const sf::Vector2u Game::WindowSize(1500, 800);
+const sf::Vector2f Game::WindowSize(1500.f, 800.f);
 
 Game::Game(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window)
 	: _engine(engine)
 	, _window(window)
 	, _helicopter(_bind, window, _map, _score)
+	, _gameover(engine, window, _helicopter)
 {
-
+	_engine.setSpeed(1.f);
 }
 
 Game::~Game()
@@ -33,8 +34,8 @@ bool Game::init()
 	_fhl.load(Resource::Font::ComfortaaBold, "rsc/font/comfortaa_bold.ttf");
 
 	_background.setTexture(_thl[Resource::Texture::Background]);
-	_background.setSize(sf::Vector2f(WindowSize));
-	_helicopter.setPosition(sf::Vector2f(15.f, WindowSize.y / 2));
+	_background.setSize(WindowSize);
+	_helicopter.setPosition(sf::Vector2f(15.f, WindowSize.y / 2.f));
 	if (_helicopter.init(_thl) == false)
 		return false;
 	_score.setCharacterSize(40);
@@ -50,6 +51,9 @@ bool Game::init()
 	_gls[1].add(&_helicopter);
 	_gls[2].add(&_score);
 
+	if (_gameover.init(&_gls[2], _fhl[Resource::Font::VcrOsd]) == false)
+		return false;
+
 	_window.create(sf::VideoMode(WindowSize.x, WindowSize.y), "Cavern Escape");
 	_window.setFramerateLimit(60);
 	return true;
@@ -62,11 +66,12 @@ mysf::GraphicRender * Game::onUpdate(const sf::Time & deltaTime, const mysf::Eve
 	if (_bind.getInput(Action::Quit, event) || event.isClosed())
 		return 0;
 	if (_helicopter.getState() == Helicopter::State::Destroy)
-		return gameover(event);
+		return _gameover(event, this);
+
 	time += deltaTime;
 	if (time > sf::seconds(15.f))
 	{
-		_engine.multiplySpeed(1.01f);
+		_engine.setSpeed(_engine.getSpeed() + 0.01f);
 		time -= sf::seconds(15.f);
 	}
 	return this;
@@ -82,35 +87,4 @@ bool Game::initBinding()
 	bind["Right"] = Action::Right;
 	bind["Quit"] = Action::Quit;
 	return _bind.load("rsc/conf/key.conf", bind);
-}
-
-mysf::GraphicRender * Game::gameover(const mysf::Event & event)
-{
-	static bool called = false;
-	static mysf::TextNode text;
-
-	if (event.key().isDown(sf::Keyboard::R))
-	{
-		_engine.play();
-		called = false;
-		return new Game(_engine, _window);
-	}
-	if (called)
-	{
-		if (_helicopter.isPlaying() == false)
-			_engine.pause();
-		return this;
-	}
-
-	text.setFont(_fhl[Resource::Font::VcrOsd]);
-	text.setCharacterSize(250);
-	text.setString("Game Over");
-	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-	text.setPosition(sf::Vector2f(WindowSize) / 2.f);
-	text.setFillColor(sf::Color::White);
-	text.setOutlineColor(sf::Color::Black);
-	text.setOutlineThickness(4.f);
-	_gls[2].add(&text);
-	called = true;
-	return this;
 }

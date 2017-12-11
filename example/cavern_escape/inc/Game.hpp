@@ -11,12 +11,16 @@
 # include "TextNode.hpp"
 
 # include "Resource.hpp"
+# include "Gameover.hpp"
 # include "Map.hpp"
 # include "Action.hpp"
 # include "Helicopter.hpp"
 
 class Game : public mysf::GraphicRender
 {
+public:
+	static const sf::Vector2f WindowSize;
+
 public:
 	explicit Game(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window);
 	Game(const Game &) = delete;
@@ -28,11 +32,8 @@ public:
 
 private:
 	bool initBinding();
-	mysf::GraphicRender * gameover(const mysf::Event & event);
 
 private:
-	static const sf::Vector2u WindowSize;
-
 	mysf::Engine<sf::RenderWindow> & _engine;
 	sf::RenderWindow & _window;
 	mysf::TextureHolder _thl;
@@ -43,6 +44,7 @@ private:
 	Map _map;
 	Score _score;
 	Helicopter _helicopter;
+	Gameover _gameover;
 };
 
 #endif // !GAME_HPP_

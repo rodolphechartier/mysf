@@ -13,6 +13,7 @@ NODEDIR		= $(SRCDIR)Node/
 
 SRC			= $(SRCDIR)main.cpp \
 			$(SRCDIR)Game.cpp \
+			$(SRCDIR)Gameover.cpp \
 			$(SRCDIR)Map.cpp \
 			$(NODEDIR)Life.cpp \
 			$(NODEDIR)Score.cpp \

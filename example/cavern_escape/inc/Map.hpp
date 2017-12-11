@@ -16,7 +16,7 @@ public:
 	Map & operator=(const Map & o) = default;
 	virtual ~Map();
 
-	void gen(const sf::Vector2u & size, unsigned int minSize);
+	void gen(const sf::Vector2f & size, unsigned int minSize);
 
 	void setSpeed(const sf::Time & speed);
 	const sf::Time & getSpeed() const;
@@ -62,7 +62,7 @@ private:
 
 private:
 	std::list<std::vector<unsigned int>> _data;
-	sf::Vector2u _size;
+	sf::Vector2f _size;
 	unsigned int _minSize;
 	sf::Time _speed;
 	sf::Texture * _texture;
