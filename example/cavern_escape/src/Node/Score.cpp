@@ -61,9 +61,8 @@ void Score::updateText()
 	_text.setString("Score: " + std::to_string(_val));
 }
 
-void Score::updateCurrent(const sf::Time & deltaTime, const mysf::Event & /* event */)
+void Score::updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & /* event */)
 {
-	_val += deltaTime.asSeconds() * 500;
 	updateText();
 }
 

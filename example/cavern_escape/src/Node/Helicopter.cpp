@@ -90,12 +90,19 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 	if (_bind.getInput(Action::Right, event))
 		pos.x += move;
 
+	if (_state == Helicopter::State::Destroy)
+		pos.y += move;
+
 	colision(deltaTime, pos);
-	if (_state != Helicopter::State::Destroy && _anims[_state]->isPlaying() == false)
+	if (_state != Helicopter::State::Destroy)
 	{
-		_anims[_state]->stop();
-		_state = Helicopter::State::Idle;
-		_anims[_state]->play();
+		_score.add(deltaTime.asSeconds() * 500);
+		if (_anims[_state]->isPlaying() == false)
+		{
+			_anims[_state]->stop();
+			_state = Helicopter::State::Idle;
+			_anims[_state]->play();
+		}
 	}
 	_anims[_state]->update(deltaTime, event);
 }
@@ -118,6 +125,7 @@ void Helicopter::colision(const sf::Time & deltaTime, sf::Vector2f & pos)
 	if (pos.y >= _window.getSize().y - getGlobalBounds().height)
 		pos.y = _window.getSize().y - getGlobalBounds().height - 1;
 
+	(void)_map;
 	setPosition(pos);
 	if (lastHit > sf::seconds(1.f) && _map.intersects(getGlobalHitbox()))
 	{

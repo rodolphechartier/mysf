@@ -22,13 +22,22 @@ bool Gameover::init(mysf::GraphicLayer * layer, const sf::Font & font)
 		return false;
 	_layer = layer;
 	_text.setFont(font);
-	_text.setCharacterSize(250);
+	_text.setCharacterSize(std::min(Game::WindowSize.x, Game::WindowSize.y) / 4.f);
 	_text.setString("Game Over");
 	_text.setOrigin(_text.getLocalBounds().width / 2.f, _text.getLocalBounds().height / 2.f);
 	_text.setPosition(Game::WindowSize / 2.f);
 	_text.setFillColor(sf::Color::White);
 	_text.setOutlineColor(sf::Color::Black);
 	_text.setOutlineThickness(4.f);
+
+	_continue.setFont(font);
+	_continue.setCharacterSize(std::min(Game::WindowSize.x, Game::WindowSize.y) / 10.f);
+	_continue.setString("Continue ? (press R)");
+	_continue.setOrigin(_continue.getLocalBounds().width / 2.f, _continue.getLocalBounds().height / 2.f);
+	_continue.setPosition(Game::WindowSize.x / 2.f, Game::WindowSize.y / 2.f + _text.getLocalBounds().height);
+	_continue.setFillColor(sf::Color::White);
+	_continue.setOutlineColor(sf::Color::Black);
+	_continue.setOutlineThickness(3.f);
 	return true;
 }
 
@@ -55,4 +64,5 @@ void Gameover::updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event
 void Gameover::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(_text, states);
+	target.draw(_continue, states);
 }

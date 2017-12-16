@@ -56,6 +56,7 @@ bool Game::init()
 
 	_window.create(sf::VideoMode(WindowSize.x, WindowSize.y), "Cavern Escape");
 	_window.setFramerateLimit(60);
+	_window.setVerticalSyncEnabled(true);
 	return true;
 }
 
@@ -69,10 +70,10 @@ mysf::GraphicRender * Game::onUpdate(const sf::Time & deltaTime, const mysf::Eve
 		return _gameover(event, this);
 
 	time += deltaTime;
-	if (time > sf::seconds(15.f))
+	if (time > sf::seconds(10.f))
 	{
 		_engine.setSpeed(_engine.getSpeed() + 0.01f);
-		time -= sf::seconds(15.f);
+		time -= sf::seconds(10.f);
 	}
 	return this;
 }

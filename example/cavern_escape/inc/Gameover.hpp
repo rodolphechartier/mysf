@@ -1,6 +1,8 @@
 #ifndef GAMEOVER_HPP_
 # define GAMEOVER_HPP_
 
+# include <algorithm>
+
 # include <SFML/Graphics.hpp>
 
 # include "Engine.hpp"
@@ -31,6 +33,7 @@ private:
 	Helicopter & _helicopter;
 
 	sf::Text _text;
+	sf::Text _continue;
 	mysf::GraphicLayer * _layer;
 	bool _added;
 };
