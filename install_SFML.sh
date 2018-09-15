@@ -5,14 +5,15 @@ log() {
 }
 
 BUILD_DIR=build
+VERSION=2.5.0
 
 echo `log` "Installing SFML..."
 
-sudo apt-get update
+sudo apt-get update ; sudo apt-get -y upgrade
 sudo apt-get install -y cmake
 
-wget "https://www.sfml-dev.org/files/SFML-2.5.0-sources.zip" &&
-unzip SFML-2.4.2-sources.zip && cd SFML-2.4.2 &&
+wget "https://www.sfml-dev.org/files/SFML-$VERSION-sources.zip" &&
+unzip SFML-$VERSION-sources.zip && cd SFML-$VERSION &&
 mkdir $BUILD_DIR && cd $BUILD_DIR || exit 1
 
 # Dependencies:
