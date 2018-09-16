@@ -1,27 +1,28 @@
 CC			= g++
 CPPFLAGS	+= -Wall -Wextra -pedantic -Werror -o3 -std=c++11 -fPIC
-CPPFLAGS	+= -I ./inc
+CPPFLAGS	+= -I ./inc -I ./inc/Engine -I ./inc/Event -I ./inc/Node
 CPPFLAGS	+= -I /usr/local/include
 
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 
-SRC			= src/GraphicLayer.cpp \
-			src/GraphicLayerSet.cpp \
-			src/GraphicRender.cpp \
-			src/Event.cpp \
-			src/Joysticks.cpp \
-			src/Key.cpp \
-			src/Binding.cpp \
-			src/Mouse.cpp \
-			src/SceneNode.cpp \
-			src/SpriteNode.cpp \
-			src/TextNode.cpp \
-			src/ShapeNode.cpp \
-			src/CircleShapeNode.cpp \
-			src/RectangleShapeNode.cpp \
-			src/ConvexShapeNode.cpp \
-			src/AnimNode.cpp \
-			src/SoundPlayer.cpp
+SRC			= \
+			src/Engine/GraphicLayer.cpp \
+			src/Engine/GraphicLayerSet.cpp \
+			src/Engine/GraphicRender.cpp \
+			src/Engine/SoundPlayer.cpp \
+			src/Event/Event.cpp \
+			src/Event/Binding.cpp \
+			src/Event/Key.cpp \
+			src/Event/Mouse.cpp \
+			src/Event/Joysticks.cpp \
+			src/Node/SceneNode.cpp \
+			src/Node/SpriteNode.cpp \
+			src/Node/TextNode.cpp \
+			src/Node/ShapeNode.cpp \
+			src/Node/CircleShapeNode.cpp \
+			src/Node/RectangleShapeNode.cpp \
+			src/Node/ConvexShapeNode.cpp \
+			src/Node/AnimNode.cpp
 
 OBJ			= $(SRC:.cpp=.o)
 
