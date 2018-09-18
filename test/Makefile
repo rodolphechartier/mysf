@@ -1,22 +1,22 @@
-CC			= g++
-CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++11
-CPPFLAGS	+= -I ../inc
-CPPFLAGS	+= -I /usr/local/include
-LDFLAGS		= $(LIB)
+LIBNAME		= libmysf
+LIBPATH		= ..
+NAME		= anim.out
 
 LIBSFML		= -L /usr/local/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system
 LIBMYSF		= -L ./ -lmysf
 LIB			= $(LIBSFML) $(LIBMYSF)
 
-SRC			= test_anim.cpp
-
-OBJ			= $(SRC:.cpp=.o)
-
-LIBNAME		= libmysf
-NAME		= anim.out
-
 RM			= rm -f
 LN			= ln -s
+
+CC			= g++
+CPPFLAGS	+= -Wall -Wextra -Werror -o3 -std=c++11
+CPPFLAGS	+= -I $(LIBPATH)/inc -I $(LIBPATH)/inc/Engine -I $(LIBPATH)/inc/Event -I $(LIBPATH)/inc/Node
+CPPFLAGS	+= -I /usr/local/include
+LDFLAGS		= $(LIB)
+
+SRC			= test_anim.cpp
+OBJ			= $(SRC:.cpp=.o)
 
 all: $(LIBNAME) $(NAME)
 
@@ -24,10 +24,10 @@ $(NAME): $(OBJ)
 	$(CC) $(CPPFLAGS) $(LDFLAGS) $(OBJ) -o $(NAME)
 
 $(LIBNAME):
-	make -C ../
+	make -C $(LIBPATH)
 	$(RM) ./$(LIBNAME).so ./$(LIBNAME).a
-	$(LN) ../$(LIBNAME).so ./$(LIBNAME).so
-	$(LN) ../$(LIBNAME).a ./$(LIBNAME).a
+	$(LN) $(LIBPATH)/$(LIBNAME).so ./$(LIBNAME).so
+	$(LN) $(LIBPATH)/$(LIBNAME).a ./$(LIBNAME).a
 
 clean:
 	$(RM) $(OBJ)

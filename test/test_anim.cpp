@@ -10,8 +10,6 @@
 
 static const unsigned int Scale = 10;
 static const sf::Time frameTime(sf::seconds(0.2f));
-static const sf::Vector2u SpriteSize = sf::Vector2u(52, 89);
-static const sf::Vector2u WindowSize = sf::Vector2u(SpriteSize * Scale);
 
 template <typename T>
 std::ostream & operator<<(std::ostream & os, const sf::Rect<T> & rect)
@@ -38,21 +36,31 @@ public:
 
   virtual bool init()
   {
+    try {
+      _spriteSize.x = std::stoul(_av[1]);
+      _spriteSize.y = std::stoul(_av[2]);
+    } catch (const std::out_of_range & e) {
+      return false;
+    }
+
     std::cout << "Loading Animations..." << std::endl;
     if (_thl.setDefault("resources/images/default.png") == false)
     {
       std::cerr << "failed to load default texture" << std::endl;
       return false;
     }
-    _anims.resize(_ac - 1);
-    for (int i = 0; i < _ac - 1; ++i)
+    _anims.resize(_ac - 3);
+    for (int i = 0; i < _ac - 3; ++i)
     {
-      if (_thl.load(i, _av[i + 1]) == false)
-        std::cerr << "Cannot load anim: " << _av[i + 1] << std::endl;
+      if (_thl.load(i, _av[i + 3]) == false)
+        std::cerr << "Cannot load anim: " << _av[i + 3] << std::endl;
       _buildAnim(_anims[i], _thl[i]);
     }
     std::cout << "Animations Loaded" << std::endl;
-    _window.create(sf::VideoMode(WindowSize.x, WindowSize.y), "Test");
+
+    _windowSize = sf::Vector2u(_spriteSize * Scale);
+    _window.create(sf::VideoMode(_windowSize.x, _windowSize.y), "Test");
+
     _gls[0].add(&_anims[_select]);
     _anims[_select].play();
     return true;
@@ -85,8 +93,8 @@ private:
   void _buildAnim(mysf::AnimNode & anim, const sf::Texture & texture)
   {
     anim.setTexture(texture);
-    for (unsigned int i = 0; i < texture.getSize().x / SpriteSize.x; ++i)
-      anim.addFrame(sf::IntRect(i * SpriteSize.x, 0, SpriteSize.x, SpriteSize.y));
+    for (unsigned int i = 0; i < texture.getSize().x / _spriteSize.x; ++i)
+      anim.addFrame(sf::IntRect(i * _spriteSize.x, 0, _spriteSize.x, _spriteSize.y));
     anim.setFrameTime(frameTime);
     anim.setScale(Scale, Scale);
     anim.loop(true);
@@ -99,6 +107,9 @@ private:
 
   sf::RenderWindow & _window;
   mysf::TextureHolder _thl;
+
+  sf::Vector2u _spriteSize;
+  sf::Vector2u _windowSize;
 
   std::vector<mysf::AnimNode> _anims;
   unsigned int _select;
@@ -113,9 +124,9 @@ public:
     _grender = new Render(_window, ac, av);
     _event.key().setEventType(mysf::OnPressed);
     _event.mouse().setEventType(mysf::OnPressed);
-    if (ac < 2)
+    if (ac < 4)
     {
-      std::cerr << av[0] << ": [anim_path [...]]" << std::endl;
+      std::cerr << av[0] << ": [sprite_size_x] [sprite_size_y] [anim_path [...]]" << std::endl;
       return 1;
     }
     return _grender->init();
