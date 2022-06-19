@@ -26,8 +26,8 @@ $(NAME): $(OBJ)
 $(LIBNAME):
 	make -C $(LIBPATH)
 	$(RM) ./$(LIBNAME).so ./$(LIBNAME).a
-	$(LN)  $(LIBPATH)/$(LIBNAME).so ./$(LIBNAME).so
-	$(LN)  $(LIBPATH)/$(LIBNAME).a ./$(LIBNAME).a
+	$(LN) $(LIBPATH)/$(LIBNAME).so ./$(LIBNAME).so
+	$(LN) $(LIBPATH)/$(LIBNAME).a ./$(LIBNAME).a
 
 clean:
 	$(RM) $(OBJ)

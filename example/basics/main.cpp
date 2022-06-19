@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../inc/Mysf.hpp"
+#include "Mysf.hpp"
 
 namespace Action
 {
