@@ -15,7 +15,6 @@ namespace mysf
   public:
 	Engine()
 	  : _grender(0)
-	  , _speed(1.f)
 	{
 
 	}
@@ -58,36 +57,6 @@ namespace mysf
 	  return ret;
 	}
 
-	void pause(bool isPaused = true)
-	{
-	  _speed = isPaused ? 0.f : 1.f;
-	}
-
-	void play(bool isPlayed = true)
-	{
-	  _speed = isPlayed ? 1.f : 0.f;
-	}
-
-	void setSpeed(float speed)
-	{
-	  _speed = speed;
-	}
-
-	void multiplySpeed(float speed)
-	{
-	  _speed *= speed;
-	}
-
-	void divideSpeed(float speed)
-	{
-	  _speed /= speed;
-	}
-
-	float getSpeed() const
-	{
-	  return _speed;
-	}
-
   private:
 	void _processEvents()
 	{
@@ -105,7 +74,7 @@ namespace mysf
 
 	  if (!_grender)
 		return 2;
-	  if ((ret = _grender->update(deltaTime * _speed, _event)) != _grender)
+	  if ((ret = _grender->update(deltaTime, _event)) != _grender)
 	  {
 		delete _grender;
 		if ((_grender = ret) == 0)
@@ -129,7 +98,6 @@ namespace mysf
 	Window _window;
 	GraphicRender * _grender;
 	Event _event;
-	float _speed;
   };
 }
 

@@ -1,10 +1,13 @@
+#include <iostream>
+
 #include "Gameover.hpp"
 #include "Game.hpp"
 
-Gameover::Gameover(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window, Helicopter & helicopter)
+Gameover::Gameover(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window, Helicopter & helicopter, Map & map)
 	: _engine(engine)
 	, _window(window)
 	, _helicopter(helicopter)
+    , _map(map)
 	, _layer(0)
 	, _added(false)
 {
@@ -49,8 +52,6 @@ mysf::GraphicRender * Gameover::operator()(const mysf::Event & event, mysf::Grap
 		_added = true;
 	}
 
-	if (_engine.getSpeed() && !_helicopter.isPlaying())
-		_engine.pause();
 	if (event.key().isDown(sf::Keyboard::R))
 		return new Game(_engine, _window);
 	return parent;
@@ -58,7 +59,8 @@ mysf::GraphicRender * Gameover::operator()(const mysf::Event & event, mysf::Grap
 
 void Gameover::updateCurrent(const sf::Time & /* deltaTime */, const mysf::Event & /* event */)
 {
-
+  if (_helicopter.getPosition().y == _window.getSize().y - _helicopter.getGlobalBounds().height)
+    _map.setSpeed(0.f);
 }
 
 void Gameover::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const

@@ -1,7 +1,7 @@
 #include "Map.hpp"
 
 Map::Map()
-	: _speed(sf::seconds(0.005f))
+	: _speed(100.f)
 	, _texture(0)
 	, _drawOffset(0)
 {
@@ -21,12 +21,22 @@ void Map::gen(const sf::Vector2f & size, unsigned int minSize)
 		genLine();
 }
 
-void Map::setSpeed(const sf::Time & speed)
+void Map::setSpeed(float speed)
 {
 	_speed = speed;
 }
 
-const sf::Time & Map::getSpeed() const
+void Map::resetSpeed()
+{
+  _speed = 100.f;
+}
+
+void Map::addSpeed(float speed)
+{
+	_speed += speed;
+}
+
+float Map::getSpeed() const
 {
 	return _speed;
 }
@@ -44,14 +54,16 @@ const sf::Texture * Map::getTexture() const
 
 void Map::updateCurrent(const sf::Time & deltaTime, const mysf::Event & /* event */)
 {
+    if (_speed == 0.f) return;
 	static sf::Time time = sf::Time::Zero;
+    const sf::Time deltaSpeed(sf::seconds(1.f / _speed));
 
 	time += deltaTime;
-	while (time > _speed)
+	while (time > deltaSpeed)
 	{
 		_data.pop_front();
 		genLine();
-		time -= _speed;
+		time -= deltaSpeed;
 		++_drawOffset;
 	}
 	if (_texture)

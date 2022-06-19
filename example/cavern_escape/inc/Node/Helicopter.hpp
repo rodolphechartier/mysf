@@ -37,6 +37,11 @@ public:
 	virtual ~Helicopter() = default;
 
 	bool init(const mysf::TextureHolder & thl);
+
+    float getSpeed() const;
+    void setSpeed(float speed);
+    void addSpeed(float speed);
+
 	void hit(unsigned int damage);
 	State getState() const;
     bool isPlaying() const;
@@ -51,7 +56,7 @@ private:
 	virtual void updateCurrent(const sf::Time & deltaTime, const mysf::Event & event) override;
 	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const override;
 
-	void colision(const sf::Time & deltaTime, sf::Vector2f & pos);
+	void colision(const sf::Time & deltaTime);
 
 	const mysf::Binding & _bind;
 	const sf::RenderWindow & _window;

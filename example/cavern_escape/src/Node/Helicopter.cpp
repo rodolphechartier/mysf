@@ -32,10 +32,24 @@ bool Helicopter::init(const mysf::TextureHolder & thl)
 	return true;
 }
 
+float Helicopter::getSpeed() const
+{
+  return _speed;
+}
+
+void Helicopter::setSpeed(float speed)
+{
+  _speed = speed;
+}
+
+void Helicopter::addSpeed(float speed)
+{
+  _speed += speed;
+}
+
 void Helicopter::hit(unsigned int damage)
 {
 	_life.sub(damage);
-	_score.sub(damage * 5);
 	_anims[_state]->stop();
 	_state = _life ? Helicopter::Hit : Helicopter::State::Destroy;
 	_anims[_state]->play();
@@ -81,6 +95,7 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 	sf::Vector2f pos(getPosition());
 	const float move = deltaTime.asSeconds() * _speed;
 
+    // Fetch user input
 	if (_bind.getInput(Action::Up, event))
 		pos.y -= move;
 	if (_bind.getInput(Action::Left, event))
@@ -90,13 +105,27 @@ void Helicopter::updateCurrent(const sf::Time & deltaTime, const mysf::Event & e
 	if (_bind.getInput(Action::Right, event))
 		pos.x += move;
 
+    // Crash the helicopter
 	if (_state == Helicopter::State::Destroy)
 		pos.y += move;
 
-	colision(deltaTime, pos);
+    // Keep inside screen
+	if (pos.x < 0)
+		pos.x = 0;
+	if (pos.y < 0)
+		pos.y = 0;
+	if (pos.x > _window.getSize().x - getGlobalBounds().width)
+		pos.x = _window.getSize().x - getGlobalBounds().width;
+	if (pos.y > _window.getSize().y - getGlobalBounds().height)
+		pos.y = _window.getSize().y - getGlobalBounds().height;
+
+    // Apply position
+    setPosition(pos);
+
 	if (_state != Helicopter::State::Destroy)
 	{
-		_score.add(deltaTime.asSeconds() * 500);
+        colision(deltaTime);
+		_score.add(deltaTime.asSeconds() * 10);
 		if (_anims[_state]->isPlaying() == false)
 		{
 			_anims[_state]->stop();
@@ -112,24 +141,13 @@ void Helicopter::drawCurrent(sf::RenderTarget & target, sf::RenderStates states)
 	_anims[_state]->draw(target, states);
 }
 
-void Helicopter::colision(const sf::Time & deltaTime, sf::Vector2f & pos)
+void Helicopter::colision(const sf::Time & deltaTime)
 {
 	static sf::Time lastHit(sf::Time::Zero);
 
-	if (pos.x < 0)
-		pos.x = 0;
-	if (pos.y < 0)
-		pos.y = 0;
-	if (pos.x >= _window.getSize().x - getGlobalBounds().width)
-		pos.x = _window.getSize().x - getGlobalBounds().width - 1;
-	if (pos.y >= _window.getSize().y - getGlobalBounds().height)
-		pos.y = _window.getSize().y - getGlobalBounds().height - 1;
-
-	(void)_map;
-	setPosition(pos);
 	if (lastHit > sf::seconds(1.f) && _map.intersects(getGlobalHitbox()))
 	{
-		hit(100);
+		hit(500);
 		lastHit = sf::Time::Zero;
 	}
 	else

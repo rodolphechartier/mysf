@@ -15,7 +15,7 @@
 class Gameover : public mysf::SceneNode
 {
 public:
-	explicit Gameover(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window, Helicopter & helicopter);
+  explicit Gameover(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window, Helicopter & helicopter, Map & map);
 	Gameover(const Gameover & o) = default;
 	Gameover & operator=(const Gameover & o) = default;
 	virtual ~Gameover();
@@ -31,6 +31,7 @@ private:
 	mysf::Engine<sf::RenderWindow> & _engine;
 	sf::RenderWindow & _window;
 	Helicopter & _helicopter;
+    Map & _map;
 
 	sf::Text _text;
 	sf::Text _continue;

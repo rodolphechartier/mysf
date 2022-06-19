@@ -6,9 +6,9 @@ Game::Game(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window)
 	: _engine(engine)
 	, _window(window)
 	, _helicopter(_bind, window, _map, _score)
-	, _gameover(engine, window, _helicopter)
+	, _gameover(engine, window, _helicopter, _map)
 {
-	_engine.setSpeed(1.f);
+
 }
 
 Game::~Game()
@@ -63,6 +63,7 @@ bool Game::init()
 mysf::GraphicRender * Game::onUpdate(const sf::Time & deltaTime, const mysf::Event & event)
 {
 	static sf::Time time(sf::Time::Zero);
+    static const sf::Time stage(sf::seconds(10.f));
 
 	if (_bind.getInput(Action::Quit, event) || event.isClosed())
 		return 0;
@@ -70,10 +71,10 @@ mysf::GraphicRender * Game::onUpdate(const sf::Time & deltaTime, const mysf::Eve
 		return _gameover(event, this);
 
 	time += deltaTime;
-	if (time > sf::seconds(10.f))
+	if (time > stage)
 	{
-		_engine.setSpeed(_engine.getSpeed() + 0.01f);
-		time -= sf::seconds(10.f);
+        _map.addSpeed(50.f);
+		time -= stage;
 	}
 	return this;
 }

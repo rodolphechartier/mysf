@@ -18,8 +18,10 @@ public:
 
 	void gen(const sf::Vector2f & size, unsigned int minSize);
 
-	void setSpeed(const sf::Time & speed);
-	const sf::Time & getSpeed() const;
+	void setSpeed(float speed);
+    void resetSpeed();
+    void addSpeed(float speed);
+	float getSpeed() const;
 
     void setTexture(sf::Texture & texture);
     const sf::Texture * getTexture() const;
@@ -64,7 +66,7 @@ private:
 	std::list<std::vector<unsigned int>> _data;
 	sf::Vector2f _size;
 	unsigned int _minSize;
-	sf::Time _speed;
+	float _speed;
 	sf::Texture * _texture;
 
 	unsigned int _drawOffset;
