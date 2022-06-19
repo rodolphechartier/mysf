@@ -36,7 +36,7 @@ OBJ			= $(SRC:.cpp=.o)
 all: $(LIBNAME) $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CPPFLAGS) $(LDFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) $(CPPFLAGS) $(LDFLAGS) -o $(NAME)
 
 $(LIBNAME):
 	make -C $(LIBPATH)
