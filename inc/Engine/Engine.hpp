@@ -45,7 +45,7 @@ namespace mysf
         int run()
         {
             sf::Clock clock;
-            UpdateReturnCode ret = 0;
+            UpdateReturnCode ret = UpdateReturnCode::Continue;
 
             // Doesn't work if put in contructor
             _window.setKeyRepeatEnabled(false);
