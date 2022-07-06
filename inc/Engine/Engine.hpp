@@ -9,96 +9,101 @@
 
 namespace mysf
 {
-  template <class Window = sf::RenderWindow>
-  class Engine
-  {
-  public:
-	Engine()
-	  : _grender(0)
-	{
+    template <class Window = sf::RenderWindow>
+    class Engine
+    {
+    private:
+        enum class UpdateReturnCode {
+            Continue,
+            Close,
+            Error
+        };
 
-	}
+    public:
+        Engine()
+            : _grender(0)
+        {
 
-	Engine(const Engine &) = delete;
-	Engine & operator=(const Engine &) = delete;
+        }
 
-	virtual ~Engine()
-	{
-	  if (_grender)
-		delete _grender;
-	}
+        Engine(const Engine &) = delete;
+        Engine & operator=(const Engine &) = delete;
 
-	virtual bool init(int /* ac */, char ** /* av */)
-	{
-	  _grender = new GraphicRender;
+        virtual ~Engine()
+        {
+            if (_grender)
+                delete _grender;
+        }
 
-	  return _grender->init();
-	}
+        virtual bool init(int /* ac */, char ** /* av */)
+        {
+            _grender = new GraphicRender;
 
-	int run()
-	{
-	  sf::Clock clock;
-	  int ret = 0;
+            return _grender->init();
+        }
 
-	  // Doesn't work if put in contructor
-	  _window.setKeyRepeatEnabled(false);
+        int run()
+        {
+            sf::Clock clock;
+            UpdateReturnCode ret = 0;
 
-	  _draw(); // 1st render
-	  while (_window.isOpen())
-	  {
-		_processEvents();
-		if ((ret = _update(clock.restart())))
-		{
-		  _window.close();
-		  return ret - 1;
-		}
-		_draw();
-	  }
-	  return ret;
-	}
+            // Doesn't work if put in contructor
+            _window.setKeyRepeatEnabled(false);
 
-  private:
-	void _processEvents()
-	{
-	  static sf::Event event;
+            _draw(); // 1st render
+            while (_window.isOpen()) {
+                _processEvents();
+                if ((ret = _update(updateClock.restart())) != UpdateReturnCode::Continue) {
+                    _window.close();
+                    if (ret == UpdateReturnCode::Error)
+                        return 1;
+                    return 0;
+                }
+                _draw();
+            }
+            return 0;
+        }
 
-	  _event.loop();
-	  while (_window.pollEvent(event))
-		_event.update(event);
-	}
+    private:
+        void _processEvents()
+        {
+            static sf::Event event;
 
-	// return (0: continue, 1: close win, 2: error)
-	int _update(const sf::Time & deltaTime)
-	{
-	  GraphicRender * ret;
+            _event.loop();
+            while (_window.pollEvent(event))
+                _event.update(event);
+        }
 
-	  if (!_grender)
-		return 2;
-	  if ((ret = _grender->update(deltaTime, _event)) != _grender)
-	  {
-		delete _grender;
-		if ((_grender = ret) == 0)
-		  return 1;
-		if (_grender->init() == false)
-		  return 2;
-		_event.reset();
-	  }
-	  return 0;
-	}
+        UpdateReturnCode _update(const sf::Time & deltaTime)
+        {
+            GraphicRender * ret;
 
-	void _draw()
-	{
-	  _window.clear();
-	  if (_grender)
-		_grender->draw(_window);
-	  _window.display();
-	}
+            if (!_grender)
+                return UpdateReturnCode::Error;
+            if ((ret = _grender->update(deltaTime, _event)) != _grender) {
+                delete _grender;
+                if ((_grender = ret) == 0)
+                    return UpdateReturnCode::Close;
+                if (_grender->init() == false)
+                    return UpdateReturnCode::Error;
+                _event.reset();
+            }
+            return UpdateReturnCode::Continue;
+        }
 
-  protected:
-	Window _window;
-	GraphicRender * _grender;
-	Event _event;
-  };
+        void _draw()
+        {
+            _window.clear();
+            if (_grender)
+                _grender->draw(_window);
+            _window.display();
+        }
+
+    protected:
+        Window _window;
+        GraphicRender * _grender;
+        Event _event;
+    };
 }
 
 #endif // !MYSF_ENGINE_HPP_
