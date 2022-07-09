@@ -21,7 +21,7 @@ namespace mysf
 
     public:
         Engine()
-            : _grender(0)
+            : _grender(new GraphicRender)
         {
 
         }
@@ -35,13 +35,6 @@ namespace mysf
                 delete _grender;
         }
 
-        virtual bool init(int /* ac */, char ** /* av */)
-        {
-            _grender = new GraphicRender;
-
-            return _grender->init();
-        }
-
         int run()
         {
             sf::Clock clock;
@@ -53,7 +46,7 @@ namespace mysf
             _draw(); // 1st render
             while (_window.isOpen()) {
                 _processEvents();
-                if ((ret = _update(updateClock.restart())) != UpdateReturnCode::Continue) {
+                if ((ret = _update(clock.restart())) != UpdateReturnCode::Continue) {
                     _window.close();
                     if (ret == UpdateReturnCode::Error)
                         return 1;
@@ -82,10 +75,9 @@ namespace mysf
                 return UpdateReturnCode::Error;
             if ((ret = _grender->update(deltaTime, _event)) != _grender) {
                 delete _grender;
-                if ((_grender = ret) == 0)
+                _grender = ret;
+                if (_grender == 0)
                     return UpdateReturnCode::Close;
-                if (_grender->init() == false)
-                    return UpdateReturnCode::Error;
                 _event.reset();
             }
             return UpdateReturnCode::Continue;

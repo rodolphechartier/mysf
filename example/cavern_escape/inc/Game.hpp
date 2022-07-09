@@ -27,10 +27,10 @@ public:
 	Game & operator=(const Game &) = delete;
 	virtual ~Game();
 
-	virtual bool init() override;
 	virtual mysf::GraphicRender * onUpdate(const sf::Time & deltaTime, const mysf::Event & event) override;
 
 private:
+    bool init();
 	bool initBinding();
 
 private:

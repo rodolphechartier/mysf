@@ -7,27 +7,27 @@
 
 namespace mysf
 {
-  class SoundPlayer : public sf::Listener
-  {
-  public:
-	SoundPlayer();
-	SoundPlayer(const SoundPlayer &) = delete;
-	SoundPlayer & operator=(const SoundPlayer &) = delete;
-	virtual ~SoundPlayer();
+    class SoundPlayer : public sf::Listener
+    {
+    public:
+        SoundPlayer();
+        SoundPlayer(const SoundPlayer &) = delete;
+        SoundPlayer & operator=(const SoundPlayer &) = delete;
+        virtual ~SoundPlayer();
 
-	static void setNbLayer(unsigned int nbLayer);
-	static unsigned int getNbLayer();
-	static void setLayerVolume(float volume, unsigned int layer);
-	static float getLayerVolume(unsigned int layer);
+        static void setNbLayer(unsigned int nbLayer);
+        static unsigned int getNbLayer();
+        static void setLayerVolume(float volume, unsigned int layer);
+        static float getLayerVolume(unsigned int layer);
 
-	void play(const sf::Sound & sound);
-	void play(const sf::Sound & sound, unsigned int layer);
-	void removeStoppedSounds();
+        void play(const sf::Sound & sound);
+        void play(const sf::Sound & sound, unsigned int layer);
+        void removeStoppedSounds();
 
-  private:
-	static std::vector<float> _volumes;
-	std::list<sf::Sound> _sounds;
-  };
+    private:
+        static std::vector<float> _volumes;
+        std::list<sf::Sound> _sounds;
+    };
 }
 
 #endif // !MYSF_SOUND_PLAYER_HPP_

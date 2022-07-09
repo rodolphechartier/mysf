@@ -12,17 +12,17 @@
 
 namespace mysf
 {
-  class GraphicLayer : public Layer<SceneNode>
-  {
-  public:
-	GraphicLayer();
-	GraphicLayer(const GraphicLayer & o);
-	GraphicLayer & operator=(const GraphicLayer & o);
-	virtual ~GraphicLayer();
+    class GraphicLayer : public Layer<SceneNode>
+    {
+    public:
+        GraphicLayer();
+        GraphicLayer(const GraphicLayer & o);
+        GraphicLayer & operator=(const GraphicLayer & o);
+        virtual ~GraphicLayer();
 
-	void update(const sf::Time & deltaTime, const Event & event);
-	void draw(sf::RenderTarget & target, sf::RenderStates states) const;
-  };
+        void update(const sf::Time & deltaTime, const Event & event);
+        void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+    };
 }
 
 #endif // !MYSF_GRAPHIC_LAYER_HPP_

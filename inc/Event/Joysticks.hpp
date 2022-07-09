@@ -9,71 +9,71 @@
 
 namespace mysf
 {
-  class Joysticks
-  {
-	typedef void (Joysticks::*updateFct)(const sf::Event & event);
+    class Joysticks
+    {
+        typedef void (Joysticks::*updateFct)(const sf::Event & event);
 
-  public:
-	class Joystick
-	{
-	  friend class Joysticks;
+    public:
+        class Joystick
+        {
+            friend class Joysticks;
 
-	public:
-	  Joystick();
-	  Joystick(const Joystick & o);
-	  Joystick & operator=(const Joystick & o);
-	  virtual ~Joystick();
+        public:
+            Joystick();
+            Joystick(const Joystick & o);
+            Joystick & operator=(const Joystick & o);
+            virtual ~Joystick();
 
-	  void connect();
-	  void disconnect();
-	  bool isConnected() const;
+            void connect();
+            void disconnect();
+            bool isConnected() const;
 
-	  void reset();
+            void reset();
 
-	  bool isDown(unsigned int button) const;
-	  float getAxis(sf::Joystick::Axis axis) const;
+            bool isDown(unsigned int button) const;
+            float getAxis(sf::Joystick::Axis axis) const;
 
-	private:
-	  bool _isConnected;
-	  std::vector<bool> _down;
-	  std::vector<float> _axis;
-	};
+        private:
+            bool _isConnected;
+            std::vector<bool> _down;
+            std::vector<float> _axis;
+        };
 
-  public:
-	Joysticks();
-	Joysticks(const Joysticks & o);
-	Joysticks & operator=(const Joysticks & o);
-	virtual ~Joysticks();
+    public:
+        Joysticks();
+        Joysticks(const Joysticks & o);
+        Joysticks & operator=(const Joysticks & o);
+        virtual ~Joysticks();
 
-	void update(const sf::Event & event);
-	void loop();
-	void reset();
+        void update(const sf::Event & event);
+        void loop();
+        void reset();
 
-	void setEventType(const EventType & eventType);
-	const EventType & getEventType() const;
+        void setEventType(const EventType & eventType);
+        const EventType & getEventType() const;
 
-	const Joystick & operator[](unsigned int joystick) const;
-	unsigned int size() const;
-	unsigned int nbConnected() const;
-	bool isConnected(unsigned int joystick) const;
+        const Joystick & operator[](unsigned int joystick) const;
+        unsigned int size() const;
+        unsigned int nbConnected() const;
+        bool isConnected(unsigned int joystick) const;
 
-  private:
-	void connect(unsigned int joystick);
-	void disconnect(unsigned int joystick);
+    private:
+        void connect(unsigned int joystick);
+        void disconnect(unsigned int joystick);
 
-	void _updatePressed(const sf::Event & event);
-	void _updateOnPressed(const sf::Event & event);
-	void _updateOnReleased(const sf::Event & event);
+        void _updatePressed(const sf::Event & event);
+        void _updateOnPressed(const sf::Event & event);
+        void _updateOnReleased(const sf::Event & event);
 
-	std::vector<updateFct> _update;
+        std::vector<updateFct> _update;
 
-  protected:
-	EventType _eventType;
-	std::vector<int> _buttons;
+    protected:
+        EventType _eventType;
+        std::vector<int> _buttons;
 
-	std::vector<Joystick> _joysticks;
-	unsigned int _nbConnected;
-  };
+        std::vector<Joystick> _joysticks;
+        unsigned int _nbConnected;
+    };
 }
 
 #endif // !MYSF_JOYSTICKS_HPP_

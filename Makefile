@@ -1,5 +1,5 @@
 CC			= g++
-CPPFLAGS	+= -Wall -Wextra -pedantic -Werror -o3 -std=c++11 -fPIC
+CPPFLAGS	+= -Wall -Wextra -pedantic -Werror -o3 -std=c++14 -fPIC
 CPPFLAGS	+= -I ./inc -I ./inc/Engine -I ./inc/Event -I ./inc/Node
 CPPFLAGS	+= -I /usr/local/include
 

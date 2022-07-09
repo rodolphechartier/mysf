@@ -8,11 +8,16 @@
 class Main : public mysf::Engine<sf::RenderWindow>
 {
 public:
-	virtual bool init(int /* ac */, char ** /* av */) override
+	bool init(int /* ac */, char ** /* av */)
 	{
-		_grender = new Game(*dynamic_cast<mysf::Engine<sf::RenderWindow> *>(this), _window);
-
-		return _grender->init();
+        try {
+            _grender = new Game(*dynamic_cast<mysf::Engine<sf::RenderWindow> *>(this), _window);
+        }
+        catch (const std::exception & e) {
+            std::cerr << e.what() << std::endl;
+            return false;
+        }
+        return true;
 	}
 };
 

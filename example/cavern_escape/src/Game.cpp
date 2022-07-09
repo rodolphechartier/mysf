@@ -8,12 +8,32 @@ Game::Game(mysf::Engine<sf::RenderWindow> & engine, sf::RenderWindow & window)
 	, _helicopter(_bind, window, _map, _score)
 	, _gameover(engine, window, _helicopter, _map)
 {
-
+    if (init() == false)
+        throw std::runtime_error("Game init failled");
 }
 
 Game::~Game()
 {
 	_thl.unload();
+}
+
+mysf::GraphicRender * Game::onUpdate(const sf::Time & deltaTime, const mysf::Event & event)
+{
+	static sf::Time time(sf::Time::Zero);
+    static const sf::Time stage(sf::seconds(10.f));
+
+	if (_bind.getInput(Action::Quit, event) || event.isClosed())
+		return 0;
+	if (_helicopter.getState() == Helicopter::State::Destroy)
+		return _gameover(event, this);
+
+	time += deltaTime;
+	if (time > stage)
+	{
+        _map.addSpeed(50.f);
+		time -= stage;
+	}
+	return this;
 }
 
 bool Game::init()
@@ -58,25 +78,6 @@ bool Game::init()
 	_window.setFramerateLimit(60);
 	_window.setVerticalSyncEnabled(true);
 	return true;
-}
-
-mysf::GraphicRender * Game::onUpdate(const sf::Time & deltaTime, const mysf::Event & event)
-{
-	static sf::Time time(sf::Time::Zero);
-    static const sf::Time stage(sf::seconds(10.f));
-
-	if (_bind.getInput(Action::Quit, event) || event.isClosed())
-		return 0;
-	if (_helicopter.getState() == Helicopter::State::Destroy)
-		return _gameover(event, this);
-
-	time += deltaTime;
-	if (time > stage)
-	{
-        _map.addSpeed(50.f);
-		time -= stage;
-	}
-	return this;
 }
 
 bool Game::initBinding()

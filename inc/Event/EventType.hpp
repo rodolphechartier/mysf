@@ -3,12 +3,11 @@
 
 namespace mysf
 {
-  enum EventType
-	{
-	  Pressed,
-	  OnPressed,
-	  OnReleased,
-	  EventTypeCount
+    enum EventType {
+        Pressed,
+        OnPressed,
+        OnReleased,
+        EventTypeCount
 	};
 }
 

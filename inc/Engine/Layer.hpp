@@ -6,44 +6,46 @@
 
 namespace mysf
 {
-  template <typename T>
-  class Layer
-  {
-  public:
-	Layer() {}
-	Layer(const Layer & o) : _list(o._list) {}
-	Layer & operator=(const Layer & o)
-	{
-	  if (&o == this)
-		return *this;
-	  _list = o._list;
-	  return *this;
-	}
-	virtual ~Layer() {}
+    template <typename T>
+    class Layer
+    {
+    public:
+        Layer() {}
+        Layer(const Layer & o) : _list(o._list) {}
 
-	void add(T * node)
-	{
-	  _list.push_back(node);
-	}
+        Layer & operator=(const Layer & o)
+        {
+            if (&o == this)
+                return *this;
+            _list = o._list;
+            return *this;
+        }
 
-	void sub(T * node)
-	{
-	  _list.erase(std::find(_list.begin(), _list.end(), node));
-	}
+        virtual ~Layer() {}
 
-	void remove(T * node)
-	{
-	  _list.erase(std::find(_list.begin(), _list.end(), node));
-	}
+        void add(T * node)
+        {
+            _list.push_back(node);
+        }
 
-	void clear()
-	{
-	  _list.clear();
-	}
+        void sub(T * node)
+        {
+            _list.erase(std::find(_list.begin(), _list.end(), node));
+        }
 
-  protected:
-	std::list<T *> _list;
-  };
+        void remove(T * node)
+        {
+            _list.erase(std::find(_list.begin(), _list.end(), node));
+        }
+
+        void clear()
+        {
+            _list.clear();
+        }
+
+    protected:
+        std::list<T *> _list;
+    };
 }
 
 #endif // !MYSF_LAYER_HPP_
